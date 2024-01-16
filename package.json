@@ -1,23 +1,5 @@
 {
-  "name": "nicebreakers",
-  "version": "1.0.0",
-  "description": "��#\u0000 \u0000N\u0000i\u0000c\u0000e\u0000B\u0000r\u0000e\u0000a\u0000k\u0000e\u0000r\u0000s\u0000\r\u0000 \u0000T\u0000e\u0000s\u0000t\u0000i\u0000n\u0000g\u0000 \u0000c\u0000o\u0000m\u0000m\u0000i\u0000t\u0000 \u0000f\u0000u\u0000n\u0000c\u0000t\u0000i\u0000o\u0000n\u0000a\u0000l\u0000i\u0000t\u0000y\u0000",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "aws-amplify": "^6.0.12"
-  },
-  "devDependencies": {
-    "@aws-amplify/backend": "^0.10.1",
-    "@aws-amplify/backend-cli": "^0.9.6",
-    "aws-cdk": "^2.121.1",
-    "aws-cdk-lib": "^2.121.1",
-    "constructs": "^10.3.0",
-    "typescript": "^5.3.3"
+    "amplify": "^0.0.11"
   }
 }
