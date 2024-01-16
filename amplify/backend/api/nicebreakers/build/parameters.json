@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "nicebreakers",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-nicebreakers-staging-222128-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/ae8357f9ac2c281cb0d9c9d625c7d46ea76f4cba"
+}
