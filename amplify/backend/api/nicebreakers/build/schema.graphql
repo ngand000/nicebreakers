@@ -1,28 +1,19 @@
-type Blog {
+type Comment @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  comment: String
+  icebreakerID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Icebreaker @aws_iam @aws_api_key {
   id: ID!
   name: String!
-  posts(filter: ModelPostFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostConnection
+  icebreaker: String
+  Comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-}
-
-type Post {
-  id: ID!
-  title: String!
-  blog: Blog
-  comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-  blogPostsId: ID
-}
-
-type Comment {
-  id: ID!
-  post: Post
-  content: String!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-  postCommentsId: ID
 }
 
 input ModelStringInput {
@@ -175,166 +166,125 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelBlogConnection {
-  items: [Blog]!
-  nextToken: String
-}
-
-input ModelBlogFilterInput {
-  id: ModelIDInput
-  name: ModelStringInput
-  and: [ModelBlogFilterInput]
-  or: [ModelBlogFilterInput]
-  not: ModelBlogFilterInput
-}
-
-type Query {
-  getBlog(id: ID!): Blog
-  listBlogs(filter: ModelBlogFilterInput, limit: Int, nextToken: String): ModelBlogConnection
-  getPost(id: ID!): Post
-  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection
-  getComment(id: ID!): Comment
-  listComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection
-}
-
-input ModelBlogConditionInput {
-  name: ModelStringInput
-  and: [ModelBlogConditionInput]
-  or: [ModelBlogConditionInput]
-  not: ModelBlogConditionInput
-}
-
-input CreateBlogInput {
-  id: ID
-  name: String!
-}
-
-input UpdateBlogInput {
-  id: ID!
-  name: String
-}
-
-input DeleteBlogInput {
-  id: ID!
-}
-
-type Mutation {
-  createBlog(input: CreateBlogInput!, condition: ModelBlogConditionInput): Blog
-  updateBlog(input: UpdateBlogInput!, condition: ModelBlogConditionInput): Blog
-  deleteBlog(input: DeleteBlogInput!, condition: ModelBlogConditionInput): Blog
-  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post
-  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post
-  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post
-  createComment(input: CreateCommentInput!, condition: ModelCommentConditionInput): Comment
-  updateComment(input: UpdateCommentInput!, condition: ModelCommentConditionInput): Comment
-  deleteComment(input: DeleteCommentInput!, condition: ModelCommentConditionInput): Comment
-}
-
-input ModelSubscriptionBlogFilterInput {
-  id: ModelSubscriptionIDInput
-  name: ModelSubscriptionStringInput
-  and: [ModelSubscriptionBlogFilterInput]
-  or: [ModelSubscriptionBlogFilterInput]
-}
-
-type Subscription {
-  onCreateBlog(filter: ModelSubscriptionBlogFilterInput): Blog @aws_subscribe(mutations: ["createBlog"])
-  onUpdateBlog(filter: ModelSubscriptionBlogFilterInput): Blog @aws_subscribe(mutations: ["updateBlog"])
-  onDeleteBlog(filter: ModelSubscriptionBlogFilterInput): Blog @aws_subscribe(mutations: ["deleteBlog"])
-  onCreatePost(filter: ModelSubscriptionPostFilterInput): Post @aws_subscribe(mutations: ["createPost"])
-  onUpdatePost(filter: ModelSubscriptionPostFilterInput): Post @aws_subscribe(mutations: ["updatePost"])
-  onDeletePost(filter: ModelSubscriptionPostFilterInput): Post @aws_subscribe(mutations: ["deletePost"])
-  onCreateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["createComment"])
-  onUpdateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["updateComment"])
-  onDeleteComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["deleteComment"])
-}
-
-type ModelPostConnection {
-  items: [Post]!
-  nextToken: String
-}
-
-input ModelPostFilterInput {
-  id: ModelIDInput
-  title: ModelStringInput
-  and: [ModelPostFilterInput]
-  or: [ModelPostFilterInput]
-  not: ModelPostFilterInput
-  blogPostsId: ModelIDInput
-}
-
-input ModelPostConditionInput {
-  title: ModelStringInput
-  and: [ModelPostConditionInput]
-  or: [ModelPostConditionInput]
-  not: ModelPostConditionInput
-  blogPostsId: ModelIDInput
-}
-
-input CreatePostInput {
-  id: ID
-  title: String!
-  blogPostsId: ID
-}
-
-input UpdatePostInput {
-  id: ID!
-  title: String
-  blogPostsId: ID
-}
-
-input DeletePostInput {
-  id: ID!
-}
-
-input ModelSubscriptionPostFilterInput {
-  id: ModelSubscriptionIDInput
-  title: ModelSubscriptionStringInput
-  and: [ModelSubscriptionPostFilterInput]
-  or: [ModelSubscriptionPostFilterInput]
-}
-
-type ModelCommentConnection {
+type ModelCommentConnection @aws_api_key @aws_iam {
   items: [Comment]!
   nextToken: String
 }
 
 input ModelCommentFilterInput {
   id: ModelIDInput
-  content: ModelStringInput
+  name: ModelStringInput
+  comment: ModelStringInput
+  icebreakerID: ModelIDInput
   and: [ModelCommentFilterInput]
   or: [ModelCommentFilterInput]
   not: ModelCommentFilterInput
-  postCommentsId: ModelIDInput
+}
+
+type Query {
+  getComment(id: ID!): Comment @aws_api_key @aws_iam
+  listComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection @aws_api_key @aws_iam
+  commentsByIcebreakerID(icebreakerID: ID!, sortDirection: ModelSortDirection, filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection @aws_api_key @aws_iam
+  getIcebreaker(id: ID!): Icebreaker @aws_api_key @aws_iam
+  listIcebreakers(filter: ModelIcebreakerFilterInput, limit: Int, nextToken: String): ModelIcebreakerConnection @aws_api_key @aws_iam
 }
 
 input ModelCommentConditionInput {
-  content: ModelStringInput
+  name: ModelStringInput
+  comment: ModelStringInput
+  icebreakerID: ModelIDInput
   and: [ModelCommentConditionInput]
   or: [ModelCommentConditionInput]
   not: ModelCommentConditionInput
-  postCommentsId: ModelIDInput
 }
 
 input CreateCommentInput {
   id: ID
-  content: String!
-  postCommentsId: ID
+  name: String
+  comment: String
+  icebreakerID: ID!
 }
 
 input UpdateCommentInput {
   id: ID!
-  content: String
-  postCommentsId: ID
+  name: String
+  comment: String
+  icebreakerID: ID
 }
 
 input DeleteCommentInput {
   id: ID!
 }
 
+type Mutation {
+  createComment(input: CreateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
+  updateComment(input: UpdateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
+  deleteComment(input: DeleteCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
+  createIcebreaker(input: CreateIcebreakerInput!, condition: ModelIcebreakerConditionInput): Icebreaker @aws_api_key @aws_iam
+  updateIcebreaker(input: UpdateIcebreakerInput!, condition: ModelIcebreakerConditionInput): Icebreaker @aws_api_key @aws_iam
+  deleteIcebreaker(input: DeleteIcebreakerInput!, condition: ModelIcebreakerConditionInput): Icebreaker @aws_api_key @aws_iam
+}
+
 input ModelSubscriptionCommentFilterInput {
   id: ModelSubscriptionIDInput
-  content: ModelSubscriptionStringInput
+  name: ModelSubscriptionStringInput
+  comment: ModelSubscriptionStringInput
+  icebreakerID: ModelSubscriptionIDInput
   and: [ModelSubscriptionCommentFilterInput]
   or: [ModelSubscriptionCommentFilterInput]
+}
+
+type Subscription {
+  onCreateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["createComment"]) @aws_api_key @aws_iam
+  onUpdateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["updateComment"]) @aws_api_key @aws_iam
+  onDeleteComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["deleteComment"]) @aws_api_key @aws_iam
+  onCreateIcebreaker(filter: ModelSubscriptionIcebreakerFilterInput): Icebreaker @aws_subscribe(mutations: ["createIcebreaker"]) @aws_api_key @aws_iam
+  onUpdateIcebreaker(filter: ModelSubscriptionIcebreakerFilterInput): Icebreaker @aws_subscribe(mutations: ["updateIcebreaker"]) @aws_api_key @aws_iam
+  onDeleteIcebreaker(filter: ModelSubscriptionIcebreakerFilterInput): Icebreaker @aws_subscribe(mutations: ["deleteIcebreaker"]) @aws_api_key @aws_iam
+}
+
+type ModelIcebreakerConnection @aws_api_key @aws_iam {
+  items: [Icebreaker]!
+  nextToken: String
+}
+
+input ModelIcebreakerFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  icebreaker: ModelStringInput
+  and: [ModelIcebreakerFilterInput]
+  or: [ModelIcebreakerFilterInput]
+  not: ModelIcebreakerFilterInput
+}
+
+input ModelIcebreakerConditionInput {
+  name: ModelStringInput
+  icebreaker: ModelStringInput
+  and: [ModelIcebreakerConditionInput]
+  or: [ModelIcebreakerConditionInput]
+  not: ModelIcebreakerConditionInput
+}
+
+input CreateIcebreakerInput {
+  id: ID
+  name: String!
+  icebreaker: String
+}
+
+input UpdateIcebreakerInput {
+  id: ID!
+  name: String
+  icebreaker: String
+}
+
+input DeleteIcebreakerInput {
+  id: ID!
+}
+
+input ModelSubscriptionIcebreakerFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  icebreaker: ModelSubscriptionStringInput
+  and: [ModelSubscriptionIcebreakerFilterInput]
+  or: [ModelSubscriptionIcebreakerFilterInput]
 }

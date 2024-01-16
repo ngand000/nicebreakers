@@ -8,6 +8,12 @@
       "Type": "String",
       "Default": "AppSyncSimpleTransform"
     },
+    "authRoleName": {
+      "Type": "String"
+    },
+    "unauthRoleName": {
+      "Type": "String"
+    },
     "DynamoDBModelTableReadIOPS": {
       "Type": "Number",
       "Default": 5,
@@ -72,7 +78,12 @@
               }
             ]
           ]
-        }
+        },
+        "AdditionalAuthenticationProviders": [
+          {
+            "AuthenticationType": "AWS_IAM"
+          }
+        ]
       }
     },
     "GraphQLAPITransformerSchema3CB2AE18": {
@@ -111,7 +122,8 @@
             "ApiId"
           ]
         },
-        "Expires": 1706050554
+        "Description": "api key description",
+        "Expires": 1708040058
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -128,163 +140,174 @@
         "Description": "None Data Source for Pipeline functions"
       }
     },
-    "Blog": {
-      "Type": "AWS::CloudFormation::Stack",
+    "DataStore": {
+      "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "TemplateURL": {
+        "KeySchema": [
+          {
+            "AttributeName": "ds_pk",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "ds_sk",
+            "KeyType": "RANGE"
+          }
+        ],
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "ds_pk",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "ds_sk",
+            "AttributeType": "S"
+          }
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "StreamSpecification": {
+          "StreamViewType": "NEW_AND_OLD_IMAGES"
+        },
+        "TableName": {
           "Fn::Join": [
             "",
             [
-              "https://s3.",
+              "AmplifyDataStore-",
               {
-                "Ref": "AWS::Region"
+                "Fn::GetAtt": [
+                  "GraphQLAPI",
+                  "ApiId"
+                ]
               },
-              ".",
+              "-",
               {
-                "Ref": "AWS::URLSuffix"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentBucket"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentRootKey"
-              },
-              "/stacks/Blog.json"
+                "Ref": "env"
+              }
             ]
           ]
         },
-        "Parameters": {
-          "DynamoDBModelTableReadIOPS": {
-            "Ref": "DynamoDBModelTableReadIOPS"
-          },
-          "DynamoDBModelTableWriteIOPS": {
-            "Ref": "DynamoDBModelTableWriteIOPS"
-          },
-          "DynamoDBBillingMode": {
-            "Ref": "DynamoDBBillingMode"
-          },
-          "DynamoDBEnablePointInTimeRecovery": {
-            "Ref": "DynamoDBEnablePointInTimeRecovery"
-          },
-          "DynamoDBEnableServerSideEncryption": {
-            "Ref": "DynamoDBEnableServerSideEncryption"
-          },
-          "referencetotransformerrootstackenv10C5A902Ref": {
-            "Ref": "env"
-          },
-          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-            "Fn::GetAtt": [
-              "GraphQLAPI",
-              "ApiId"
-            ]
-          },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
-          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-            "Ref": "S3DeploymentBucket"
-          },
-          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-            "Ref": "S3DeploymentRootKey"
-          }
+        "TimeToLiveSpecification": {
+          "AttributeName": "_ttl",
+          "Enabled": true
         }
       },
-      "DependsOn": [
-        "GraphQLAPITransformerSchema3CB2AE18"
-      ]
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete"
     },
-    "Post": {
-      "Type": "AWS::CloudFormation::Stack",
+    "AmplifyDataStoreIAMRole8DE05A49": {
+      "Type": "AWS::IAM::Role",
       "Properties": {
-        "TemplateURL": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "appsync.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "RoleName": {
           "Fn::Join": [
             "",
             [
-              "https://s3.",
+              "AmplifyDataStoreIAMRb752cd-",
               {
-                "Ref": "AWS::Region"
+                "Fn::GetAtt": [
+                  "GraphQLAPI",
+                  "ApiId"
+                ]
               },
-              ".",
+              "-",
               {
-                "Ref": "AWS::URLSuffix"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentBucket"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentRootKey"
-              },
-              "/stacks/Post.json"
+                "Ref": "env"
+              }
             ]
           ]
-        },
-        "Parameters": {
-          "DynamoDBModelTableReadIOPS": {
-            "Ref": "DynamoDBModelTableReadIOPS"
-          },
-          "DynamoDBModelTableWriteIOPS": {
-            "Ref": "DynamoDBModelTableWriteIOPS"
-          },
-          "DynamoDBBillingMode": {
-            "Ref": "DynamoDBBillingMode"
-          },
-          "DynamoDBEnablePointInTimeRecovery": {
-            "Ref": "DynamoDBEnablePointInTimeRecovery"
-          },
-          "DynamoDBEnableServerSideEncryption": {
-            "Ref": "DynamoDBEnableServerSideEncryption"
-          },
-          "referencetotransformerrootstackenv10C5A902Ref": {
-            "Ref": "env"
-          },
-          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-            "Fn::GetAtt": [
-              "GraphQLAPI",
-              "ApiId"
-            ]
-          },
-          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-            "Ref": "S3DeploymentBucket"
-          },
-          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-            "Ref": "S3DeploymentRootKey"
-          },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogQuerygetBlogpostAuth0FunctionQuerygetBlogpostAuth0FunctionAppSyncFunction48204FB4FunctionId": {
-            "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogQuerygetBlogpostAuth0FunctionQuerygetBlogpostAuth0FunctionAppSyncFunction48204FB4FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogMutationcreateBloginit0FunctionMutationcreateBloginit0FunctionAppSyncFunctionEEFF6067FunctionId": {
-            "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogMutationcreateBloginit0FunctionMutationcreateBloginit0FunctionAppSyncFunctionEEFF6067FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogMutationupdateBloginit0FunctionMutationupdateBloginit0FunctionAppSyncFunctionBD83DF18FunctionId": {
-            "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogMutationupdateBloginit0FunctionMutationupdateBloginit0FunctionAppSyncFunctionBD83DF18FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogSubscriptionOnCreateBlogDataResolverFnSubscriptionOnCreateBlogDataResolverFnAppSyncFunction69F96569FunctionId": {
-            "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogSubscriptionOnCreateBlogDataResolverFnSubscriptionOnCreateBlogDataResolverFnAppSyncFunction69F96569FunctionId"
-            ]
-          }
         }
-      },
-      "DependsOn": [
-        "GraphQLAPITransformerSchema3CB2AE18"
-      ]
+      }
+    },
+    "DynamoDBAccess71ABE5AE": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "AmplifyDataStore-",
+                            {
+                              "Fn::GetAtt": [
+                                "GraphQLAPI",
+                                "ApiId"
+                              ]
+                            },
+                            "-",
+                            {
+                              "Ref": "env"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "AmplifyDataStore-",
+                            {
+                              "Fn::GetAtt": [
+                                "GraphQLAPI",
+                                "ApiId"
+                              ]
+                            },
+                            "-",
+                            {
+                              "Ref": "env"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "DynamoDBAccess71ABE5AE",
+        "Roles": [
+          {
+            "Ref": "AmplifyDataStoreIAMRole8DE05A49"
+          }
+        ]
+      }
     },
     "Comment": {
       "Type": "AWS::CloudFormation::Stack",
@@ -338,34 +361,134 @@
               "ApiId"
             ]
           },
+          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+            "Fn::GetAtt": [
+              "GraphQLAPINONEDS95A13CF0",
+              "Name"
+            ]
+          },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
             "Ref": "S3DeploymentBucket"
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogQuerygetBlogpostAuth0FunctionQuerygetBlogpostAuth0FunctionAppSyncFunction48204FB4FunctionId": {
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
+    },
+    "Icebreaker": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/Icebreaker.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
             "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogQuerygetBlogpostAuth0FunctionQuerygetBlogpostAuth0FunctionAppSyncFunction48204FB4FunctionId"
+              "GraphQLAPI",
+              "ApiId"
             ]
           },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogMutationcreateBloginit0FunctionMutationcreateBloginit0FunctionAppSyncFunctionEEFF6067FunctionId": {
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentQuerygetCommentauth0FunctionQuerygetCommentauth0FunctionAppSyncFunction7138B8C3FunctionId": {
             "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogMutationcreateBloginit0FunctionMutationcreateBloginit0FunctionAppSyncFunctionEEFF6067FunctionId"
+              "Comment",
+              "Outputs.transformerrootstackCommentQuerygetCommentauth0FunctionQuerygetCommentauth0FunctionAppSyncFunction7138B8C3FunctionId"
             ]
           },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogMutationupdateBloginit0FunctionMutationupdateBloginit0FunctionAppSyncFunctionBD83DF18FunctionId": {
+          "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentQuerygetCommentpostAuth0FunctionQuerygetCommentpostAuth0FunctionAppSyncFunction37C6E59AFunctionId": {
             "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogMutationupdateBloginit0FunctionMutationupdateBloginit0FunctionAppSyncFunctionBD83DF18FunctionId"
+              "Comment",
+              "Outputs.transformerrootstackCommentQuerygetCommentpostAuth0FunctionQuerygetCommentpostAuth0FunctionAppSyncFunction37C6E59AFunctionId"
             ]
           },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogSubscriptionOnCreateBlogDataResolverFnSubscriptionOnCreateBlogDataResolverFnAppSyncFunction69F96569FunctionId": {
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentMutationcreateCommentinit0FunctionMutationcreateCommentinit0FunctionAppSyncFunction35DF5DACFunctionId": {
             "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogSubscriptionOnCreateBlogDataResolverFnSubscriptionOnCreateBlogDataResolverFnAppSyncFunction69F96569FunctionId"
+              "Comment",
+              "Outputs.transformerrootstackCommentMutationcreateCommentinit0FunctionMutationcreateCommentinit0FunctionAppSyncFunction35DF5DACFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentMutationcreateCommentauth0FunctionMutationcreateCommentauth0FunctionAppSyncFunctionBA9EE2D9FunctionId": {
+            "Fn::GetAtt": [
+              "Comment",
+              "Outputs.transformerrootstackCommentMutationcreateCommentauth0FunctionMutationcreateCommentauth0FunctionAppSyncFunctionBA9EE2D9FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentMutationupdateCommentinit0FunctionMutationupdateCommentinit0FunctionAppSyncFunction01D3D055FunctionId": {
+            "Fn::GetAtt": [
+              "Comment",
+              "Outputs.transformerrootstackCommentMutationupdateCommentinit0FunctionMutationupdateCommentinit0FunctionAppSyncFunction01D3D055FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentSubscriptiononCreateCommentauth0FunctionSubscriptiononCreateCommentauth0FunctionAppSyncFunction4FC4B1DEFunctionId": {
+            "Fn::GetAtt": [
+              "Comment",
+              "Outputs.transformerrootstackCommentSubscriptiononCreateCommentauth0FunctionSubscriptiononCreateCommentauth0FunctionAppSyncFunction4FC4B1DEFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentSubscriptionOnCreateCommentDataResolverFnSubscriptionOnCreateCommentDataResolverFnAppSyncFunction89422787FunctionId": {
+            "Fn::GetAtt": [
+              "Comment",
+              "Outputs.transformerrootstackCommentSubscriptionOnCreateCommentDataResolverFnSubscriptionOnCreateCommentDataResolverFnAppSyncFunction89422787FunctionId"
             ]
           }
         }
@@ -408,10 +531,10 @@
               "ApiId"
             ]
           },
-          "referencetotransformerrootstackPostNestedStackPostNestedStackResource45FCAC5EOutputstransformerrootstackPostPostDataSource6998E105Name": {
+          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
             "Fn::GetAtt": [
-              "Post",
-              "Outputs.transformerrootstackPostPostDataSource6998E105Name"
+              "GraphQLAPINONEDS95A13CF0",
+              "Name"
             ]
           },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
@@ -419,12 +542,6 @@
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
-          },
-          "referencetotransformerrootstackPostNestedStackPostNestedStackResource45FCAC5EOutputstransformerrootstackPostPostTable34CAE87BRef": {
-            "Fn::GetAtt": [
-              "Post",
-              "Outputs.transformerrootstackPostPostTable34CAE87BRef"
-            ]
           },
           "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentCommentDataSourceA0E54655Name": {
             "Fn::GetAtt": [
@@ -438,25 +555,17 @@
               "Outputs.transformerrootstackCommentCommentTable5427FDE2Ref"
             ]
           },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogBlogDataSourceC4A89823Name": {
-            "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogBlogDataSourceC4A89823Name"
-            ]
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
           },
-          "referencetotransformerrootstackBlogNestedStackBlogNestedStackResourceEF10046FOutputstransformerrootstackBlogBlogTable6154040CRef": {
-            "Fn::GetAtt": [
-              "Blog",
-              "Outputs.transformerrootstackBlogBlogTable6154040CRef"
-            ]
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
           }
         }
       },
       "DependsOn": [
-        "Blog",
         "Comment",
-        "GraphQLAPITransformerSchema3CB2AE18",
-        "Post"
+        "GraphQLAPITransformerSchema3CB2AE18"
       ]
     },
     "CustomResourcesjson": {
@@ -502,9 +611,8 @@
       "DependsOn": [
         "GraphQLAPI",
         "GraphQLAPITransformerSchema3CB2AE18",
-        "Blog",
-        "Post",
         "Comment",
+        "Icebreaker",
         "ConnectionStack"
       ]
     }
@@ -576,6 +684,5 @@
         }
       }
     }
-  },
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.2.1\",\"stackType\":\"api-AppSync\",\"metadata\":{}}"
+  }
 }

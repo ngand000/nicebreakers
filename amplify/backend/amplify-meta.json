@@ -14,29 +14,79 @@
   },
   "api": {
     "nicebreakers": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "output": {
         "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ],
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
             }
-          },
-          "additionalAuthenticationProviders": []
+          }
         },
         "GraphQLAPIIdOutput": "plmohenfz5ax5px5b2ryznxykq",
         "GraphQLAPIEndpointOutput": "https://orvcqhptszdezh2x2vctba3b34.appsync-api.us-west-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-cnf734au7bci7fwq323rdjahz4"
       },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync",
+      "lastPushTimeStamp": "2024-01-16T23:46:29.577Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apinicebreakers"
       },
-      "lastPushTimeStamp": "2024-01-16T23:02:21.328Z",
-      "lastPushDirHash": "/bVIAfD7WIiUsJq76pBp8SilS0U="
+      "lastPushDirHash": "z+U7LeuZjIPHKPotAUwl33943TA="
+    }
+  },
+  "auth": {
+    "NiceBreakers": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+          ]
+        },
+        "signupAttributes": [],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "output": {
+        "UserPoolId": "us-west-2_0p0aZDuoI",
+        "AppClientIDWeb": "4b5bedgkocn64n58dtl1r8sp26",
+        "AppClientID": "dmq7muqkbau767349gr6hfe59",
+        "IdentityPoolId": "us-west-2:41aabc73-52a6-45dc-89b0-56bced146e6a",
+        "UserPoolArn": "arn:aws:cognito-idp:us-west-2:741451776109:userpool/us-west-2_0p0aZDuoI",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "NiceBreakers"
+      },
+      "lastPushTimeStamp": "2024-01-16T23:46:29.605Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/auth/NiceBreakers-cloudformation-template.json",
+        "logicalId": "authNiceBreakers"
+      }
     }
   }
 }
