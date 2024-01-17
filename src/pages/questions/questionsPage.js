@@ -2,7 +2,10 @@
 
 const QuestionPage = (props) => {
     return (
-        <p> Questions go here </p>
+        <div>
+            <div> Filters </div>
+            <div> Icebreaker questions (can scroll) </div>
+        </div>
     )
 }
 

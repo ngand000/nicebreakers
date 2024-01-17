@@ -2,7 +2,10 @@
 
 const UploadPage = (props) => {
     return (
-        <p> Upload stuff here </p>
+        <div>
+            <div> Data entry/upload </div>
+            <div> Button to upload </div>
+        </div>
     )
 }
 

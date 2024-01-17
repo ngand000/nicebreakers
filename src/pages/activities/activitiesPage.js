@@ -2,7 +2,10 @@
 
 const ActivitiesPage = (props) => {
     return (
-        <p> Icebreaker activities go here </p>
+        <div>
+            <div> Filters </div>
+            <div> Icebreaker activities (can scroll) </div>
+        </div>
     )
 }
 
