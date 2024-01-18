@@ -7,5 +7,3 @@ through the icebreakers that have been posted to the site based on different sta
 each icebreaker, so they can find one that fits their needs.
 
 Repository Layout:
-/.idea: IntelliJ Configuration Settings
-/.vscode: VSCode Configuration Settings
