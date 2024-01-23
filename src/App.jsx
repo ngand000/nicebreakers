@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import './App.css';
-import ActivitiesPage from "./pages/activities/activitiesPage";
+import ActivitiesPage from "./pages/activities/ActivitiesPage";
 import PostPage from "./pages/post/postPage";
 import QuestionPage from "./pages/questions/questionsPage";
 import UploadPage from "./pages/upload/uploadPage";
