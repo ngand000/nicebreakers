@@ -15,6 +15,17 @@
     - Started implementing very simple version of activities page
     - Learned that we should think about the choices we are going to make for longer than I expected, as I expected to get to the coding earlier
   - Shivank:
+    -No trouble or difficulties this week
+    -Made revisions to Requirements and Policies based on feedback
+      -Added Project Description
+      -Added some more detail and speceficity to the Major Risks Section
+    -Worked on Architecture and Design Section
+      -Disussing alternatives
+      -Descriptions of identified software components
+      -Did a risk assesment case
+      -Documentation plan
+    -The main trouble I had was learning more about AWS amplify and how to convey its usage and structure well
+    -One thing I learned when relecting on risk assesment is the potential that our project has for specific feature creep in the search section and different non-technical strategies we can use to defer that.
 - Goals:
   - Andrew:
   - Anusha:
@@ -23,3 +34,5 @@
     - On activities page, display all necessary stats of each icebreaker activity currently stored by the page (later on will be pulled from database). Estimate: 2 days
     - Format page so that icebreaker activities display in the positions the concept drawing shows and can scroll: Estimate: 1 day
   - Shivank:
+  - Work on creating a search play display and specifically lock down logic of translating display sliders/choices to logic representations of data ranges (ex "ages 5-8" -> int[5, 8] -> database query for this range). Estimate: 2 days
+    
