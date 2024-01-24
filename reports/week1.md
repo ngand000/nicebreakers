@@ -1,6 +1,9 @@
 1.
 - Previous Goals: N/A
 - Progress and Issues:
+  - Finished Architecture and Design section of living document
+  - Set up Amplify database
+  - Created Git repo and skeleton for website
 - Goals:
   - Discuss revision to the Requirements and Policies section during TA meeting
 2.
