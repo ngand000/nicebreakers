@@ -31,5 +31,5 @@
     - On activities page, display all necessary stats of each icebreaker activity currently stored by the page (later on will be pulled from database). Estimate: 2 days
     - Format page so that icebreaker activities display in the positions the concept drawing shows and can scroll: Estimate: 1 day
   - Shivank:
-  - Work on creating a search play display and specifically lock down logic of translating display sliders/choices to logic representations of data ranges (ex "ages 5-8" -> int[5, 8] -> database query for this range). Estimate: 2 days
+    - Work on creating a search play display and specifically lock down logic of translating display sliders/choices to logic representations of data ranges (ex "ages 5-8" -> int[5, 8] -> database query for this range). Estimate: 2 days
     
