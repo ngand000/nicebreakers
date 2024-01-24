@@ -2,6 +2,7 @@
 - Previous Goals: N/A
 - Progress and Issues:
 - Goals:
+  - Discuss revision to the Requirements and Policies section during TA meeting
 2.
 - Previous Goals: N/A
 - Progress and Issues:
