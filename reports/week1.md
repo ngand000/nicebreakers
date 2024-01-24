@@ -1,4 +1,25 @@
-1. Previous Goals: N/A
-2. Progress and Issues:
-
-3. Goals:
+1.
+- Previous Goals: N/A
+- Progress and Issues:
+- Goals:
+2.
+- Previous Goals: N/A
+- Progress and Issues:
+  - Andrew:
+  - Anusha:
+  - Lim:
+  - Matthew:
+    - No trouble this week, not stuck on anything
+    - Contributed to Architecture and Design section of living document
+    - Started React framework for our website with simple outlines
+    - Started implementing very simple version of activities page
+    - Learned that we should think about the choices we are going to make for longer than I expected, as I expected to get to the coding earlier
+  - Shivank:
+- Goals:
+  - Andrew:
+  - Anusha:
+  - Lim:
+  - Matthew: 
+    - On activities page, display all necessary stats of each icebreaker activity currently stored by the page (later on will be pulled from database). Estimate: 2 days
+    - Format page so that icebreaker activities display in the positions the concept drawing shows and can scroll: Estimate: 1 day
+  - Shivank:
