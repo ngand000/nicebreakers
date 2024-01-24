@@ -15,17 +15,14 @@
     - Started implementing very simple version of activities page
     - Learned that we should think about the choices we are going to make for longer than I expected, as I expected to get to the coding earlier
   - Shivank:
-    -No trouble or difficulties this week
-    -Made revisions to Requirements and Policies based on feedback
-      -Added Project Description
-      -Added some more detail and speceficity to the Major Risks Section
-    -Worked on Architecture and Design Section
-      -Disussing alternatives
-      -Descriptions of identified software components
-      -Did a risk assesment case
-      -Documentation plan
-    -The main trouble I had was learning more about AWS amplify and how to convey its usage and structure well
-    -One thing I learned when relecting on risk assesment is the potential that our project has for specific feature creep in the search section and different non-technical strategies we can use to defer that.
+    - No trouble or difficulties this week:
+    - Made revisions to Requirements and Policies based on feedback
+      - Added Project Description
+      - Added some more detail and speceficity to the Major Risks Section
+    - Worked on Architecture and Design Section
+      - Disussing alternatives, Descriptions of identified software components, Did a risk assesment case, Documentation plan
+    - The main trouble I had was learning more about AWS amplify and how to convey its usage and structure well
+    - One thing I learned when relecting on risk assesment is creating non-technical strategies we can use to defer issues
 - Goals:
   - Andrew:
   - Anusha:
