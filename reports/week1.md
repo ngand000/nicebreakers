@@ -10,6 +10,11 @@
 - Previous Goals: N/A
 - Progress and Issues:
   - Andrew:
+    - No issues this week:
+    - Implemeneted AWS into the project
+    - Created the schema for the database
+    - Set up AWS libraries that will be used with our website
+    - Contributed to Software architecture and Test plan
   - Anusha:
   - Lim:
   - Matthew:
@@ -29,11 +34,13 @@
     - One thing I learned when relecting on risk assesment is creating non-technical strategies we can use to defer issues
 - Goals:
   - Andrew:
+    - On the activities page, allow the website to pull data from the database and store it in a variable: Estimate 1 day
+    - Create a way to like and dislike posts and update the vote onto the database: Estiamte 3 days
   - Anusha:
   - Lim:
-  - Matthew: 
+  - Matthew:
     - On activities page, display all necessary stats of each icebreaker activity currently stored by the page (later on will be pulled from database). Estimate: 2 days
     - Format page so that icebreaker activities display in the positions the concept drawing shows and can scroll: Estimate: 1 day
   - Shivank:
     - Work on creating a search play display and specifically lock down logic of translating display sliders/choices to logic representations of data ranges (ex "ages 5-8" -> int[5, 8] -> database query for this range). Estimate: 2 days
-    
+
