@@ -17,6 +17,9 @@
     - Contributed to Software architecture and Test plan
   - Anusha:
   - Lim:
+    - No blocker this weekL
+    - Contributed to the GitHub setup and the Architecture and Design section of living document
+    - run React initialization to start a React project on the repo
   - Matthew:
     - No trouble this week, not stuck on anything
     - Contributed to Architecture and Design section of living document
@@ -38,6 +41,8 @@
     - Create a way to like and dislike posts and update the vote onto the database: Estiamte 3 days
   - Anusha:
   - Lim:
+    - To set up a sample database, and allow the website to pull from the database. Estimate 2 days
+    - Testing for the newly implemented feature. Estimate 3 days
   - Matthew:
     - On activities page, display all necessary stats of each icebreaker activity currently stored by the page (later on will be pulled from database). Estimate: 2 days
     - Format page so that icebreaker activities display in the positions the concept drawing shows and can scroll: Estimate: 1 day
