@@ -4,7 +4,7 @@ import React from "react"
 export default function ActivityPreview({activity}) {
 
     function rangeToString(r) {
-        return (r[0] == r[1] ? r[0] : r[0] + "-" + r[1])
+        return (r[0] === r[1] ? r[0] : r[0] + "-" + r[1])
     }
 
     const outerDivStyle = {padding: "4px 16px 4px 16px",
@@ -19,34 +19,49 @@ export default function ActivityPreview({activity}) {
         margin: "auto",
         width: "100%",
         height: "90%",
-        position: "relative"
+        position: "relative",
     }
 
 
-    const nameStyle = {fontSize: "4vmin", textDecoration: "underline"}
+    const nameStyle = {fontSize: "4vmin", textDecoration: "underline", width: "100%"}
 
-    const abstractStyle = {fontSize: "3vmin", textAlign: "center"}
+    const abstractStyle = {fontSize: "3vmin", textAlign: "center", width: "100%"}
 
-    const likeCountStyle = {position: "absolute", left: "4%", bottom: "4%", fontSize: "3.5vmin"}
+    const bottomBar = {display: "flex", width: "100%", height: "10%", position: "absolute", bottom: "4%"}
 
-    const durationStyle = {position: "absolute", bottom: "4%", fontSize: "3vmin", left: "0", right: "0", textAlign: "center"}
+    const likeCountStyle = {fontSize: "3.5vmin", flexGrow: 1}
 
-    const peopleCountStyle = {position: "absolute", bottom: "4%", fontSize: "3vmin", right: "0"}
+    const iconWithText = {display: "flex", width: "40%", flexGrow: 1, flexShrink: 1, justifyContent: "center"}
+
+    const icon = {margin: "0 2% 0 5%", height: "100%", flexShrink: 1}
+
+    const durationStyle = {fontSize: "3vmin"}
+
+    const peopleCountStyle = {fontSize: "3vmin"}
 
     return ( <div style={outerDivStyle}>
             <div style={innerDivStyle}>
                 <div style={nameStyle}>
                     {activity.Name}
                 </div>
+                <div style={{flexBasis: "100%", height: 0}} />
                 <div style={abstractStyle}>
                     {activity.Abstract}
                 </div>
-                <div style={likeCountStyle}>{activity.Likes}</div>
-                <div style={durationStyle}>
-                    {rangeToString(activity.Duration) + " min"}
-                </div>
-                <div style={peopleCountStyle}>
-                    {rangeToString(activity.PlayerCount) + " ppl"}
+                <div style={bottomBar}>
+                    <div style={likeCountStyle}>{activity.Likes}</div>
+                    <div style={iconWithText}>
+                        <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>
+                        <div style={durationStyle}>
+                            {rangeToString(activity.Duration)}
+                        </div>
+                    </div>
+                    <div style={iconWithText}>
+                        <img style={icon} src={"personclipartpng.png"} alt={"ppl"}/>
+                        <div style={peopleCountStyle}>
+                            {rangeToString(activity.PlayerCount)}
+                    </div>
+                    </div>
                 </div>
         </div>
     </div>)
