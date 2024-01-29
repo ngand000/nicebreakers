@@ -6,9 +6,16 @@ import QuestionPage from "./pages/questions/questionsPage";
 import UploadPage from "./pages/upload/uploadPage";
 
 function App() {
+
+    const linkStyle = {textDecoration: "none", height: 0}
+
+    const headerStyle = {fontSize: "5vh", color: "black", textAlign: "center"}
+
   return (
       <div>
-          <h1> Website wide header </h1>
+          <a href="/" style={linkStyle}>
+              <p style={headerStyle}> Nicebreakers Logo </p>
+          </a>
           <BrowserRouter>
             <Routes>
               { /* Put your page(s) here */}
