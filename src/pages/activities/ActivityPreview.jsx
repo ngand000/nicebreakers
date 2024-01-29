@@ -1,26 +1,26 @@
 import React from "react"
+import "./ActivityPreview.css"
+import {useNavigate} from "react-router-dom"
 
 // The preview for a single activity pulled from the database
 export default function ActivityPreview({activity}) {
+
+    const navigate = useNavigate()
 
     function rangeToString(r) {
         return (r[0] === r[1] ? r[0] : r[0] + "-" + r[1])
     }
 
-    const outerDivStyle = {padding: "4px 16px 4px 16px",
-        width: "20%",
-        height: "50%"}
 
     const innerDivStyle = {
         border: "1px",
         borderStyle: "solid",
         borderColor: "rgb(200 200 200)",
         borderRadius: "10px",
-        margin: "auto",
-        width: "100%",
-        height: "90%",
         position: "relative",
+        height: "100%"
     }
+
 
 
     const nameStyle = {fontSize: "4vmin", textDecoration: "underline", width: "100%"}
@@ -29,7 +29,7 @@ export default function ActivityPreview({activity}) {
 
     const bottomBar = {display: "flex", width: "100%", height: "10%", position: "absolute", bottom: "4%"}
 
-    const likeCountStyle = {fontSize: "3.5vmin", flexGrow: 1}
+    const likeCountStyle = {fontSize: "3.5vmin", flexGrow: 1, textAlign: "center"}
 
     const iconWithText = {display: "flex", width: "40%", flexGrow: 1, flexShrink: 1, justifyContent: "center"}
 
@@ -39,7 +39,7 @@ export default function ActivityPreview({activity}) {
 
     const peopleCountStyle = {fontSize: "3vmin"}
 
-    return ( <div style={outerDivStyle}>
+    return ( <div className={"outerDivStyle"} onClick={() => {navigate("post?id=" + activity.id)}}>
             <div style={innerDivStyle}>
                 <div style={nameStyle}>
                     {activity.Name}
@@ -63,6 +63,6 @@ export default function ActivityPreview({activity}) {
                     </div>
                     </div>
                 </div>
-        </div>
-    </div>)
+            </div>
+        </div>)
 }
