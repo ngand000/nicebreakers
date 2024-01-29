@@ -11,6 +11,7 @@ export default function ActivityPreview({activity}) {
         return (r[0] === r[1] ? r[0] : r[0] + "-" + r[1])
     }
 
+
     const innerDivStyle = {
         border: "1px",
         borderStyle: "solid",
@@ -38,30 +39,30 @@ export default function ActivityPreview({activity}) {
 
     const peopleCountStyle = {fontSize: "3vmin"}
 
-    return ( <div className={"outerDivStyle"}>
-        <div style={innerDivStyle} onClick={() => {navigate("/post?id=" + activity.id)}}>
-            <div style={nameStyle}>
-                {activity.Name}
-            </div>
-            <div style={{flexBasis: "100%", height: 0}} />
-            <div style={abstractStyle}>
-                {activity.Abstract}
-            </div>
-            <div style={bottomBar}>
-                <div style={likeCountStyle}>{activity.Likes}</div>
-                <div style={iconWithText}>
-                    <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>
-                    <div style={durationStyle}>
-                        {rangeToString(activity.Duration)}
+    return ( <div className={"outerDivStyle"} onClick={() => {navigate("post?id=" + activity.id)}}>
+            <div style={innerDivStyle}>
+                <div style={nameStyle}>
+                    {activity.Name}
+                </div>
+                <div style={{flexBasis: "100%", height: 0}} />
+                <div style={abstractStyle}>
+                    {activity.Abstract}
+                </div>
+                <div style={bottomBar}>
+                    <div style={likeCountStyle}>{activity.Likes}</div>
+                    <div style={iconWithText}>
+                        <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>
+                        <div style={durationStyle}>
+                            {rangeToString(activity.Duration)}
+                        </div>
+                    </div>
+                    <div style={iconWithText}>
+                        <img style={icon} src={"personclipartpng.png"} alt={"ppl"}/>
+                        <div style={peopleCountStyle}>
+                            {rangeToString(activity.PlayerCount)}
+                    </div>
                     </div>
                 </div>
-                <div style={iconWithText}>
-                    <img style={icon} src={"personclipartpng.png"} alt={"ppl"}/>
-                    <div style={peopleCountStyle}>
-                        {rangeToString(activity.PlayerCount)}
-                    </div>
-                </div>
             </div>
-        </div>
-    </div>)
+        </div>)
 }
