@@ -167,7 +167,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-nicebreakers-staging-222128-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/f1e1529d914aaafcebc6612b3e393b7ea91b38f0",
+          "S3DeploymentRootKey": "amplify-appsync-files/d1692cd23f164b895680da8b3044b366a8b3d4d9",
           "env": "staging"
         }
       }
@@ -226,6 +226,39 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
+          "env": "staging"
+        }
+      }
+    },
+    "storages3nicebreakersstoragec9bdab74": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "nicebreakers-storage-c9bdab74",
+          "selectedGuestPermissions": "",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket",
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "s3PrivatePolicy": "Private_policy_fe08ad48",
+          "s3ProtectedPolicy": "Protected_policy_fe08ad48",
+          "s3PublicPolicy": "Public_policy_fe08ad48",
+          "s3ReadPolicy": "read_policy_fe08ad48",
+          "s3UploadsPolicy": "Uploads_policy_fe08ad48",
+          "authPolicyName": "s3_amplify_fe08ad48",
+          "unauthPolicyName": "s3_amplify_fe08ad48",
+          "AuthenticatedAllowList": "ALLOW",
+          "GuestAllowList": "DISALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+          "s3PermissionsGuestPublic": "DISALLOW",
+          "s3PermissionsGuestUploads": "DISALLOW",
           "env": "staging"
         }
       }

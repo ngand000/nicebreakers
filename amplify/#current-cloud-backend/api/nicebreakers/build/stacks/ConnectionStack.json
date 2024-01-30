@@ -1,6 +1,6 @@
 {
   "Resources": {
-    "IcebreakerCommentsauth0FunctionIcebreakerCommentsauth0FunctionAppSyncFunction4290A161": {
+    "ActivityCommentsauth0FunctionActivityCommentsauth0FunctionAppSyncFunctionA8E76200": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -9,7 +9,7 @@
         "DataSourceName": {
           "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
         },
-        "Name": "IcebreakerCommentsauth0Function",
+        "Name": "ActivityCommentsauth0Function",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -23,14 +23,14 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Icebreaker.Comments.auth.1.req.vtl"
+              "/resolvers/Activity.Comments.auth.1.req.vtl"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
-    "IcebreakerCommentsDataResolverFnIcebreakerCommentsDataResolverFnAppSyncFunction368B1A38": {
+    "ActivityCommentsDataResolverFnActivityCommentsDataResolverFnAppSyncFunction5C06E843": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -39,7 +39,7 @@
         "DataSourceName": {
           "Ref": "referencetotransformerrootstackCommentNestedStackCommentNestedStackResource199283FBOutputstransformerrootstackCommentCommentDataSourceA0E54655Name"
         },
-        "Name": "IcebreakerCommentsDataResolverFn",
+        "Name": "ActivityCommentsDataResolverFn",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -53,7 +53,7 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Icebreaker.Comments.req.vtl"
+              "/resolvers/Activity.Comments.req.vtl"
             ]
           ]
         },
@@ -69,32 +69,32 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Icebreaker.Comments.res.vtl"
+              "/resolvers/Activity.Comments.res.vtl"
             ]
           ]
         }
       }
     },
-    "IcebreakerCommentsResolver": {
+    "ActivityCommentsResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
         "FieldName": "Comments",
-        "TypeName": "Icebreaker",
+        "TypeName": "Activity",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "IcebreakerCommentsauth0FunctionIcebreakerCommentsauth0FunctionAppSyncFunction4290A161",
+                "ActivityCommentsauth0FunctionActivityCommentsauth0FunctionAppSyncFunctionA8E76200",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "IcebreakerCommentsDataResolverFnIcebreakerCommentsDataResolverFnAppSyncFunction368B1A38",
+                "ActivityCommentsDataResolverFnActivityCommentsDataResolverFnAppSyncFunction5C06E843",
                 "FunctionId"
               ]
             }
@@ -104,7 +104,7 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Icebreaker\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"Comments\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Activity\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"Comments\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
