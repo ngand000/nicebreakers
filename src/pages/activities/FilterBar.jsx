@@ -4,11 +4,10 @@ import "./FilterBar.css"
 
 export default function FilterBar({openPopup, removeFilter}) {
 
-    const filters = []
-
-    for (let i=0; i<20; i++) {
-        filters.push({color: "rgb(0, 255, 0)", label: "Group Size"})
-    }
+    const filters = [{color: "rgb(255,94,94)", label: "Group Size"},
+        {color: "rgb(255,187,89)", label: "Ages"},
+        {color: "rgb(255,252,123)", label: "Duration(min)"},
+        {color: "rgb(182,255,123)", label: "Endorsed"}]
 
     return (<div className={"filterBarStyle"}>
         Filters

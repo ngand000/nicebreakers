@@ -58,13 +58,13 @@ export default function ActivityPreview({activity}) {
                     <div style={iconWithText}>
                         <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>
                         <div style={rangeStyle}>
-                            {rangeToString(activity.Duration)}
+                            {rangeToString(activity["Duration(min)"])}
                         </div>
                     </div>
                     <div style={iconWithText}>
                         <img style={icon} src={"personclipartpng.png"} alt={"ppl"}/>
                         <div style={rangeStyle}>
-                            {rangeToString(activity.PlayerCount)}
+                            {rangeToString(activity["Group Size"])}
                     </div>
                     </div>
                 </div>
