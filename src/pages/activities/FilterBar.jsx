@@ -2,7 +2,7 @@ import React from "react"
 import Filter from "./Filter";
 import "./FilterBar.css"
 
-export default function FilterBar() {
+export default function FilterBar({openPopup, removeFilter}) {
 
     const filters = []
 
@@ -13,7 +13,7 @@ export default function FilterBar() {
     return (<div className={"filterBarStyle"}>
         Filters
         {filters.map((filter, i) => {
-            return <Filter key={i} color={filter.color} label={filter.label} className={"filterStyle"}/>
+            return <Filter key={i} color={filter.color} label={filter.label} className={"filterStyle"} onClick={openPopup} removeFilter={removeFilter}/>
         })}
     </div>)
 }
