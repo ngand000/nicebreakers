@@ -1,6 +1,7 @@
 import ActivityList from "./ActivityList";
+import FilterBar from "./FilterBar";
 
-
+// page that displays the activities pulled from the database
 const ActivitiesPage = (props) => {
 
     const dummyActivities = [{Name: "icebreaker 1", Likes: 7, Abstract: "A cool icebreaker!", PlayerCount: [3, 4], Duration: [20, 20], Endorsed: true, id: 1},
@@ -12,8 +13,8 @@ const ActivitiesPage = (props) => {
 
     return (
         <div>
-            <div> Filters </div>
-            <ActivityList activities={dummyActivities}/>
+            <FilterBar />
+            <ActivityList activities={dummyActivities} />
         </div>
     )
 }

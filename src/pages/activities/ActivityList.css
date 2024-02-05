@@ -1,10 +1,11 @@
 .divStyle {
     display: flex;
     flex-wrap: wrap;
-    height: 80vh;
+    height: 69vh;
     width: 90vw;
     margin: auto;
     border: solid;
+    overflow: hidden;
     overflow-y: scroll;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
