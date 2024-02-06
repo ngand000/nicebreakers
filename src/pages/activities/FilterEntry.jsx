@@ -11,7 +11,8 @@ export default function FilterEntry({ onClose, filter, dtype}) {
         let result;
 
         switch (dtype) {
-            case "range":
+            case "rangeIn":
+            case "rangeOut":
                 if (!isNaN(Number(filterValue)) && !isNaN(parseInt(filterValue))) {
                     result = [parseInt(filterValue), parseInt(filterValue)];
                     break;

@@ -34,24 +34,31 @@ const ActivitiesPage = () => {
 
     function removeFilter(filter) {
         let newFilters = {...filters}
+        console.log(filter)
         delete newFilters[filter]
         setFilters(newFilters)
     }
 
     function setEndorsed(value) {
         let newFilters = {...filters,
-        endorsed: true}
+        Endorsed: true}
         setFilters(newFilters)
     }
 
-    const actualProperties = {"Group Size": "playerCount", "Duration(min)": "duration", "Ages": "ageRange", "endorsed": "endorsed"}
+    const actualProperties = {"Group Size": "playerCount", "Duration(min)": "duration", "Ages": "ageRange", "Endorsed": "endorsed"}
 
     function filterOK (a) {
+        console.log(filters)
         for (const [k, value] of Object.entries(filters)) {
             let key = actualProperties[k]
             switch (filterTypes[k]) {
-                case "range":
+                case "rangeIn":
                     if (value[0] > a[key][0] || value[1] < a[key][1]) {
+                        return false;
+                    }
+                    break
+                case "rangeOut":
+                    if (value[0] < a[key][0] || value[1] > a[key][1]) {
                         return false;
                     }
                     break
@@ -73,7 +80,7 @@ const ActivitiesPage = () => {
         return b.likes-a.likes
     }
 
-    const filterTypes = {"Group Size": "range", "Ages": "range", "Duration(min)": "range", "Endorsed": "bool"}
+    const filterTypes = {"Group Size": "rangeOut", "Ages": "rangeOut", "Duration(min)": "rangeIn", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
 

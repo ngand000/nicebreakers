@@ -25,7 +25,7 @@ export default function ActivityPreview({activity}) {
 
     const nameStyle = {fontSize: "4vmin", textDecoration: "underline", width: "100%"}
 
-    const abstractStyle = {fontSize: "3vmin", textAlign: "center", width: "100%"}
+    const abstractStyle = {fontSize: "2.5vmin", textAlign: "center", width: "100%", height: "60%", maxHeight: "60%", overflowY: "hidden"}
 
     const bottomBar = {display: "flex", width: "100%", height: "15%", position: "absolute", bottom: "4%"}
 
