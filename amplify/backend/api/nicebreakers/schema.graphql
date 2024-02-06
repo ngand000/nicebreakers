@@ -1,40 +1,14 @@
-type Report @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  author: String!
-  report: String!
-}
-
-type Question @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  question: String!
-  likes: String!
-  ageRange: [Int!]!
-  endorsed: Boolean
-  tags: [String]
-  author: String
-}
-
 type Comment @model @auth(rules: [{allow: public}]) {
   id: ID!
-  author: String!
-  comment: String!
-  icebreakerID: ID! @index(name: "byActivity")
+  name: String
+  comment: String
+  icebreakerID: ID! @index(name: "byIcebreaker")
 }
 
-type Activity @model @auth(rules: [{allow: public}]) {
+type Icebreaker @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
-  description: String!
-  Comments: [Comment] @hasMany(indexName: "byActivity", fields: ["id"])
-  author: String!
-  abstract: String
-  likes: Int!
-  pictures: [String]
-  captions: [String]
-  playerCount: [Int!]!
-  duration: [Int!]!
-  ageRange: [Int!]!
-  endorsed: Boolean
-  setup: Int!
-  tags: [String]
+  icebreaker: String
+  Comments: [Comment] @hasMany(indexName: "byIcebreaker", fields: ["id"])
 }
+ 

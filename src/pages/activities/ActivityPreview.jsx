@@ -44,27 +44,27 @@ export default function ActivityPreview({activity}) {
     return ( <div className={"outerDivStyle"} onClick={() => {navigate("post?id=" + activity.id)}}>
             <div style={innerDivStyle}>
                 <div style={nameStyle}>
-                    {activity.name}
+                    {activity.Name}
                 </div>
                 <div style={{flexBasis: "100%", height: 0}} />
                 <div style={abstractStyle}>
-                    {activity.abstract}
+                    {activity.Abstract}
                 </div>
                 <div style={bottomBar}>
                     {/*<div style={likeCountStyle}>
                         <img style={likeIcon} src={"likeplaceholder.png"} alt={"likes"}/>*/}
-                        <div style={likeNumStyle}>{activity.likes}</div>
+                        <div style={likeNumStyle}>{activity.Likes}</div>
                     {/*</div>*/}
                     <div style={iconWithText}>
                         <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>
                         <div style={rangeStyle}>
-                            {rangeToString(activity.duration)}
+                            {rangeToString(activity.Duration)}
                         </div>
                     </div>
                     <div style={iconWithText}>
                         <img style={icon} src={"personclipartpng.png"} alt={"ppl"}/>
                         <div style={rangeStyle}>
-                            {rangeToString(activity.playerCount)}
+                            {rangeToString(activity.PlayerCount)}
                     </div>
                     </div>
                 </div>
