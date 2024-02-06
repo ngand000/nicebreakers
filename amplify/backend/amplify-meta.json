@@ -36,12 +36,12 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2024-01-16T23:46:29.577Z",
+      "lastPushTimeStamp": "2024-02-06T09:58:20.268Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apinicebreakers"
       },
-      "lastPushDirHash": "z+U7LeuZjIPHKPotAUwl33943TA="
+      "lastPushDirHash": "FXCQYeB1AomZNhYSna/Unz3rd7w="
     }
   },
   "auth": {
@@ -74,18 +74,34 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito",
       "output": {
-        "UserPoolId": "us-west-2_0p0aZDuoI",
-        "AppClientIDWeb": "4b5bedgkocn64n58dtl1r8sp26",
-        "AppClientID": "dmq7muqkbau767349gr6hfe59",
-        "IdentityPoolId": "us-west-2:41aabc73-52a6-45dc-89b0-56bced146e6a",
-        "UserPoolArn": "arn:aws:cognito-idp:us-west-2:741451776109:userpool/us-west-2_0p0aZDuoI",
+        "UserPoolId": "us-west-2_pwzwlq8TM",
+        "AppClientIDWeb": "3r4dum550cvhtbsv5ii3pomc69",
+        "AppClientID": "4e6otd4ck4o3nmmqc2k3ar1kkl",
+        "IdentityPoolId": "us-west-2:51410c04-c961-4cd9-a32e-8feb356e8740",
+        "UserPoolArn": "arn:aws:cognito-idp:us-west-2:741451776109:userpool/us-west-2_pwzwlq8TM",
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "NiceBreakers"
       },
-      "lastPushTimeStamp": "2024-01-16T23:46:29.605Z",
+      "lastPushTimeStamp": "2024-02-06T09:58:20.276Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/auth/NiceBreakers-cloudformation-template.json",
         "logicalId": "authNiceBreakers"
+      }
+    }
+  },
+  "storage": {
+    "s3nicebreakersstoragec9bdab74": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3",
+      "output": {
+        "BucketName": "nicebreakers-storage-c9bdab74222128-staging",
+        "Region": "us-west-2"
+      },
+      "lastPushTimeStamp": "2024-02-06T09:58:22.270Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3nicebreakersstoragec9bdab74"
       }
     }
   }

@@ -4,6 +4,10 @@ import ActivitiesPage from "./pages/activities/ActivitiesPage";
 import PostPage from "./pages/post/postPage";
 import QuestionPage from "./pages/questions/questionsPage";
 import UploadPage from "./pages/upload/uploadPage";
+import { Amplify } from 'aws-amplify';
+import config from './aws-exports.js';
+
+Amplify.configure(config);
 
 function App() {
 
