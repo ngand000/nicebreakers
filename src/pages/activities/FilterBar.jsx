@@ -2,7 +2,7 @@ import React from "react"
 import Filter from "./Filter";
 import "./FilterBar.css"
 
-export default function FilterBar({openPopup, removeFilter}) {
+export default function FilterBar({openPopup, removeFilter, setEndorsed}) {
 
     const filters = [{color: "rgb(255,94,94)", label: "Group Size"},
         {color: "rgb(255,187,89)", label: "Ages"},
@@ -12,7 +12,7 @@ export default function FilterBar({openPopup, removeFilter}) {
     return (<div className={"filterBarStyle"}>
         Filters
         {filters.map((filter, i) => {
-            return <Filter key={i} color={filter.color} label={filter.label} className={"filterStyle"} onClick={openPopup} removeFilter={removeFilter}/>
+            return <Filter key={i} color={filter.color} label={filter.label} className={"filterStyle"} onClick={filter.label==="Endorsed"?setEndorsed:openPopup} removeFilter={removeFilter}/>
         })}
     </div>)
 }

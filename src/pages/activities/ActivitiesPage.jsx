@@ -14,7 +14,7 @@ const ActivitiesPage = () => {
         setFilterEditing(label)
         setIsPopupOpen(true);
         console.log(filters)
-    };
+    }
 
     function closePopup(value) {
         if (value) {
@@ -22,7 +22,7 @@ const ActivitiesPage = () => {
             [filterEditing]: value})
         }
         setIsPopupOpen(false);
-    };
+    }
 
     function removeFilter(filter) {
         let newFilters = {...filters}
@@ -30,6 +30,32 @@ const ActivitiesPage = () => {
         setFilters(newFilters)
     }
 
+    function setEndorsed(value) {
+        let newFilters = {...filters,
+        Endorsed: true}
+        setFilters(newFilters)
+    }
+
+    function filterOK (a) {
+        for (const [key, value] of Object.entries(filters)) {
+            switch (filterTypes[key]) {
+                case "range":
+                    if (value[0] > a[key][0] || value[1] < a[key][1]) {
+                        return false;
+                    }
+                    break
+                default:
+                    if (a[key] !== value) {
+                        return false;
+                    }
+            }
+        }
+        return true;
+    }
+
+    function compareLikes(a, b) {
+        return b.Likes-a.Likes
+    }
 
     const filterTypes = {"Group Size": "range", "Ages": "range", "Duration(min)": "range", "Endorsed": "bool"}
 
@@ -40,18 +66,26 @@ const ActivitiesPage = () => {
         activities.push({Name: "dummy", Likes: 7, Abstract: "This is an abstract! It's about 2 sentences!", "Group Size": [1, 4], "Duration(min)": [20, 30], Endorsed: true, id: 0})
     }
 
+    const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
+
+    const thisLinkStyle = {textDecoration: "underline", color: "rgb(190, 190, 190)", margin: "auto", fontSize: "10vmin"}
+
+    const otherLinkStyle = {textDecoration: "underline", color: "black", margin: "auto", fontSize: "10vmin"}
+
+    const logoStyle = {}
+
     return (
         <div>
-            {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-            <FilterBar openPopup={openPopup} removeFilter={removeFilter}/>
-            <ActivityList activities={activities.filter((a) => {
-                for (const [key, value] of Object.entries(filters)) {
-                    if (a[key] !== value) {
-                        return false;
-                    }
-                }
-                return true;
-            })} />
+            <div style={headerStyle}>
+                <img style={logoStyle} src={"logoplaceholder.png"} alt={"logo"}/>
+                <a href={"/"} style={thisLinkStyle}>Activites</a>
+                <a href={"/questions"} style={otherLinkStyle}>Questions</a>
+            </div>
+            <div>
+                {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
+                <FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
+                <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
+            </div>
         </div>
     )
 }
