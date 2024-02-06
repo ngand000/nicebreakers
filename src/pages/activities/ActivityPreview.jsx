@@ -33,13 +33,15 @@ export default function ActivityPreview({activity}) {
 
     /*const likeIcon = {height: "7vmin", position: "absolute", right: "5%"}*/
 
-    const likeNumStyle = {fontSize: "3.5vmin", flexGrow: 1, textAlign: "center", width: "10%"/*, bottom: "5%", position: "absolute"*/}
+    const likeNumStyle = {fontSize: "3.5vmin", flexGrow: 1, textAlign: "left", width: "10%"/*, bottom: "5%", position: "absolute"*/}
 
-    const iconWithText = {display: "flex", width: "40%", flexGrow: 1, flexShrink: 1, justifyContent: "center"}
+    const iconWithText = {display: "flex", width: "auto", flexGrow: 1, justifyContent: "center"}
 
-    const icon = {margin: "0 5% 0 0%", flexShrink: 1}
+    const icon = {margin: "auto 5% auto auto", flexShrink: 1, width: "3vmin", height: "auto"}
 
-    const rangeStyle = {fontSize: "3vmin", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", padding: "0.5vmin 0 0 0"}
+    const rangeStyle = {fontSize: "3vmin", whiteSpace: "nowrap", overflow: "hidden", padding: "0.5vmin 0 0 0", flexGrow: 0}
+
+    const endorseStyle = {position: "absolute", top: "2%", right: "2%", width: "3vmin"}
 
     return ( <div className={"outerDivStyle"} onClick={() => {navigate("post?id=" + activity.id)}}>
             <div style={innerDivStyle}>
@@ -50,11 +52,14 @@ export default function ActivityPreview({activity}) {
                 <div style={abstractStyle}>
                     {activity.abstract}
                 </div>
+                {activity.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
                 <div style={bottomBar}>
-                    {/*<div style={likeCountStyle}>
-                        <img style={likeIcon} src={"likeplaceholder.png"} alt={"likes"}/>*/}
-                        <div style={likeNumStyle}>{activity.likes}</div>
-                    {/*</div>*/}
+                    <div style={iconWithText}>
+                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"}/>
+                        <div style={likeNumStyle}>
+                            {activity.likes}
+                        </div>
+                    </div>
                     <div style={iconWithText}>
                         <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>
                         <div style={rangeStyle}>
