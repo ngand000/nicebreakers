@@ -44,11 +44,19 @@ const ActivitiesPage = () => {
         setFilters(newFilters)
     }
 
+    const actualProperties = {"Group Size": "playerCount", "Duration(min)": "duration", "Ages": "ageRange", "endorsed": "endorsed"}
+
     function filterOK (a) {
-        for (const [key, value] of Object.entries(filters)) {
-            switch (filterTypes[key]) {
+        for (const [k, value] of Object.entries(filters)) {
+            let key = actualProperties[k]
+            switch (filterTypes[k]) {
                 case "range":
                     if (value[0] > a[key][0] || value[1] < a[key][1]) {
+                        return false;
+                    }
+                    break
+                case "bool":
+                    if (!a[key]) {
                         return false;
                     }
                     break
