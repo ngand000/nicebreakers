@@ -2,6 +2,14 @@ import ActivityList from "./ActivityList";
 import FilterBar from "./FilterBar";
 import FilterEntry from "./FilterEntry";
 import React, {useState} from 'react'
+import { DataStore } from 'aws-amplify/datastore';
+import { Activity } from '../../models';
+import { Amplify } from 'aws-amplify';
+import config from '../../aws-exports.js';
+
+Amplify.configure(config);
+
+const activities = await DataStore.query(Activity);
 
 // page that displays the activities pulled from the database
 const ActivitiesPage = () => {
@@ -32,7 +40,7 @@ const ActivitiesPage = () => {
 
     function setEndorsed(value) {
         let newFilters = {...filters,
-        Endorsed: true}
+        endorsed: true}
         setFilters(newFilters)
     }
 
@@ -54,17 +62,10 @@ const ActivitiesPage = () => {
     }
 
     function compareLikes(a, b) {
-        return b.Likes-a.Likes
+        return b.likes-a.likes
     }
 
     const filterTypes = {"Group Size": "range", "Ages": "range", "Duration(min)": "range", "Endorsed": "bool"}
-
-    const activities = [{Name: "icebreaker 1", Likes: 7, Abstract: "A cool icebreaker!", "Group Size": [3, 4], "Duration(min)": [20, 20], Endorsed: true, id: 1},
-        {Name: "icebreaker 2", Likes: 0, Abstract: "A second, less cool icebreaker!", "Group Size": [1, 1], "Duration(min)": [50, 80], Endorsed: false, id: 2}]
-
-    for (let i=0;i<20;i++) {
-        activities.push({Name: "dummy", Likes: 7, Abstract: "This is an abstract! It's about 2 sentences!", "Group Size": [1, 4], "Duration(min)": [20, 30], Endorsed: true, id: 0})
-    }
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
 
