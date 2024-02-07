@@ -1,9 +1,9 @@
 import React from "react"
-import "./ActivityPreview.css"
+import "./QuestionPreview.css"
 import {useNavigate} from "react-router-dom"
 
 // The preview for a single activity pulled from the database
-export default function ActivityPreview({activity}) {
+export default function QuestionPreview({question}) {
 
     const navigate = useNavigate()
 
@@ -23,7 +23,7 @@ export default function ActivityPreview({activity}) {
 
 
 
-    const nameStyle = {fontSize: "4vmin", textDecoration: "underline", width: "100%"}
+    const questionStyle = {fontSize: "4vmin", width: "100%"}
 
     const abstractStyle = {fontSize: "2.5vmin", textAlign: "center", width: "100%", height: "60%", maxHeight: "60%", overflowY: "hidden"}
 
@@ -43,34 +43,34 @@ export default function ActivityPreview({activity}) {
 
     const endorseStyle = {position: "absolute", top: "2%", right: "2%", width: "3vmin"}
 
-    return ( <div className={"outerDivStyle"} onClick={() => {navigate("post?id=" + activity.id)}}>
+    return ( <div className={"outerDivStyle2"}>
             <div style={innerDivStyle}>
-                <div style={nameStyle}>
-                    {activity.name}
+                <div style={questionStyle}>
+                    {question.question}
                 </div>
                 <div style={{flexBasis: "100%", height: 0}} />
-                <div style={abstractStyle}>
-                    {activity.abstract}
-                </div>
-                {activity.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
+                {/*<div style={abstractStyle}>*/}
+                {/*    {activity.abstract}*/}
+                {/*</div>*/}
+                {question.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
                 <div style={bottomBar}>
                     <div style={iconWithText}>
                         <img style={icon} src={"likeplaceholder.png"} alt={"duration"}/>
                         <div style={likeNumStyle}>
-                            {activity.likes}
+                            {question.likes}
                         </div>
-                    </div>
-                    <div style={iconWithText}>
-                        <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>
-                        <div style={rangeStyle}>
-                            {rangeToString(activity.duration)}
-                        </div>
-                    </div>
-                    <div style={iconWithText}>
-                        <img style={icon} src={"personclipartpng.png"} alt={"ppl"}/>
-                        <div style={rangeStyle}>
-                            {rangeToString(activity.playerCount)}
-                    </div>
+                {/*    </div>*/}
+                {/*    <div style={iconWithText}>*/}
+                {/*        <img style={icon} src={"clockplaceholder.png"} alt={"duration"}/>*/}
+                {/*        <div style={rangeStyle}>*/}
+                {/*            {rangeToString(activity.duration)}*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*    <div style={iconWithText}>*/}
+                {/*        <img style={icon} src={"personclipartpng.png"} alt={"ppl"}/>*/}
+                {/*        <div style={rangeStyle}>*/}
+                {/*            {rangeToString(activity.playerCount)}*/}
+                {/*    </div>*/}
                     </div>
                 </div>
             </div>

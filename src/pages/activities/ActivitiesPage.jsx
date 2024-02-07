@@ -94,7 +94,7 @@ const ActivitiesPage = () => {
         <div>
             <div style={headerStyle}>
                 <img style={logoStyle} src={"logoplaceholder.png"} alt={"logo"}/>
-                <a href={"/"} style={thisLinkStyle}>Activites</a>
+                <a href={"/"} style={thisLinkStyle}>Activities</a>
                 <a href={"/questions"} style={otherLinkStyle}>Questions</a>
             </div>
             <div>

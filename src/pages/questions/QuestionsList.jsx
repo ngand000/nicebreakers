@@ -1,13 +1,13 @@
 import React from "react"
-import ActivityPreview from "./ActivityPreview";
-import "./ActivityList.css"
+import QuestionPreview from "./QuestionPreview";
+import "./QuestionsList.css"
 
 // The section that lists the activities pulled from the database
-export default function ActivityList({activities}) {
+export default function QuestionsList({questions}) {
 
     return ( <div className={"divStyle"}>
-        {activities.map((activity, i) => {
-            return <ActivityPreview key={i} activity={activity}/>
+        {questions.map((question, i) => {
+            return <QuestionPreview key={i} question={question}/>
         })}
         </div>
     )
