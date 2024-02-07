@@ -11,19 +11,25 @@ Amplify.configure(config);
 
 const questions = await DataStore.query(Question);
 
-// page that displays the activities pulled from the database
+// page that displays the questions pulled from the database
 const QuestionsPage = () => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [filterEditing, setFilterEditing] = useState("");
     const [filters, setFilters] = useState({});
 
+    //pre: none
+    //args: label is the filter we are setting a value for
+    //post: opens popup so user can enter a value for that filter
     function openPopup(label) {
         setFilterEditing(label)
         setIsPopupOpen(true);
         console.log(filters)
     }
 
+    //pre: filterEditing has a value
+    //args: value is the value we are assigning to the current filter
+    //post: filters now include filterEditing with value value
     function closePopup(value) {
         if (value) {
             setFilters({...filters,
@@ -32,6 +38,9 @@ const QuestionsPage = () => {
         setIsPopupOpen(false);
     }
 
+    //pre: none
+    //args: filter is the filter we are removing the value from
+    //post: removes that filter from filters, if it is there
     function removeFilter(filter) {
         let newFilters = {...filters}
         console.log(filter)
@@ -39,6 +48,9 @@ const QuestionsPage = () => {
         setFilters(newFilters)
     }
 
+    //pre: none
+    //args: _ is a dummy argument so this can be passed in place of openPopup
+    //post: in filters, Endorsed is set to true
     function setEndorsed(value) {
         let newFilters = {...filters,
         Endorsed: true}
@@ -47,6 +59,9 @@ const QuestionsPage = () => {
 
     const actualProperties = {"Ages": "ageRange", "Endorsed": "endorsed"}
 
+    // pre, post: none
+    // args: a, the question for which it is being checked if it fits the filters
+    // returns: boolean representing whether a fits all current filters
     function filterOK (a) {
         console.log(filters)
         for (const [k, value] of Object.entries(filters)) {
@@ -76,11 +91,14 @@ const QuestionsPage = () => {
         return true;
     }
 
+    // pre, post: none
+    // args: a, b the questions to compare
+    // returns: difference between b and a's likes, so that they can be compared
     function compareLikes(a, b) {
         return b.likes-a.likes
     }
 
-    const filterTypes = {"Group Size": "rangeOut", "Ages": "rangeOut", "Duration(min)": "rangeIn", "Endorsed": "bool"}
+    const filterTypes = {"Ages": "rangeOut", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
 

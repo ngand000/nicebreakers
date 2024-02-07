@@ -2,7 +2,7 @@ import React from "react"
 import QuestionPreview from "./QuestionPreview";
 import "./QuestionsList.css"
 
-// The section that lists the activities pulled from the database
+// The section that lists the questions pulled from the database
 export default function QuestionsList({questions}) {
 
     return ( <div className={"divStyle"}>

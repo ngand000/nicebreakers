@@ -17,23 +17,20 @@ export default function ActivityPreview({activity}) {
         borderStyle: "solid",
         borderColor: "rgb(200 200 200)",
         borderRadius: "10px",
+        display: "flex",
+        flexDirection: "column",
         position: "relative",
+        justifyContent: "flex-end",
         height: "100%"
     }
 
+    const nameStyle = {display: "flex", fontSize: "4vmin", textDecoration: "underline", width: "100%", border: "solid", margin: "0 0 0 0"}
 
+    const abstractStyle = {display: "flex", fontSize: "2.5vmin", textAlign: "left", width: "100%", height: "60%", maxHeight: "60%", overflowY: "auto", overflowX: "hidden", marginTop: "0", border: "solid"}
 
-    const nameStyle = {fontSize: "4vmin", textDecoration: "underline", width: "100%"}
+    const bottomBar = {display: "flex", width: "100%", height: "15%", margin: "auto 0 5% 0"}
 
-    const abstractStyle = {fontSize: "2.5vmin", textAlign: "center", width: "100%", height: "60%", maxHeight: "60%", overflowY: "hidden"}
-
-    const bottomBar = {display: "flex", width: "100%", height: "15%", position: "absolute", bottom: "4%"}
-
-    /*const likeCountStyle = {flexGrow: 1, textAlign: "center", width: "20%", padding: "0.25vmin 0 0 0", position: "relative", border: "solid"}*/
-
-    /*const likeIcon = {height: "7vmin", position: "absolute", right: "5%"}*/
-
-    const likeNumStyle = {fontSize: "3.5vmin", flexGrow: 1, textAlign: "left", width: "10%"/*, bottom: "5%", position: "absolute"*/}
+    const likeNumStyle = {fontSize: "3.5vmin", flexGrow: 1, textAlign: "left", width: "10%"}
 
     const iconWithText = {display: "flex", width: "auto", flexGrow: 1, justifyContent: "center"}
 
@@ -48,16 +45,15 @@ export default function ActivityPreview({activity}) {
                 <div style={nameStyle}>
                     {activity.name}
                 </div>
-                <div style={{flexBasis: "100%", height: 0}} />
-                <div style={abstractStyle}>
+                <p style={abstractStyle}>
                     {activity.abstract}
-                </div>
+                </p>
                 {activity.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
                 <div style={bottomBar}>
                     <div style={iconWithText}>
                         <img style={icon} src={"likeplaceholder.png"} alt={"duration"}/>
                         <div style={likeNumStyle}>
-                            {activity.likes}
+                            {activity.likes > 10000 ? activity.likes.toExponential() : activity.likes}
                         </div>
                     </div>
                     <div style={iconWithText}>

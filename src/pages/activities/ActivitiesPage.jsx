@@ -18,12 +18,17 @@ const ActivitiesPage = () => {
     const [filterEditing, setFilterEditing] = useState("");
     const [filters, setFilters] = useState({});
 
+    //pre: none
+    //args: label is the filter we are setting a value for
+    //post: opens popup so user can enter a value for that filter
     function openPopup(label) {
         setFilterEditing(label)
-        setIsPopupOpen(true);
-        console.log(filters)
+        setIsPopupOpen(true)
     }
 
+    //pre: filterEditing has a value
+    //args: value is the value we are assigning to the current filter
+    //post: filters now include filterEditing with value value
     function closePopup(value) {
         if (value) {
             setFilters({...filters,
@@ -32,6 +37,9 @@ const ActivitiesPage = () => {
         setIsPopupOpen(false);
     }
 
+    //pre: none
+    //args: filter is the filter we are removing the value from
+    //post: removes that filter from filters, if it is there
     function removeFilter(filter) {
         let newFilters = {...filters}
         console.log(filter)
@@ -39,7 +47,10 @@ const ActivitiesPage = () => {
         setFilters(newFilters)
     }
 
-    function setEndorsed(value) {
+    //pre: none
+    //args: _ is a dummy argument so this can be passed in place of openPopup
+    //post: in filters, Endorsed is set to true
+    function setEndorsed(_) {
         let newFilters = {...filters,
         Endorsed: true}
         setFilters(newFilters)
@@ -47,8 +58,10 @@ const ActivitiesPage = () => {
 
     const actualProperties = {"Group Size": "playerCount", "Duration(min)": "duration", "Ages": "ageRange", "Endorsed": "endorsed"}
 
+    // pre, post: none
+    // args: a, the activity for which it is being checked if it fits the filters
+    // returns: boolean representing whether a fits all current filters
     function filterOK (a) {
-        console.log(filters)
         for (const [k, value] of Object.entries(filters)) {
             let key = actualProperties[k]
             switch (filterTypes[k]) {
@@ -76,6 +89,9 @@ const ActivitiesPage = () => {
         return true;
     }
 
+    // pre, post: none
+    // args: a, b the activities to compare
+    // returns: difference between b and a's likes, so that they can be compared
     function compareLikes(a, b) {
         return b.likes-a.likes
     }
@@ -99,7 +115,7 @@ const ActivitiesPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
+                <FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
                 <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
             </div>
         </div>
