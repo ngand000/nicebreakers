@@ -1,18 +1,18 @@
-import ActivityList from "./ActivityList";
-import FilterBar from "./FilterBar";
-import FilterEntry from "./FilterEntry";
+import QuestionsList from "./QuestionsList";
+import FilterBar from "../activities/FilterBar";
+import FilterEntry from "../activities/FilterEntry";
 import React, {useState} from 'react'
 import { DataStore } from 'aws-amplify/datastore';
-import { Activity } from '../../models';
+import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
 
 Amplify.configure(config);
 
-const activities = await DataStore.query(Activity);
+const questions = await DataStore.query(Question);
 
-// page that displays the activities pulled from the database
-const ActivitiesPage = () => {
+// page that displays the questions pulled from the database
+const QuestionsPage = () => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [filterEditing, setFilterEditing] = useState("");
@@ -23,7 +23,8 @@ const ActivitiesPage = () => {
     //post: opens popup so user can enter a value for that filter
     function openPopup(label) {
         setFilterEditing(label)
-        setIsPopupOpen(true)
+        setIsPopupOpen(true);
+        console.log(filters)
     }
 
     //pre: filterEditing has a value
@@ -50,18 +51,19 @@ const ActivitiesPage = () => {
     //pre: none
     //args: _ is a dummy argument so this can be passed in place of openPopup
     //post: in filters, Endorsed is set to true
-    function setEndorsed(_) {
+    function setEndorsed(value) {
         let newFilters = {...filters,
         Endorsed: true}
         setFilters(newFilters)
     }
 
-    const actualProperties = {"Group Size": "playerCount", "Duration(min)": "duration", "Ages": "ageRange", "Endorsed": "endorsed"}
+    const actualProperties = {"Ages": "ageRange", "Endorsed": "endorsed"}
 
     // pre, post: none
-    // args: a, the activity for which it is being checked if it fits the filters
+    // args: a, the question for which it is being checked if it fits the filters
     // returns: boolean representing whether a fits all current filters
     function filterOK (a) {
+        console.log(filters)
         for (const [k, value] of Object.entries(filters)) {
             let key = actualProperties[k]
             switch (filterTypes[k]) {
@@ -90,13 +92,13 @@ const ActivitiesPage = () => {
     }
 
     // pre, post: none
-    // args: a, b the activities to compare
+    // args: a, b the questions to compare
     // returns: difference between b and a's likes, so that they can be compared
     function compareLikes(a, b) {
         return b.likes-a.likes
     }
 
-    const filterTypes = {"Group Size": "rangeOut", "Ages": "rangeOut", "Duration(min)": "rangeIn", "Endorsed": "bool"}
+    const filterTypes = {"Ages": "rangeOut", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
 
@@ -110,16 +112,16 @@ const ActivitiesPage = () => {
         <div>
             <div style={headerStyle}>
                 <img style={logoStyle} src={"logoplaceholder.png"} alt={"logo"}/>
-                <a href={"/"} style={thisLinkStyle}>Activities</a>
-                <a href={"/questions"} style={otherLinkStyle}>Questions</a>
+                <a href={"/"} style={otherLinkStyle}>Activities</a>
+                <a href={"/questions"} style={thisLinkStyle}>Questions</a>
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
-                <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
+                <FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
+                <QuestionsList questions={questions.filter(filterOK).sort(compareLikes)} />
             </div>
         </div>
     )
 }
 
-export default ActivitiesPage;
+export default QuestionsPage;
