@@ -17,9 +17,9 @@ const UploadPage = (props) => {
                 <label htmlFor={"playerCount"}>Player Count:</label>
                 <input type="number" min="1" max="100" id={"playerCount"}/>
                 <br/>
-                {/*needs to be duration*/}
+
                 <label htmlFor={"duration"}>Duration:</label>
-                <input type="time" id={"duration"}/>
+                <input type="number" min="1" max="60" id={"playerCount"}/>
                 <br/>
                 <label htmlFor={"ageRange"}>Age Range:</label>
                 <input type="number" min="1" max="100" id={"minAge"}/>
