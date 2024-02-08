@@ -1,19 +1,62 @@
+type Report @aws_iam @aws_api_key {
+  id: ID!
+  author: String!
+  report: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Question @aws_iam @aws_api_key {
+  id: ID!
+  question: String!
+  likes: String!
+  ageRange: [Int!]!
+  endorsed: Boolean
+  tags: [String]
+  author: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
 type Comment @aws_iam @aws_api_key {
   id: ID!
-  name: String
-  comment: String
+  author: String!
+  comment: String!
   icebreakerID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
 }
 
-type Icebreaker @aws_iam @aws_api_key {
+type Activity @aws_iam @aws_api_key {
   id: ID!
   name: String!
-  icebreaker: String
+  description: String!
   Comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
+  author: String!
+  abstract: String
+  likes: Int!
+  pictures: [String]
+  captions: [String]
+  playerCount: [Int!]!
+  duration: [Int!]!
+  ageRange: [Int!]!
+  endorsed: Boolean
+  setup: Int!
+  tags: [String]
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
 }
 
 input ModelStringInput {
@@ -166,125 +209,340 @@ enum ModelSortDirection {
   DESC
 }
 
+type ModelReportConnection @aws_api_key @aws_iam {
+  items: [Report]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelReportFilterInput {
+  id: ModelIDInput
+  author: ModelStringInput
+  report: ModelStringInput
+  and: [ModelReportFilterInput]
+  or: [ModelReportFilterInput]
+  not: ModelReportFilterInput
+  _deleted: ModelBooleanInput
+}
+
+type Query {
+  getReport(id: ID!): Report @aws_api_key @aws_iam
+  listReports(filter: ModelReportFilterInput, limit: Int, nextToken: String): ModelReportConnection @aws_api_key @aws_iam
+  syncReports(filter: ModelReportFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReportConnection @aws_api_key @aws_iam
+  getQuestion(id: ID!): Question @aws_api_key @aws_iam
+  listQuestions(filter: ModelQuestionFilterInput, limit: Int, nextToken: String): ModelQuestionConnection @aws_api_key @aws_iam
+  syncQuestions(filter: ModelQuestionFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelQuestionConnection @aws_api_key @aws_iam
+  getComment(id: ID!): Comment @aws_api_key @aws_iam
+  listComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection @aws_api_key @aws_iam
+  syncComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCommentConnection @aws_api_key @aws_iam
+  commentsByIcebreakerID(icebreakerID: ID!, sortDirection: ModelSortDirection, filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection @aws_api_key @aws_iam
+  getActivity(id: ID!): Activity @aws_api_key @aws_iam
+  listActivities(filter: ModelActivityFilterInput, limit: Int, nextToken: String): ModelActivityConnection @aws_api_key @aws_iam
+  syncActivities(filter: ModelActivityFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelActivityConnection @aws_api_key @aws_iam
+}
+
+input ModelReportConditionInput {
+  author: ModelStringInput
+  report: ModelStringInput
+  and: [ModelReportConditionInput]
+  or: [ModelReportConditionInput]
+  not: ModelReportConditionInput
+  _deleted: ModelBooleanInput
+}
+
+input CreateReportInput {
+  id: ID
+  author: String!
+  report: String!
+  _version: Int
+}
+
+input UpdateReportInput {
+  id: ID!
+  author: String
+  report: String
+  _version: Int
+}
+
+input DeleteReportInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createReport(input: CreateReportInput!, condition: ModelReportConditionInput): Report @aws_api_key @aws_iam
+  updateReport(input: UpdateReportInput!, condition: ModelReportConditionInput): Report @aws_api_key @aws_iam
+  deleteReport(input: DeleteReportInput!, condition: ModelReportConditionInput): Report @aws_api_key @aws_iam
+  createQuestion(input: CreateQuestionInput!, condition: ModelQuestionConditionInput): Question @aws_api_key @aws_iam
+  updateQuestion(input: UpdateQuestionInput!, condition: ModelQuestionConditionInput): Question @aws_api_key @aws_iam
+  deleteQuestion(input: DeleteQuestionInput!, condition: ModelQuestionConditionInput): Question @aws_api_key @aws_iam
+  createComment(input: CreateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
+  updateComment(input: UpdateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
+  deleteComment(input: DeleteCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
+  createActivity(input: CreateActivityInput!, condition: ModelActivityConditionInput): Activity @aws_api_key @aws_iam
+  updateActivity(input: UpdateActivityInput!, condition: ModelActivityConditionInput): Activity @aws_api_key @aws_iam
+  deleteActivity(input: DeleteActivityInput!, condition: ModelActivityConditionInput): Activity @aws_api_key @aws_iam
+}
+
+input ModelSubscriptionReportFilterInput {
+  id: ModelSubscriptionIDInput
+  author: ModelSubscriptionStringInput
+  report: ModelSubscriptionStringInput
+  and: [ModelSubscriptionReportFilterInput]
+  or: [ModelSubscriptionReportFilterInput]
+  _deleted: ModelBooleanInput
+}
+
+type Subscription {
+  onCreateReport(filter: ModelSubscriptionReportFilterInput): Report @aws_subscribe(mutations: ["createReport"]) @aws_api_key @aws_iam
+  onUpdateReport(filter: ModelSubscriptionReportFilterInput): Report @aws_subscribe(mutations: ["updateReport"]) @aws_api_key @aws_iam
+  onDeleteReport(filter: ModelSubscriptionReportFilterInput): Report @aws_subscribe(mutations: ["deleteReport"]) @aws_api_key @aws_iam
+  onCreateQuestion(filter: ModelSubscriptionQuestionFilterInput): Question @aws_subscribe(mutations: ["createQuestion"]) @aws_api_key @aws_iam
+  onUpdateQuestion(filter: ModelSubscriptionQuestionFilterInput): Question @aws_subscribe(mutations: ["updateQuestion"]) @aws_api_key @aws_iam
+  onDeleteQuestion(filter: ModelSubscriptionQuestionFilterInput): Question @aws_subscribe(mutations: ["deleteQuestion"]) @aws_api_key @aws_iam
+  onCreateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["createComment"]) @aws_api_key @aws_iam
+  onUpdateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["updateComment"]) @aws_api_key @aws_iam
+  onDeleteComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["deleteComment"]) @aws_api_key @aws_iam
+  onCreateActivity(filter: ModelSubscriptionActivityFilterInput): Activity @aws_subscribe(mutations: ["createActivity"]) @aws_api_key @aws_iam
+  onUpdateActivity(filter: ModelSubscriptionActivityFilterInput): Activity @aws_subscribe(mutations: ["updateActivity"]) @aws_api_key @aws_iam
+  onDeleteActivity(filter: ModelSubscriptionActivityFilterInput): Activity @aws_subscribe(mutations: ["deleteActivity"]) @aws_api_key @aws_iam
+}
+
+type ModelQuestionConnection @aws_api_key @aws_iam {
+  items: [Question]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelQuestionFilterInput {
+  id: ModelIDInput
+  question: ModelStringInput
+  likes: ModelStringInput
+  ageRange: ModelIntInput
+  endorsed: ModelBooleanInput
+  tags: ModelStringInput
+  author: ModelStringInput
+  and: [ModelQuestionFilterInput]
+  or: [ModelQuestionFilterInput]
+  not: ModelQuestionFilterInput
+  _deleted: ModelBooleanInput
+}
+
+input ModelQuestionConditionInput {
+  question: ModelStringInput
+  likes: ModelStringInput
+  ageRange: ModelIntInput
+  endorsed: ModelBooleanInput
+  tags: ModelStringInput
+  author: ModelStringInput
+  and: [ModelQuestionConditionInput]
+  or: [ModelQuestionConditionInput]
+  not: ModelQuestionConditionInput
+  _deleted: ModelBooleanInput
+}
+
+input CreateQuestionInput {
+  id: ID
+  question: String!
+  likes: String!
+  ageRange: [Int!]!
+  endorsed: Boolean
+  tags: [String]
+  author: String
+  _version: Int
+}
+
+input UpdateQuestionInput {
+  id: ID!
+  question: String
+  likes: String
+  ageRange: [Int!]
+  endorsed: Boolean
+  tags: [String]
+  author: String
+  _version: Int
+}
+
+input DeleteQuestionInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionQuestionFilterInput {
+  id: ModelSubscriptionIDInput
+  question: ModelSubscriptionStringInput
+  likes: ModelSubscriptionStringInput
+  ageRange: ModelSubscriptionIntInput
+  endorsed: ModelSubscriptionBooleanInput
+  tags: ModelSubscriptionStringInput
+  author: ModelSubscriptionStringInput
+  and: [ModelSubscriptionQuestionFilterInput]
+  or: [ModelSubscriptionQuestionFilterInput]
+  _deleted: ModelBooleanInput
+}
+
 type ModelCommentConnection @aws_api_key @aws_iam {
   items: [Comment]!
   nextToken: String
+  startedAt: AWSTimestamp
 }
 
 input ModelCommentFilterInput {
   id: ModelIDInput
-  name: ModelStringInput
+  author: ModelStringInput
   comment: ModelStringInput
   icebreakerID: ModelIDInput
   and: [ModelCommentFilterInput]
   or: [ModelCommentFilterInput]
   not: ModelCommentFilterInput
-}
-
-type Query {
-  getComment(id: ID!): Comment @aws_api_key @aws_iam
-  listComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection @aws_api_key @aws_iam
-  commentsByIcebreakerID(icebreakerID: ID!, sortDirection: ModelSortDirection, filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection @aws_api_key @aws_iam
-  getIcebreaker(id: ID!): Icebreaker @aws_api_key @aws_iam
-  listIcebreakers(filter: ModelIcebreakerFilterInput, limit: Int, nextToken: String): ModelIcebreakerConnection @aws_api_key @aws_iam
+  _deleted: ModelBooleanInput
 }
 
 input ModelCommentConditionInput {
-  name: ModelStringInput
+  author: ModelStringInput
   comment: ModelStringInput
   icebreakerID: ModelIDInput
   and: [ModelCommentConditionInput]
   or: [ModelCommentConditionInput]
   not: ModelCommentConditionInput
+  _deleted: ModelBooleanInput
 }
 
 input CreateCommentInput {
   id: ID
-  name: String
-  comment: String
+  author: String!
+  comment: String!
   icebreakerID: ID!
+  _version: Int
 }
 
 input UpdateCommentInput {
   id: ID!
-  name: String
+  author: String
   comment: String
   icebreakerID: ID
+  _version: Int
 }
 
 input DeleteCommentInput {
   id: ID!
-}
-
-type Mutation {
-  createComment(input: CreateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
-  updateComment(input: UpdateCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
-  deleteComment(input: DeleteCommentInput!, condition: ModelCommentConditionInput): Comment @aws_api_key @aws_iam
-  createIcebreaker(input: CreateIcebreakerInput!, condition: ModelIcebreakerConditionInput): Icebreaker @aws_api_key @aws_iam
-  updateIcebreaker(input: UpdateIcebreakerInput!, condition: ModelIcebreakerConditionInput): Icebreaker @aws_api_key @aws_iam
-  deleteIcebreaker(input: DeleteIcebreakerInput!, condition: ModelIcebreakerConditionInput): Icebreaker @aws_api_key @aws_iam
+  _version: Int
 }
 
 input ModelSubscriptionCommentFilterInput {
   id: ModelSubscriptionIDInput
-  name: ModelSubscriptionStringInput
+  author: ModelSubscriptionStringInput
   comment: ModelSubscriptionStringInput
   icebreakerID: ModelSubscriptionIDInput
   and: [ModelSubscriptionCommentFilterInput]
   or: [ModelSubscriptionCommentFilterInput]
+  _deleted: ModelBooleanInput
 }
 
-type Subscription {
-  onCreateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["createComment"]) @aws_api_key @aws_iam
-  onUpdateComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["updateComment"]) @aws_api_key @aws_iam
-  onDeleteComment(filter: ModelSubscriptionCommentFilterInput): Comment @aws_subscribe(mutations: ["deleteComment"]) @aws_api_key @aws_iam
-  onCreateIcebreaker(filter: ModelSubscriptionIcebreakerFilterInput): Icebreaker @aws_subscribe(mutations: ["createIcebreaker"]) @aws_api_key @aws_iam
-  onUpdateIcebreaker(filter: ModelSubscriptionIcebreakerFilterInput): Icebreaker @aws_subscribe(mutations: ["updateIcebreaker"]) @aws_api_key @aws_iam
-  onDeleteIcebreaker(filter: ModelSubscriptionIcebreakerFilterInput): Icebreaker @aws_subscribe(mutations: ["deleteIcebreaker"]) @aws_api_key @aws_iam
-}
-
-type ModelIcebreakerConnection @aws_api_key @aws_iam {
-  items: [Icebreaker]!
+type ModelActivityConnection @aws_api_key @aws_iam {
+  items: [Activity]!
   nextToken: String
+  startedAt: AWSTimestamp
 }
 
-input ModelIcebreakerFilterInput {
+input ModelActivityFilterInput {
   id: ModelIDInput
   name: ModelStringInput
-  icebreaker: ModelStringInput
-  and: [ModelIcebreakerFilterInput]
-  or: [ModelIcebreakerFilterInput]
-  not: ModelIcebreakerFilterInput
+  description: ModelStringInput
+  author: ModelStringInput
+  abstract: ModelStringInput
+  likes: ModelIntInput
+  pictures: ModelStringInput
+  captions: ModelStringInput
+  playerCount: ModelIntInput
+  duration: ModelIntInput
+  ageRange: ModelIntInput
+  endorsed: ModelBooleanInput
+  setup: ModelIntInput
+  tags: ModelStringInput
+  and: [ModelActivityFilterInput]
+  or: [ModelActivityFilterInput]
+  not: ModelActivityFilterInput
+  _deleted: ModelBooleanInput
 }
 
-input ModelIcebreakerConditionInput {
+input ModelActivityConditionInput {
   name: ModelStringInput
-  icebreaker: ModelStringInput
-  and: [ModelIcebreakerConditionInput]
-  or: [ModelIcebreakerConditionInput]
-  not: ModelIcebreakerConditionInput
+  description: ModelStringInput
+  author: ModelStringInput
+  abstract: ModelStringInput
+  likes: ModelIntInput
+  pictures: ModelStringInput
+  captions: ModelStringInput
+  playerCount: ModelIntInput
+  duration: ModelIntInput
+  ageRange: ModelIntInput
+  endorsed: ModelBooleanInput
+  setup: ModelIntInput
+  tags: ModelStringInput
+  and: [ModelActivityConditionInput]
+  or: [ModelActivityConditionInput]
+  not: ModelActivityConditionInput
+  _deleted: ModelBooleanInput
 }
 
-input CreateIcebreakerInput {
+input CreateActivityInput {
   id: ID
   name: String!
-  icebreaker: String
+  description: String!
+  author: String!
+  abstract: String
+  likes: Int!
+  pictures: [String]
+  captions: [String]
+  playerCount: [Int!]!
+  duration: [Int!]!
+  ageRange: [Int!]!
+  endorsed: Boolean
+  setup: Int!
+  tags: [String]
+  _version: Int
 }
 
-input UpdateIcebreakerInput {
+input UpdateActivityInput {
   id: ID!
   name: String
-  icebreaker: String
+  description: String
+  author: String
+  abstract: String
+  likes: Int
+  pictures: [String]
+  captions: [String]
+  playerCount: [Int!]
+  duration: [Int!]
+  ageRange: [Int!]
+  endorsed: Boolean
+  setup: Int
+  tags: [String]
+  _version: Int
 }
 
-input DeleteIcebreakerInput {
+input DeleteActivityInput {
   id: ID!
+  _version: Int
 }
 
-input ModelSubscriptionIcebreakerFilterInput {
+input ModelSubscriptionActivityFilterInput {
   id: ModelSubscriptionIDInput
   name: ModelSubscriptionStringInput
-  icebreaker: ModelSubscriptionStringInput
-  and: [ModelSubscriptionIcebreakerFilterInput]
-  or: [ModelSubscriptionIcebreakerFilterInput]
+  description: ModelSubscriptionStringInput
+  author: ModelSubscriptionStringInput
+  abstract: ModelSubscriptionStringInput
+  likes: ModelSubscriptionIntInput
+  pictures: ModelSubscriptionStringInput
+  captions: ModelSubscriptionStringInput
+  playerCount: ModelSubscriptionIntInput
+  duration: ModelSubscriptionIntInput
+  ageRange: ModelSubscriptionIntInput
+  endorsed: ModelSubscriptionBooleanInput
+  setup: ModelSubscriptionIntInput
+  tags: ModelSubscriptionStringInput
+  and: [ModelSubscriptionActivityFilterInput]
+  or: [ModelSubscriptionActivityFilterInput]
+  _deleted: ModelBooleanInput
 }

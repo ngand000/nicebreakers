@@ -201,7 +201,7 @@
         "UserPoolId": {
           "Ref": "UserPool"
         },
-        "ClientName": "nicebr8fd9a8d0_app_clientWeb",
+        "ClientName": "nicebrc823e8cb_app_clientWeb",
         "RefreshTokenValidity": {
           "Ref": "userpoolClientRefreshTokenValidity"
         },
@@ -219,7 +219,7 @@
         "UserPoolId": {
           "Ref": "UserPool"
         },
-        "ClientName": "nicebr8fd9a8d0_app_client",
+        "ClientName": "nicebrc823e8cb_app_client",
         "GenerateSecret": {
           "Ref": "userpoolClientGenerateSecret"
         },
@@ -259,7 +259,7 @@
               "Fn::Join": [
                 "",
                 [
-                  "upClientLambdaRole8fd9a8d0",
+                  "upClientLambdaRolec823e8cb",
                   {
                     "Fn::Select": [
                       3,
