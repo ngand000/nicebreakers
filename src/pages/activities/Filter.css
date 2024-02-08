@@ -1,0 +1,18 @@
+.filterStyle {
+    border-radius: 10vmin;
+    height: 100%;
+    display: flex;
+    padding: 1vh 1vw 1vh 1vw;
+    font-size: 3vh;
+    margin: 1vh 0 0 2vw;
+    flex-shrink: 0;
+    transition-timing-function: ease-out;
+    transition:
+            width 0.25s,
+            height 0.25s,
+            padding 0.25s
+}
+
+.filterStyle:hover {
+    padding: 1vh 1.5vw 1vh 1.5vw;
+}
