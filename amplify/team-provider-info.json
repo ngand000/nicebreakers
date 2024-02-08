@@ -12,11 +12,11 @@
       "AmplifyAppId": "d3pb2yef2pgy2m"
     },
     "categories": {
-      "api": {
-        "nicebreakers": {}
-      },
       "auth": {
         "NiceBreakers": {}
+      },
+      "storage": {
+        "s3nicebreakersstoragec9bdab74": {}
       }
     }
   }

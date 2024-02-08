@@ -2,20 +2,13 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import './App.css';
 import ActivitiesPage from "./pages/activities/ActivitiesPage";
 import PostPage from "./pages/post/postPage";
-import QuestionPage from "./pages/questions/questionsPage";
+import QuestionPage from "./pages/questions/QuestionsPage";
 import UploadPage from "./pages/upload/uploadPage";
 
 function App() {
 
-    const linkStyle = {textDecoration: "none", height: 0}
-
-    const headerStyle = {fontSize: "5vh", color: "black", textAlign: "center"}
-
   return (
       <div>
-          <a href="/" style={linkStyle}>
-              <p style={headerStyle}> Nicebreakers Logo </p>
-          </a>
           <BrowserRouter>
             <Routes>
               { /* Put your page(s) here */}
