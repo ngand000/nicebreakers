@@ -1,6 +1,0 @@
-{
-  "AppSyncApiName": "nicebreakers",
-  "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2024-01-16T23:34:09.557Z"
-}

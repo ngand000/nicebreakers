@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import './Filter.css'
 
+// single filter that user can click on to filter by
 export default function Filter({color, label, onClick, removeFilter}) {
 
     const [filtered, setFiltered] = useState(false)
@@ -9,6 +10,8 @@ export default function Filter({color, label, onClick, removeFilter}) {
         backgroundColor: color
     }
 
+    //pre: label has a value
+    //post: either applies filter to label, or removes it there already is one
     function filterOnClick() {
         if (!filtered) {
             onClick(label)

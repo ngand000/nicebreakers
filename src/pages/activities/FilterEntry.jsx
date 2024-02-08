@@ -1,17 +1,21 @@
 import React, {useState} from 'react';
 import './FilterEntry.css';
 
+// the popup wherein the user can input what value they want to filter by
 export default function FilterEntry({ onClose, filter, dtype}) {
 
     const [filterValue, setFilterValue] = useState("");
     const [failedInput, setFailedInput] = useState("");
 
+    // pre: none
+    // post: if text in textbox is of valid format, updates filter with said text and closes popup
+    // otherwise, notifies user of correct format
     function realOnClose() {
-        // turn filterValue into valid type
         let result;
 
         switch (dtype) {
-            case "range":
+            case "rangeIn":
+            case "rangeOut":
                 if (!isNaN(Number(filterValue)) && !isNaN(parseInt(filterValue))) {
                     result = [parseInt(filterValue), parseInt(filterValue)];
                     break;
