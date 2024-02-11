@@ -2,26 +2,24 @@ import QuestionsList from "./QuestionsList";
 import FilterBar from "../activities/FilterBar";
 import FilterEntry from "../activities/FilterEntry";
 import UploadButton from "../upload/UploadButton.jsx"
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { DataStore } from 'aws-amplify/datastore';
-import {Activity, Question} from '../../models';
+import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
-import {useEffect} from "react";
 
 Amplify.configure(config);
+
+const questions = await DataStore.query(Question);
+
 // page that displays the questions pulled from the database
 const QuestionsPage = () => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [filterEditing, setFilterEditing] = useState("");
     const [filters, setFilters] = useState({});
-    const [questions, setQuestions] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            setQuestions(await DataStore.query(Question))})()
-    })
+    const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
+    const filterBarRef = useRef(null);
 
     //pre: none
     //args: label is the filter we are setting a value for
@@ -106,10 +104,22 @@ const QuestionsPage = () => {
     // pre: none
     // post: none
     // args none
+    // returns the number of vw units to offset
+    // the upload button from the filter bar
+    useEffect(() => {
+        if (filterBarRef.current) {
+            const vwUnits = (filterBarRef.current.offsetWidth/window.innerWidth) * 100;
+            setUploadButtonOffset(74 - vwUnits);
+        }
+    }, [filterBarRef.current]);
+
+    // pre: numerical is non-null
+    // post: none
+    // args numerical, the number of vw to offset upload button
     // returns stirng representing number of vw units
     // to offset upload button
-    function getUploadButtonOffset() {
-        return activitiesUploadOffset + "vw";
+    function getUploadButtonOffset(numerical) {
+        return numerical + "vw";
     }
 
     const filterTypes = {"Ages": "rangeOut", "Endorsed": "bool"}
@@ -122,8 +132,6 @@ const QuestionsPage = () => {
 
     const logoStyle = {}
 
-    const activitiesUploadOffset = 43.2
-
     return (
         <div>
             <div style={headerStyle}>
@@ -134,8 +142,8 @@ const QuestionsPage = () => {
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
                 <ul style={{margin: "2vh 0 2vh 2vw", padding: "0"}}>
-                    <li id="filterbar" style={{display: "inline-block"}}><FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
-                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset()}}><UploadButton uploadType={"QuestionUpload"}></UploadButton></li>
+                    <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
+                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"/upload/QuestionUpload"}></UploadButton></li>
                 </ul>
                 <QuestionsList questions={questions.filter(filterOK).sort(compareLikes)} />
             </div>
