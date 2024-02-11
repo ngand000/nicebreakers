@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import UploadButton from "../UploadButton.jsx";
 
 const UploadPage = (props) => {
     return (
@@ -29,7 +30,7 @@ const UploadPage = (props) => {
                 <label htmlFor={"photos"}>Upload photos:</label>
                 <input type="file" id="activityPics" name="activityPics"/>
                 <br/>
-                <input type="submit"/>
+                <UploadButton uploadType={"/"}></UploadButton>
             </form>
             {/*<div> Data entry/upload </div>*/}
             {/*<div> Button to upload </div>*/}

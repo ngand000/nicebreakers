@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import UploadButton from "../UploadButton.jsx";
 
 const UploadPage = (props) => {
     return (
@@ -18,7 +19,7 @@ const UploadPage = (props) => {
                 to
                 <input type="number" min="1" max="100" id={"maxAge"}/>
                 <br/>
-                <input type="submit"/>
+                <UploadButton uploadType={"/questions"}></UploadButton>
             </form>
             {/*<div> Data entry/upload </div>*/}
             {/*<div> Button to upload </div>*/}
