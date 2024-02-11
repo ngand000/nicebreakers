@@ -65,3 +65,15 @@
     padding: 3vmin;
     border-radius: 1vmin;
 }
+
+.small-input {
+    padding: 1vh 1vw 1vh 1vw;
+    font-size: 3vmin;
+}
+
+.upload-button-bounder {
+    display: flex;
+    width: 8.7vw;
+    height: 8vh;
+    margin: 0 0 5vh 35vw;
+}
