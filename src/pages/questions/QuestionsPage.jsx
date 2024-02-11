@@ -4,7 +4,7 @@ import FilterEntry from "../activities/FilterEntry";
 import UploadButton from "../upload/UploadButton.jsx"
 import React, {useState} from 'react'
 import { DataStore } from 'aws-amplify/datastore';
-import {Activity, Question} from '../../models';
+import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
 import {useEffect} from "react";
@@ -29,7 +29,6 @@ const QuestionsPage = () => {
     function openPopup(label) {
         setFilterEditing(label)
         setIsPopupOpen(true);
-        console.log(filters)
     }
 
     //pre: filterEditing has a value
@@ -48,7 +47,6 @@ const QuestionsPage = () => {
     //post: removes that filter from filters, if it is there
     function removeFilter(filter) {
         let newFilters = {...filters}
-        console.log(filter)
         delete newFilters[filter]
         setFilters(newFilters)
     }
@@ -68,7 +66,6 @@ const QuestionsPage = () => {
     // args: a, the question for which it is being checked if it fits the filters
     // returns: boolean representing whether a fits all current filters
     function filterOK (a) {
-        console.log(filters)
         for (const [k, value] of Object.entries(filters)) {
             let key = actualProperties[k]
             switch (filterTypes[k]) {
