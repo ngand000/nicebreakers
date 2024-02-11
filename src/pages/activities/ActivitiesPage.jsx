@@ -1,6 +1,7 @@
 import ActivityList from "./ActivityList";
 import FilterBar from "./FilterBar";
 import FilterEntry from "./FilterEntry";
+import UploadButton from "./UploadButton"
 import React, {useState} from 'react'
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../models';
@@ -115,7 +116,10 @@ const ActivitiesPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
+                <ul style={{margin: "2vh 0 2vh 2vw", padding: "0"}}>
+                    <li style={{display: "inline-block", marginRight: "20vw"}}><FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
+                    <li style={{display: "inline-block"}}><UploadButton></UploadButton></li>
+                </ul>
                 <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
             </div>
         </div>
