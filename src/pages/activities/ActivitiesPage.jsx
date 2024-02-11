@@ -1,7 +1,7 @@
 import ActivityList from "./ActivityList";
 import FilterBar from "./FilterBar";
 import FilterEntry from "./FilterEntry";
-import UploadButton from "./UploadButton"
+import UploadButton from "../upload/UploadButton.jsx"
 import React, {useState} from 'react'
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../models';
@@ -97,6 +97,15 @@ const ActivitiesPage = () => {
         return b.likes-a.likes
     }
 
+    // pre: none
+    // post: none
+    // args none
+    // returns stirng representing number of vw units
+    // to offset upload button
+    function getUploadButtonOffset() {
+        return activitiesUploadOffset + "vw";
+    }
+
     const filterTypes = {"Group Size": "rangeOut", "Ages": "rangeOut", "Duration(min)": "rangeIn", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
@@ -106,6 +115,8 @@ const ActivitiesPage = () => {
     const otherLinkStyle = {textDecoration: "underline", color: "black", margin: "auto", fontSize: "10vmin"}
 
     const logoStyle = {}
+
+    const activitiesUploadOffset = 19
 
     return (
         <div>
@@ -117,8 +128,8 @@ const ActivitiesPage = () => {
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
                 <ul style={{margin: "2vh 0 2vh 2vw", padding: "0"}}>
-                    <li style={{display: "inline-block", marginRight: "20vw"}}><FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
-                    <li style={{display: "inline-block"}}><UploadButton></UploadButton></li>
+                    <li id="filterbar" style={{display: "inline-block"}}><FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
+                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset()}}><UploadButton></UploadButton></li>
                 </ul>
                 <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
             </div>

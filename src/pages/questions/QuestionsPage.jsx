@@ -1,6 +1,7 @@
 import QuestionsList from "./QuestionsList";
 import FilterBar from "../activities/FilterBar";
 import FilterEntry from "../activities/FilterEntry";
+import UploadButton from "../upload/UploadButton.jsx"
 import React, {useState} from 'react'
 import { DataStore } from 'aws-amplify/datastore';
 import {Question} from '../../models';
@@ -98,6 +99,15 @@ const QuestionsPage = () => {
         return b.likes-a.likes
     }
 
+    // pre: none
+    // post: none
+    // args none
+    // returns stirng representing number of vw units
+    // to offset upload button
+    function getUploadButtonOffset() {
+        return activitiesUploadOffset + "vw";
+    }
+
     const filterTypes = {"Ages": "rangeOut", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
@@ -108,6 +118,8 @@ const QuestionsPage = () => {
 
     const logoStyle = {}
 
+    const activitiesUploadOffset = 43.2
+
     return (
         <div>
             <div style={headerStyle}>
@@ -117,7 +129,10 @@ const QuestionsPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
+                <ul style={{margin: "2vh 0 2vh 2vw", padding: "0"}}>
+                    <li id="filterbar" style={{display: "inline-block"}}><FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
+                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset()}}><UploadButton></UploadButton></li>
+                </ul>
                 <QuestionsList questions={questions.filter(filterOK).sort(compareLikes)} />
             </div>
         </div>
