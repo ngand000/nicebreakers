@@ -3,7 +3,8 @@ import './App.css';
 import ActivitiesPage from "./pages/activities/ActivitiesPage";
 import PostPage from "./pages/post/postPage";
 import QuestionPage from "./pages/questions/QuestionsPage";
-import UploadPage from "./pages/upload/uploadPage";
+import ActivityUploadPage from "./pages/upload/ActivityUpload/ActivityUploadPage";
+import QuestionUploadPage from "./pages/upload/QuestionUpload/QuestionUploadPage";
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
               { /* Put your page(s) here */}
               <Route path='/' element ={<ActivitiesPage />}/>s
               <Route path='/questions' element={<QuestionPage />}/>
-              <Route path='/upload' element={<UploadPage />}/>
+              <Route path='/upload/ActivityUpload' element={<ActivityUploadPage />}/>
+              <Route path='/upload/QuestionUpload' element={<QuestionUploadPage />}/>
               <Route path='/post' element={<PostPage />}/>
             </Routes>
           </BrowserRouter>
