@@ -4,20 +4,24 @@ import FilterEntry from "../activities/FilterEntry";
 import UploadButton from "../upload/UploadButton.jsx"
 import React, {useState} from 'react'
 import { DataStore } from 'aws-amplify/datastore';
-import {Question} from '../../models';
+import {Activity, Question} from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
+import {useEffect} from "react";
 
 Amplify.configure(config);
-
-const questions = await DataStore.query(Question);
-
 // page that displays the questions pulled from the database
 const QuestionsPage = () => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [filterEditing, setFilterEditing] = useState("");
     const [filters, setFilters] = useState({});
+    const [questions, setQuestions] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            setQuestions(await DataStore.query(Question))})()
+    })
 
     //pre: none
     //args: label is the filter we are setting a value for
