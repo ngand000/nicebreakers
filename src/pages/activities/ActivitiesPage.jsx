@@ -2,15 +2,13 @@ import ActivityList from "./ActivityList";
 import FilterBar from "./FilterBar";
 import FilterEntry from "./FilterEntry";
 import UploadButton from "../upload/UploadButton.jsx";
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
 
 Amplify.configure(config);
-
-const activities = await DataStore.query(Activity);
 
 // page that displays the activities pulled from the database
 const ActivitiesPage = () => {
@@ -20,6 +18,12 @@ const ActivitiesPage = () => {
     const [filters, setFilters] = useState({});
     const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
     const filterBarRef = useRef(null);
+    const [activities, setActivities] = useState([])
+
+    useEffect(() => {
+        (async () => {
+        setActivities(await DataStore.query(Activity))})()
+    })
 
     //pre: none
     //args: label is the filter we are setting a value for
