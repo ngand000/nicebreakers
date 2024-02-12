@@ -9,12 +9,12 @@ const UploadPage = (props) => {
     const [activityName, activityNameSetter] = useState("");
     const [activityDescription, activityDescriptionSetter] = useState("");
     const [authorVal, authorValSetter] = useState("");
-    const [playerCountMin, playerCountMinSetter] = useState("");
-    const [playerCountMax, playerCountMaxSetter] = useState("");
-    const [durationMin, durationMinSetter] = useState("");
-    const [durationMax, duarationMaxSetter] = useState("");
-    const [ageMin, ageMinSetter] = useState("");
-    const [ageMax, ageMaxSetter] = useState("");
+    const [playerCountMin, playerCountMinSetter] = useState(1);
+    const [playerCountMax, playerCountMaxSetter] = useState(1);
+    const [durationMin, durationMinSetter] = useState(0);
+    const [durationMax, duarationMaxSetter] = useState(1);
+    const [ageMin, ageMinSetter] = useState(0);
+    const [ageMax, ageMaxSetter] = useState(1);
 
     const filterNames = ["activityName", "activityDescription", "authorVal", "playerCountMin", "playerCountMax", "durationMin", "durationMax", "ageMin", "ageMax"];
 
@@ -51,7 +51,98 @@ const UploadPage = (props) => {
     //         popup for any invalid values, returns true
     //         if all filters are valid and false otherwise
     function filterChecks() {
-        return true;
+        var passesChecks = true;
+        filterNames.forEach(function(filter) {
+            switch(filter) {
+                case "activityName":
+                    if (activityName === "") {
+                        alert("Activity Name cannot be blank");
+                        passesChecks = false;
+                    }
+                    break;
+                case "activityDescription":
+                    if (activityDescription === "") {
+                        alert("Activity Description cannot be blank");
+                        passesChecks = false;
+                    }
+                    break;
+                case "authorVal":
+                    if (authorVal === "") {
+                        alert("Author field cannot be blank");
+                        passesChecks = false;
+                    }
+                    break;
+                case "playerCountMin":
+                    if (playerCountMin < 1) {
+                        alert("Must have at least one player in min field");
+                        passesChecks = false;
+                    } else if (playerCountMin > 99) {
+                        alert("Cannot have over 99 players");
+                        passesChecks = false;
+                    }
+                    break;
+                case "playerCountMax":
+                    console.log(playerCountMin);
+                    console.log(playerCountMax);
+                    if (playerCountMax < 1) {
+                        alert("Must have at least one player in max field");
+                        passesChecks = false;
+                    } else if (playerCountMax > 99) {
+                        alert("Cannot have over 99 players");
+                        passesChecks = false;
+                    } else if (playerCountMin > playerCountMax) {
+                        alert("Min players cannot be larger than max players");
+                        passesChecks = false;
+                    }
+                    break;
+                case "durationMin":
+                    console.log(durationMin);
+                    if (durationMin < 0) {
+                        alert("Minimum duration must be at least 0 minutes");
+                        passesChecks = false;
+                    } else if (durationMin > 60) {
+                        alert("Minimum duration cannot be over 60 minutes");
+                        passesChecks = false;
+                    }
+                    break;
+                case "durationMax":
+                    if (durationMax < 0) {
+                        alert("Maximum duration must be at least 0 minutes");
+                        passesChecks = false;
+                    } else if (durationMax > 60) {
+                        alert("Maximum duration cannot be over 60 minutes");
+                        passesChecks = false;
+                    } else if (durationMin > durationMax) {
+                        alert("Minimum duration cannot be larger than max duration");
+                        passesChecks = false;
+                    }
+                    break;
+                case "ageMin":
+                    if (ageMin < 0) {
+                        alert("Minimum age must be at least 0");
+                        passesChecks = false;
+                    } else if (ageMin > 99) {
+                        alert("Minimum age cannot be over 99");
+                        passesChecks = false;
+                    }
+                    break;
+                case "ageMax":
+                    if (ageMax < 0) {
+                        alert("Maximum age must be at least 0");
+                        passesChecks = false;
+                    } else if (ageMax > 99) {
+                        alert("Maximum age cannot be over 99");
+                        passesChecks = false;
+                    } else if (ageMin > ageMax) {
+                        alert("Minimum age cannot be larger than max age");
+                        passesChecks = false;
+                    }
+                    break;
+                default:
+                    console.log("Unknown input");
+            }
+        });
+        return passesChecks;
     }
 
     //pre: event is non-null
@@ -71,6 +162,7 @@ const UploadPage = (props) => {
     return (
         <div>
             <div className="header">
+                {/* TODO: Make the logo render properly and redirect to Activities Page on click*/}
                 <img src={"logoplaceholder.png"} alt={"logo"}/>
                 <text className="title">Upload Activity</text>
             </div>
@@ -95,7 +187,7 @@ const UploadPage = (props) => {
                     <ul style={{margin: "2vh 0 2vh 2vw", padding: "0", display: "flex", listStyleType: "none"}}>
                         <li><div className="color-box" style={{backgroundColor: "rgb(255,94,94)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"minPlayers"} value={playerCountMin} onChange={(thisEvent) => inputHandler(thisEvent, playerCountMinSetter)}/></div></li>
                         <li><div className="feild-entry-title" style={{display: "inline-block", paddingTop: "5vh"}}>to</div></li>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(169,246,187)", display: "inline-block"}}><input className="small-input" type="number" min="2" max="99" id={"maxPlayers"} value={playerCountMax} onChange={(thisEvent) => inputHandler(thisEvent, playerCountMaxSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(169,246,187)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"maxPlayers"} value={playerCountMax} onChange={(thisEvent) => inputHandler(thisEvent, playerCountMaxSetter)}/></div></li>
                     </ul>
                 </div>
                 <br/>
@@ -111,9 +203,9 @@ const UploadPage = (props) => {
                 <div className="color-box" style={{backgroundColor: "rgb(255,94,94)"}}>
                     <label className="feild-entry-title" style={{marginLeft: "2vw"}} htmlFor={"ageRange"}>Age Range:</label>
                     <ul style={{margin: "2vh 0 2vh 2vw", padding: "0", display: "flex", listStyleType: "none"}}>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(255,187,89)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="100" id={"minAge"} value={ageMin} onChange={(thisEvent) => inputHandler(thisEvent, ageMinSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(255,187,89)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="99" id={"minAge"} value={ageMin} onChange={(thisEvent) => inputHandler(thisEvent, ageMinSetter)}/></div></li>
                         <li><div className="feild-entry-title" style={{display: "inline-block", paddingTop: "5vh"}}>to</div></li>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(182,255,123)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="100" id={"maxAge"} value={ageMax} onChange={(thisEvent) => inputHandler(thisEvent, ageMaxSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(182,255,123)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"maxAge"} value={ageMax} onChange={(thisEvent) => inputHandler(thisEvent, ageMaxSetter)}/></div></li>
                     </ul>
                 </div>
                 <br/>
