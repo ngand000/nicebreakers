@@ -16,6 +16,8 @@ const UploadPage = (props) => {
     const [ageMin, ageMinSetter] = useState("");
     const [ageMax, ageMaxSetter] = useState("");
 
+    const filterNames = ["activityName", "activityDescription", "authorVal", "playerCountMin", "playerCountMax", "durationMin", "durationMax", "ageMin", "ageMax"];
+
     //pre: none
     //post: none
     //args: none
@@ -26,7 +28,6 @@ const UploadPage = (props) => {
         } else {
             questionFocusToggler("");
         }
-        console.log(playerCountMin);
     }
 
     //pre: event and varSetter are non-null
@@ -41,6 +42,30 @@ const UploadPage = (props) => {
             return null;
         }
         varSetter(event.target.value);
+    };
+
+    //pre: state varibles are non-null
+    //post: none
+    //args: none
+    //returns: checks through state variables and gives
+    //         popup for any invalid values, returns true
+    //         if all filters are valid and false otherwise
+    function filterChecks() {
+        return true;
+    }
+
+    //pre: event is non-null
+    //post: none
+    //args: none
+    //returns: calls the filter check and if all
+    //         checks pass, submits query to database
+    //         add redirects to respective viewing page
+    const checkSubmit = (event) => {
+        event.preventDefault();
+        if (filterChecks()) {
+            //TODO: Put function call to Database Query Here
+            window.location.href = "/";
+        }
     };
 
     return (
@@ -98,7 +123,7 @@ const UploadPage = (props) => {
                 </div>
                 <br/>
                 <div className="upload-button-bounder">
-                    <UploadButton uploadType={"/"}></UploadButton>
+                    <button className="uploadButtonFilterStyle" onClick={(thisEvent) => checkSubmit(thisEvent)}>Upload</button>
                 </div>
             </form>
         </div>
