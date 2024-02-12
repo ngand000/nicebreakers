@@ -15,6 +15,7 @@ const UploadPage = (props) => {
     const [durationMax, duarationMaxSetter] = useState(1);
     const [ageMin, ageMinSetter] = useState(0);
     const [ageMax, ageMaxSetter] = useState(1);
+    const [userImages, userImageSetter] = useState([]);
 
     const filterNames = ["activityName", "activityDescription", "authorVal", "playerCountMin", "playerCountMax", "durationMin", "durationMax", "ageMin", "ageMax"];
 
@@ -42,6 +43,28 @@ const UploadPage = (props) => {
             return null;
         }
         varSetter(event.target.value);
+    };
+
+    //pre: event is non-null
+    //post: none
+    //args: event, the element event that caused the file update
+    //returns: stores the event's file into proper useState variable
+    //         or has an alert is filetype is invalid
+    const handleFileInput = (event) => {
+        if (event == null) {
+            return null;
+        }
+        const currFiles = event.target.files;
+        const tempFiles = [];
+        for (let i = 0; i < currFiles.length; i++) {
+            const currFile = currFiles[i];
+            if (currFile && currFile.type.startsWith('image/')) {
+                tempFiles.push(currFile);
+            } else {
+                alert(currFile.name + " is not an image file (jpeg, png, etc)");
+            }
+        }
+        userImageSetter(tempFiles);
     };
 
     //pre: state varibles are non-null
@@ -82,8 +105,6 @@ const UploadPage = (props) => {
                     }
                     break;
                 case "playerCountMax":
-                    console.log(playerCountMin);
-                    console.log(playerCountMax);
                     if (playerCountMax < 1) {
                         alert("Must have at least one player in max field");
                         passesChecks = false;
@@ -96,7 +117,6 @@ const UploadPage = (props) => {
                     }
                     break;
                 case "durationMin":
-                    console.log(durationMin);
                     if (durationMin < 0) {
                         alert("Minimum duration must be at least 0 minutes");
                         passesChecks = false;
@@ -220,7 +240,7 @@ const UploadPage = (props) => {
                 <br/>
                 <div className="color-box" style={{backgroundColor: "rgb(169,246,187)"}}>
                     <label className="feild-entry-title" htmlFor={"photos"}>Upload photos:</label>
-                    <input className="small-input" type="file" id="activityPics" name="activityPics"/>
+                    <input className="small-input" type="file" accept="image/*" id="activityPics" name="activityPics" multiple onChange={(thisEvent) => handleFileInput(thisEvent)}/>
                 </div>
                 <br/>
                 <div className="upload-button-bounder">
