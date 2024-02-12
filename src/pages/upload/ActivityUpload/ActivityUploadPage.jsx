@@ -140,6 +140,7 @@ const UploadPage = (props) => {
                     break;
                 default:
                     console.log("Unknown input");
+                    passesChecks = false;
             }
         });
         return passesChecks;
@@ -159,10 +160,18 @@ const UploadPage = (props) => {
         }
     };
 
+    //pre: none
+    //post: none
+    //args: none
+    //returns: redirects to respective viewing page
+    const goBack = (event) => {
+        event.preventDefault();
+        window.location.href = "/";
+    }
+
     return (
         <div>
             <div className="header">
-                {/* TODO: Make the logo render properly and redirect to Activities Page on click*/}
                 <img src={"logoplaceholder.png"} alt={"logo"}/>
                 <text className="title">Upload Activity</text>
             </div>
@@ -215,6 +224,7 @@ const UploadPage = (props) => {
                 </div>
                 <br/>
                 <div className="upload-button-bounder">
+                    <button className="uploadButtonFilterStyle" style={{backgroundColor: "rgb(255,94,94)"}} onClick={(thisEvent) => goBack(thisEvent)}>Back</button>
                     <button className="uploadButtonFilterStyle" onClick={(thisEvent) => checkSubmit(thisEvent)}>Upload</button>
                 </div>
             </form>
