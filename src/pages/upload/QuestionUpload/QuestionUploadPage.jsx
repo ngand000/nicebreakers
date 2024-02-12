@@ -45,6 +45,45 @@ const UploadPage = (props) => {
     //         popup for any invalid values, returns true
     //         if all filters are valid and false otherwise
     function filterChecks() {
+        filterNames.forEach(function(filter) {
+            switch(filter) {
+                case "questionText":
+                    if (questionText === "") {
+                        alert("Question cannot be blank");
+                        return false;
+                    }
+                    break;
+                case "authorVal":
+                    if (authorVal === "") {
+                        alert("Author field cannot be blank");
+                        return false;
+                    }
+                    break;
+                case "ageMin":
+                    if (ageMin < 0) {
+                        alert("Minimum age must be at least 0");
+                        passesChecks = false;
+                    } else if (ageMin > 99) {
+                        alert("Minimum age cannot be over 99");
+                        passesChecks = false;
+                    }
+                    break;
+                case "ageMax":
+                    if (ageMax < 0) {
+                        alert("Maximum age must be at least 0");
+                        passesChecks = false;
+                    } else if (ageMax > 99) {
+                        alert("Maximum age cannot be over 99");
+                        passesChecks = false;
+                    } else if (ageMin > ageMax) {
+                        alert("Minimum age cannot be larger than max age");
+                        passesChecks = false;
+                    }
+                    break;
+                default:
+                    console.log("Unknown input");
+            }
+        });
         return true;
     }
 
@@ -65,6 +104,7 @@ const UploadPage = (props) => {
     return (
         <div>
             <div className="header">
+                {/* TODO: Make the logo render properly and redirect to Questions Page on click*/}
                 <img src={"logoplaceholder.png"} alt={"logo"}/>
                 <text className="title">Upload Question</text>
             </div>
