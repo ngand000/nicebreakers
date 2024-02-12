@@ -176,8 +176,8 @@ const UploadPage = (props) => {
                 <text className="title">Upload Activity</text>
             </div>
             <form id ="uploadActivity" style={{width: "80%", marginLeft: "10%"}}>
-                <div className="name-entry-block">
-                    <label className="feild-entry-title" for={"activityName"}>Activity Name:</label>
+                <div className="color-box" style={{backgroundColor: "rgb(255,187,89)"}}>
+                    <label className="feild-entry-title" style={{marginLeft: "4vw"}} for={"activityName"}>Activity Name:</label>
                     <input className="name-entry-box" type={"text"} id={"activity"} value={activityName} onChange={(thisEvent) => inputHandler(thisEvent, activityNameSetter)}/>
                 </div>
                 <br/>
