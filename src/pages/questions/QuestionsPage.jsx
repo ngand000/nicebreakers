@@ -10,8 +10,6 @@ import config from '../../aws-exports.js';
 
 Amplify.configure(config);
 
-const questions = await DataStore.query(Question);
-
 // page that displays the questions pulled from the database
 const QuestionsPage = () => {
 
@@ -20,6 +18,12 @@ const QuestionsPage = () => {
     const [filters, setFilters] = useState({});
     const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
     const filterBarRef = useRef(null);
+    const [questions, setQuestions] = useState([])
+
+    useEffect(() => {
+        (async () => {
+        setQuestions(await DataStore.query(Question))})()
+    })
 
     //pre: none
     //args: label is the filter we are setting a value for
