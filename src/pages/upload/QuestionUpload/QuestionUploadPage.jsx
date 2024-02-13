@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
+import { DataStore } from 'aws-amplify/datastore';
+import {Question} from '../../../models';
+import { Amplify } from 'aws-amplify';
+import config from '../../../aws-exports.js';
 import '../UploadPages.css';
+
+Amplify.configure(config);
+
+DataStore.configure(config);
 
 const UploadPage = (props) => {
     
@@ -61,22 +69,22 @@ const UploadPage = (props) => {
                     }
                     break;
                 case "ageMin":
-                    if (ageMin < 0) {
+                    if (Number(ageMin) < 0) {
                         alert("Minimum age must be at least 0");
                         passesChecks = false;
-                    } else if (ageMin > 99) {
+                    } else if (Number(ageMin) > 99) {
                         alert("Minimum age cannot be over 99");
                         passesChecks = false;
                     }
                     break;
                 case "ageMax":
-                    if (ageMax < 0) {
+                    if (Number(ageMax) < 0) {
                         alert("Maximum age must be at least 0");
                         passesChecks = false;
-                    } else if (ageMax > 99) {
+                    } else if (Number(ageMax) > 99) {
                         alert("Maximum age cannot be over 99");
                         passesChecks = false;
-                    } else if (ageMin > ageMax) {
+                    } else if (Number(ageMin) > Number(ageMax)) {
                         alert("Minimum age cannot be larger than max age");
                         passesChecks = false;
                     }
@@ -89,6 +97,28 @@ const UploadPage = (props) => {
         return passesChecks;
     }
 
+    //pre: none
+    //post: none
+    //args: none
+    //return, none, pushes new Activity to remote database
+    //        populated with user inputs
+    const queryPush = async() => {
+        try {
+            await DataStore.save(
+                new Question({
+                    question: questionText,
+                    likes: "0",
+                    ageRange: [Number(ageMin), Number(ageMax)],
+                    endorsed: false,
+                    tage: null,
+                    author: authorVal,
+                })
+            );
+        } catch (error) {
+            alert("Error in submitting question");
+        }
+    };
+
     //pre: event is non-null
     //post: none
     //args: none
@@ -98,7 +128,7 @@ const UploadPage = (props) => {
     const checkSubmit = (event) => {
         event.preventDefault();
         if (filterChecks()) {
-            //TODO: Put function call to Database Query Here
+            queryPush();
             window.location.href = "/questions";
         }
     };
