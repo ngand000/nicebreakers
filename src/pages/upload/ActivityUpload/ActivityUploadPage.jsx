@@ -1,12 +1,21 @@
 import React, {useState} from 'react';
-import UploadButton from "../UploadButton.jsx";
+import { DataStore } from 'aws-amplify/datastore';
+import { Activity } from '../../../models';
+import { Amplify } from 'aws-amplify';
+import config from '../../../aws-exports.js';
 import '../UploadPages.css';
+
+Amplify.configure(config);
+
+DataStore.configure(config);
 
 const UploadPage = (props) => {
 
-    const [textboxPlaceHolder, questionFocusToggler] = useState("Enter your Description here!");
+    const [abstractPlaceHolder, abstractToggler] = useState("Enter your Abstract here!");
+    const [descriptionPlaceHolder, descriptionToggler] = useState("Enter your Description here!");
 
     const [activityName, activityNameSetter] = useState("");
+    const [activityAbstract, activityAbstractSetter] = useState("");
     const [activityDescription, activityDescriptionSetter] = useState("");
     const [authorVal, authorValSetter] = useState("");
     const [playerCountMin, playerCountMinSetter] = useState(1);
@@ -17,17 +26,19 @@ const UploadPage = (props) => {
     const [ageMax, ageMaxSetter] = useState(1);
     const [userImages, userImageSetter] = useState([]);
 
-    const filterNames = ["activityName", "activityDescription", "authorVal", "playerCountMin", "playerCountMax", "durationMin", "durationMax", "ageMin", "ageMax"];
+    const filterNames = ["activityName", "activityAbstract", "activityDescription", "authorVal", "playerCountMin", "playerCountMax", "durationMin", "durationMax", "ageMin", "ageMax"];
 
     //pre: none
     //post: none
-    //args: none
+    //args: toggler, the useState variable toggler to use
+    //      placeHolder, the useStatePlaceHolder to use
+    //      msg, the message to write
     //returns: none, toggles the descripton promp preview on click
-    function togglePlaceHolder() {
-        if (textboxPlaceHolder === "") {
-            questionFocusToggler("Enter your Description here!");
+    const togglePlaceHolder = (toggler, placeHolder, msg) => {
+        if (placeHolder === "") {
+            toggler(msg);
         } else {
-            questionFocusToggler("");
+            toggler("");
         }
     }
 
@@ -83,6 +94,12 @@ const UploadPage = (props) => {
                         passesChecks = false;
                     }
                     break;
+                case "activityAbstract":
+                        if (activityAbstract === "") {
+                            alert("Activity Abstract cannot be blank");
+                            passesChecks = false;
+                        }
+                        break;
                 case "activityDescription":
                     if (activityDescription === "") {
                         alert("Activity Description cannot be blank");
@@ -96,64 +113,64 @@ const UploadPage = (props) => {
                     }
                     break;
                 case "playerCountMin":
-                    if (playerCountMin < 1) {
+                    if (Number(playerCountMin) < 1) {
                         alert("Must have at least one player in min field");
                         passesChecks = false;
-                    } else if (playerCountMin > 99) {
+                    } else if (Number(playerCountMin) > 99) {
                         alert("Cannot have over 99 players");
                         passesChecks = false;
                     }
                     break;
                 case "playerCountMax":
-                    if (playerCountMax < 1) {
+                    if (Number(playerCountMax) < 1) {
                         alert("Must have at least one player in max field");
                         passesChecks = false;
-                    } else if (playerCountMax > 99) {
+                    } else if (Number(playerCountMax) > 99) {
                         alert("Cannot have over 99 players");
                         passesChecks = false;
-                    } else if (playerCountMin > playerCountMax) {
+                    } else if (Number(playerCountMin) > Number(playerCountMax)) {
                         alert("Min players cannot be larger than max players");
                         passesChecks = false;
                     }
                     break;
                 case "durationMin":
-                    if (durationMin < 0) {
+                    if (Number(durationMin) < 0) {
                         alert("Minimum duration must be at least 0 minutes");
                         passesChecks = false;
-                    } else if (durationMin > 60) {
+                    } else if (Number(durationMin) > 60) {
                         alert("Minimum duration cannot be over 60 minutes");
                         passesChecks = false;
                     }
                     break;
                 case "durationMax":
-                    if (durationMax < 0) {
+                    if (Number(durationMax) < 0) {
                         alert("Maximum duration must be at least 0 minutes");
                         passesChecks = false;
-                    } else if (durationMax > 60) {
+                    } else if (Number(durationMax) > 60) {
                         alert("Maximum duration cannot be over 60 minutes");
                         passesChecks = false;
-                    } else if (durationMin > durationMax) {
+                    } else if (Number(durationMin) > Number(durationMax)) {
                         alert("Minimum duration cannot be larger than max duration");
                         passesChecks = false;
                     }
                     break;
                 case "ageMin":
-                    if (ageMin < 0) {
+                    if (Number(ageMin) < 0) {
                         alert("Minimum age must be at least 0");
                         passesChecks = false;
-                    } else if (ageMin > 99) {
+                    } else if (Number(ageMin) > 99) {
                         alert("Minimum age cannot be over 99");
                         passesChecks = false;
                     }
                     break;
                 case "ageMax":
-                    if (ageMax < 0) {
+                    if (Number(ageMax) < 0) {
                         alert("Maximum age must be at least 0");
                         passesChecks = false;
-                    } else if (ageMax > 99) {
+                    } else if (Number(ageMax) > 99) {
                         alert("Maximum age cannot be over 99");
                         passesChecks = false;
-                    } else if (ageMin > ageMax) {
+                    } else if (Number(ageMin) > Number(ageMax)) {
                         alert("Minimum age cannot be larger than max age");
                         passesChecks = false;
                     }
@@ -166,6 +183,35 @@ const UploadPage = (props) => {
         return passesChecks;
     }
 
+    //pre: none
+    //post: none
+    //args: none
+    //return, none, pushes new Activity to remote database
+    //        populated with user inputs
+    const queryPush = async() => {
+        try {
+            await DataStore.save(
+                new Activity({
+                    name: activityName,
+                    description: activityDescription,
+                    Comments: null,
+                    author: authorVal,
+                    abstract: activityAbstract,
+                    likes: 0,
+                    pictures: userImages,
+                    playerCount: [Number(playerCountMin), Number(playerCountMax)],
+                    duration: [Number(durationMin), Number(durationMax)],
+                    ageRange: [Number(ageMin), Number(ageMax)],
+                    endorsed: false,
+                    setup: 0,
+                    tags: null,
+                })
+            );
+        } catch (error) {
+            alert("Error in submitting activity");
+        }
+    };
+
     //pre: event is non-null
     //post: none
     //args: none
@@ -175,7 +221,7 @@ const UploadPage = (props) => {
     const checkSubmit = (event) => {
         event.preventDefault();
         if (filterChecks()) {
-            //TODO: Put function call to Database Query Here
+            queryPush();
             window.location.href = "/";
         }
     };
@@ -201,9 +247,14 @@ const UploadPage = (props) => {
                     <input className="name-entry-box" type={"text"} id={"activity"} value={activityName} onChange={(thisEvent) => inputHandler(thisEvent, activityNameSetter)}/>
                 </div>
                 <br/>
+                <div className="color-box" style={{backgroundColor: "rgb(215, 109, 236)"}}>
+                    <label className="feild-entry-title" htmlFor={"activityDescription"}>Abstract:</label>
+                    <textarea id="abstract-entry-box" className="question-entry-box" style={{width: "95%", height: "20vh"}} name={"Abstract"} form={"uploadAbstract"} placeholder={abstractPlaceHolder} onFocus={() => togglePlaceHolder(abstractToggler, abstractPlaceHolder, "Enter your Abstract here!")} onBlur={() => togglePlaceHolder(abstractToggler, abstractPlaceHolder, "Enter your Abstract here!")} value={activityAbstract} onChange={(thisEvent) => inputHandler(thisEvent, activityAbstractSetter)}></textarea>
+                </div>
+                <br/>
                 <div className="color-box" style={{backgroundColor: "rgb(255,252,123)"}}>
                     <label className="feild-entry-title" htmlFor={"activityDescription"}>Description:</label>
-                    <textarea id="question-entry-box" className="question-entry-box" style={{width: "95%", height: "20vh"}} name={"Description"} form={"uploadActivity"} placeholder={textboxPlaceHolder} onFocus={togglePlaceHolder} onBlur={togglePlaceHolder} value={activityDescription} onChange={(thisEvent) => inputHandler(thisEvent, activityDescriptionSetter)}></textarea>
+                    <textarea id="question-entry-box" className="question-entry-box" style={{width: "95%", height: "20vh"}} name={"Description"} form={"uploadActivity"} placeholder={descriptionPlaceHolder} onFocus={() => togglePlaceHolder(descriptionToggler, descriptionPlaceHolder, "Enter your Description here!")} onBlur={() => togglePlaceHolder(descriptionToggler, descriptionPlaceHolder, "Enter your Description here!")} value={activityDescription} onChange={(thisEvent) => inputHandler(thisEvent, activityDescriptionSetter)}></textarea>
                 </div>
                 <br/>
                 <div className="color-box" style={{backgroundColor: "rgb(182,255,123)"}}>

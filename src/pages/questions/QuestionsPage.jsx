@@ -1,8 +1,8 @@
 import QuestionsList from "./QuestionsList";
 import FilterBar from "../activities/FilterBar";
 import FilterEntry from "../activities/FilterEntry";
-import UploadButton from "../upload/UploadButton.jsx"
-import React, {useEffect, useRef, useState} from 'react'
+import UploadButton from "../upload/UploadButton.jsx";
+import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
