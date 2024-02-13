@@ -111,7 +111,7 @@ const UploadPage = (props) => {
                     likes: "0",
                     ageRange: [Number(ageMin), Number(ageMax)],
                     endorsed: false,
-                    tage: null,
+                    tags: null,
                     author: authorVal,
                 })
             );
