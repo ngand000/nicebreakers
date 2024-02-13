@@ -1,0 +1,17 @@
+.descStyle {
+    border: solid;
+    border-width: 5px;
+    border-radius: 10px;
+    border-color: rgb(150, 150, 150);
+    margin: 0 5px 0 5px;
+}
+
+.titleAndValueStyle {
+    display: flex;
+    border: solid;
+    border-width: 5px;
+    border-radius: 10px;
+    flex-shrink: 1;
+    margin: 20px 5px 5px 5px;
+    width: 20%
+}
