@@ -4,6 +4,7 @@ import {Question} from '../../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 
 Amplify.configure(config);
 
@@ -110,7 +111,7 @@ const UploadPage = (props) => {
                     likes: "0",
                     ageRange: [Number(ageMin), Number(ageMax)],
                     endorsed: false,
-                    tage: null,
+                    tags: null,
                     author: authorVal,
                 })
             );
@@ -177,4 +178,4 @@ const UploadPage = (props) => {
     )
 }
 
-export default UploadPage;
+export default withAuthenticator(UploadPage);
