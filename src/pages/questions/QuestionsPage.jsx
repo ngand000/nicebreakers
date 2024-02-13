@@ -142,7 +142,7 @@ const QuestionsPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <ul style={{margin: "2vh 0 2vh 2vw", padding: "0"}}>
+                <ul style={{margin: "0 0 0 2vw", padding: "0"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
                     <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"/upload/QuestionUpload"}></UploadButton></li>
                 </ul>
