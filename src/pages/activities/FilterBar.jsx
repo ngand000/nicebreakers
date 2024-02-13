@@ -6,11 +6,11 @@ import "./FilterBar.css"
 export default function FilterBar({openPopup, removeFilter, setEndorsed, activities}) {
 
     const filters = activities ? [{color: "rgb(255,94,94)", label: "Group Size"},
-        {color: "rgb(255,187,89)", label: "Ages"},
-        {color: "rgb(255,252,123)", label: "Duration(min)"},
-        {color: "rgb(182,255,123)", label: "Endorsed"}]
-        : [{color: "rgb(255,187,89)", label: "Ages"},
-            {color: "rgb(182,255,123)", label: "Endorsed"}]
+        {color: "rgb(76,246,70)", label: "Ages"},
+        {color: "rgb(79,239,255)", label: "Duration(min)"},
+        {color: "rgb(150,79,255)", label: "Endorsed"}]
+        : [{color: "rgb(76,246,70)", label: "Ages"},
+            {color: "rgb(150,79,255)", label: "Endorsed"}]
 
     return (<div className={"filterBarStyle"}>
         Filters

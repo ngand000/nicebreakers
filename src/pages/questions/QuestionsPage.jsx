@@ -1,7 +1,8 @@
 import QuestionsList from "./QuestionsList";
 import FilterBar from "../activities/FilterBar";
 import FilterEntry from "../activities/FilterEntry";
-import React, {useState} from 'react'
+import UploadButton from "../upload/UploadButton.jsx";
+import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
@@ -9,14 +10,20 @@ import config from '../../aws-exports.js';
 
 Amplify.configure(config);
 
-const questions = await DataStore.query(Question);
-
 // page that displays the questions pulled from the database
 const QuestionsPage = () => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [filterEditing, setFilterEditing] = useState("");
     const [filters, setFilters] = useState({});
+    const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
+    const filterBarRef = useRef(null);
+    const [questions, setQuestions] = useState([])
+
+    useEffect(() => {
+        (async () => {
+        setQuestions(await DataStore.query(Question))})()
+    })
 
     //pre: none
     //args: label is the filter we are setting a value for
@@ -24,7 +31,6 @@ const QuestionsPage = () => {
     function openPopup(label) {
         setFilterEditing(label)
         setIsPopupOpen(true);
-        console.log(filters)
     }
 
     //pre: filterEditing has a value
@@ -43,7 +49,6 @@ const QuestionsPage = () => {
     //post: removes that filter from filters, if it is there
     function removeFilter(filter) {
         let newFilters = {...filters}
-        console.log(filter)
         delete newFilters[filter]
         setFilters(newFilters)
     }
@@ -63,7 +68,6 @@ const QuestionsPage = () => {
     // args: a, the question for which it is being checked if it fits the filters
     // returns: boolean representing whether a fits all current filters
     function filterOK (a) {
-        console.log(filters)
         for (const [k, value] of Object.entries(filters)) {
             let key = actualProperties[k]
             switch (filterTypes[k]) {
@@ -98,6 +102,27 @@ const QuestionsPage = () => {
         return b.likes-a.likes
     }
 
+    // pre: none
+    // post: none
+    // args none
+    // returns the number of vw units to offset
+    // the upload button from the filter bar
+    useEffect(() => {
+        if (filterBarRef.current) {
+            const vwUnits = (filterBarRef.current.offsetWidth/window.innerWidth) * 100;
+            setUploadButtonOffset(74 - vwUnits);
+        }
+    }, [filterBarRef.current]);
+
+    // pre: numerical is non-null
+    // post: none
+    // args numerical, the number of vw to offset upload button
+    // returns stirng representing number of vw units
+    // to offset upload button
+    function getUploadButtonOffset(numerical) {
+        return numerical + "vw";
+    }
+
     const filterTypes = {"Ages": "rangeOut", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
@@ -117,7 +142,10 @@ const QuestionsPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/>
+                <ul style={{margin: "0 0 0 2vw", padding: "0"}}>
+                    <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
+                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"/upload/QuestionUpload"}></UploadButton></li>
+                </ul>
                 <QuestionsList questions={questions.filter(filterOK).sort(compareLikes)} />
             </div>
         </div>

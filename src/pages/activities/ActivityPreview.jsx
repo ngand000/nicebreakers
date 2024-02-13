@@ -8,7 +8,7 @@ export default function ActivityPreview({activity}) {
     const navigate = useNavigate()
 
     function rangeToString(r) {
-        return (r[0] === r[1] ? r[0] : r[0] + "-" + r[1])
+        return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
     }
 
 
@@ -24,9 +24,9 @@ export default function ActivityPreview({activity}) {
         height: "100%"
     }
 
-    const nameStyle = {display: "flex", fontSize: "4vmin", textDecoration: "underline", width: "100%", border: "solid", margin: "0 0 0 0"}
+    const nameStyle = {display: "flex", fontSize: "4vmin", textDecoration: "underline", width: "100%", margin: "0 0 0 0"}
 
-    const abstractStyle = {display: "flex", fontSize: "2.5vmin", textAlign: "left", width: "100%", height: "60%", maxHeight: "60%", overflowY: "auto", overflowX: "hidden", marginTop: "0", border: "solid"}
+    const abstractStyle = {display: "flex", fontSize: "2.5vmin", textAlign: "left", width: "100%", height: "60%", maxHeight: "60%", overflowY: "auto", overflowX: "hidden", marginTop: "0"}
 
     const bottomBar = {display: "flex", width: "100%", height: "15%", margin: "auto 0 5% 0"}
 
