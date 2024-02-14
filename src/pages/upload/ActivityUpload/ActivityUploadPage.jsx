@@ -186,8 +186,9 @@ const UploadPage = (props) => {
     //pre: none
     //post: none
     //args: none
-    //return, none, pushes new Activity to remote database
+    //return, true if pushes new Activity to remote database
     //        populated with user inputs
+    //        false if push failed
     const queryPush = async() => {
         try {
             await DataStore.save(
@@ -207,8 +208,11 @@ const UploadPage = (props) => {
                     tags: null,
                 })
             );
+            alert("Uploaded Successfully");
+            return true;
         } catch (error) {
             alert("Error in submitting activity");
+            return false;
         }
     };
 
@@ -221,8 +225,9 @@ const UploadPage = (props) => {
     const checkSubmit = (event) => {
         event.preventDefault();
         if (filterChecks()) {
-            queryPush();
-            window.location.href = "/";
+            if (queryPush()) {
+                window.location.href = "/";
+            }
         }
     };
 
@@ -290,7 +295,7 @@ const UploadPage = (props) => {
                 </div>
                 <br/>
                 <div className="color-box" style={{backgroundColor: "rgb(169,246,187)"}}>
-                    <label className="feild-entry-title" htmlFor={"photos"}>Upload photos:</label>
+                    <label className="feild-entry-title" htmlFor={"photos"}>Upload photos (Unsupported):</label>
                     <input className="small-input" type="file" accept="image/*" id="activityPics" name="activityPics" multiple onChange={(thisEvent) => handleFileInput(thisEvent)}/>
                 </div>
                 <br/>

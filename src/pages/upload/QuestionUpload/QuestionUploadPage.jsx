@@ -100,8 +100,9 @@ const UploadPage = (props) => {
     //pre: none
     //post: none
     //args: none
-    //return, none, pushes new Activity to remote database
+    //return, true if pushes new Question to remote database
     //        populated with user inputs
+    //        false if push failed
     const queryPush = async() => {
         try {
             await DataStore.save(
@@ -110,12 +111,16 @@ const UploadPage = (props) => {
                     likes: "0",
                     ageRange: [Number(ageMin), Number(ageMax)],
                     endorsed: false,
-                    tage: null,
+                    tags: null,
                     author: authorVal,
                 })
             );
+            alert("Uploaded Successfully");
+            return true;
         } catch (error) {
+            alert(error);
             alert("Error in submitting question");
+            return false;
         }
     };
 
@@ -128,8 +133,9 @@ const UploadPage = (props) => {
     const checkSubmit = (event) => {
         event.preventDefault();
         if (filterChecks()) {
-            queryPush();
-            window.location.href = "/questions";
+            if (queryPush()) {
+                window.location.href = "/questions";
+            }
         }
     };
 
