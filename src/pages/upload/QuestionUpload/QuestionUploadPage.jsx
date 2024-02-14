@@ -129,10 +129,11 @@ const UploadPage = (props) => {
     //returns: calls the filter check and if all
     //         checks pass, submits query to database
     //         add redirects to respective viewing page
-    const checkSubmit = (event) => {
+    const checkSubmit = async(event) => {
         event.preventDefault();
         if (filterChecks()) {
-            if (queryPush()) {
+            const queryStatus = await queryPush();
+            if (queryStatus) {
                 window.location.href = "/questions";
             }
         }
