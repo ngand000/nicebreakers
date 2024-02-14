@@ -118,7 +118,6 @@ const UploadPage = (props) => {
             alert("Uploaded Successfully");
             return true;
         } catch (error) {
-            alert(error);
             alert("Error in submitting question");
             return false;
         }
