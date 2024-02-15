@@ -188,7 +188,7 @@ const UploadPage = (props) => {
     //args: none
     //return, true if pushes new Activity to remote database
     //        populated with user inputs
-    //        false if push failed
+    //        and false if push failed
     const queryPush = async() => {
         try {
             await DataStore.save(
@@ -222,10 +222,11 @@ const UploadPage = (props) => {
     //returns: calls the filter check and if all
     //         checks pass, submits query to database
     //         add redirects to respective viewing page
-    const checkSubmit = (event) => {
+    const checkSubmit = async(event) => {
         event.preventDefault();
         if (filterChecks()) {
-            if (queryPush()) {
+            const queryStatus = await queryPush();
+            if (queryStatus) {
                 window.location.href = "/";
             }
         }
