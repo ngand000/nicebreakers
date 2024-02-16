@@ -1,4 +1,4 @@
-﻿# NiceBreakers
+﻿# NiceBreakers Developer Manual
 When planning an event and trying to find icebreaker activities to do, the best you can
 find is just pre-compiled lists of icebreakers rather than something that better fits
 your needs. The solution to that problem is Nicebreakers. Nicebreakers will be a website
