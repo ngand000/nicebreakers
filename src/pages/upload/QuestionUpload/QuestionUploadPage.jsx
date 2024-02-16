@@ -102,7 +102,7 @@ const UploadPage = (props) => {
     //args: none
     //return, true if pushes new Question to remote database
     //        populated with user inputs
-    //        false if push failed
+    //        and false if push failed
     const queryPush = async() => {
         try {
             await DataStore.save(
