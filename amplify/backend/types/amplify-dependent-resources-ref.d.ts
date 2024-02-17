@@ -16,11 +16,5 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolId": "string",
       "UserPoolName": "string"
     }
-  },
-  "storage": {
-    "s3nicebreakersstoragec9bdab74": {
-      "BucketName": "string",
-      "Region": "string"
-    }
   }
 }

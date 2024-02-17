@@ -46,6 +46,27 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [],
+    "hostedUI": true,
+    "hostedUIDomainName": "4u24r9i5cg74",
+    "authProvidersUserPool": [
+      "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"]}"
   }
 }
