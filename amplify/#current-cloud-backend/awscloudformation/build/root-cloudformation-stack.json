@@ -226,6 +226,7 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
+          "hostedUI": false,
           "env": "staging"
         }
       }

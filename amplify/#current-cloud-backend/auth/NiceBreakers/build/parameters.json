@@ -58,5 +58,6 @@
     ]
   },
   "breakCircularDependency": true,
-  "dependsOn": []
+  "dependsOn": [],
+  "hostedUI": false
 }
