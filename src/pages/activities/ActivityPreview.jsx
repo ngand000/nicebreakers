@@ -8,7 +8,7 @@ export default function ActivityPreview({activity}) {
     const navigate = useNavigate()
 
     function rangeToString(r) {
-        return (r[0] === r[1] ? r[0] : r[0] + "-" + r[1])
+        return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
     }
 
 

@@ -1,5 +1,7 @@
 .uploadButtonFilterStyle {
+    background-color: rgb(148, 148, 242);
     border-radius: 10vmin;
+    border-color: transparent;
     display: flex;
     padding: 1vh 1vw 1vh 1vw;
     font-size: 3vh;

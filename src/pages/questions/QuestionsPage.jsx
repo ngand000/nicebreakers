@@ -1,16 +1,14 @@
 import QuestionsList from "./QuestionsList";
 import FilterBar from "../activities/FilterBar";
 import FilterEntry from "../activities/FilterEntry";
-import UploadButton from "../upload/UploadButton.jsx"
-import React, {useEffect, useRef, useState} from 'react'
+import UploadButton from "../upload/UploadButton.jsx";
+import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
 
 Amplify.configure(config);
-
-const questions = await DataStore.query(Question);
 
 // page that displays the questions pulled from the database
 const QuestionsPage = () => {
@@ -20,6 +18,12 @@ const QuestionsPage = () => {
     const [filters, setFilters] = useState({});
     const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
     const filterBarRef = useRef(null);
+    const [questions, setQuestions] = useState([])
+
+    useEffect(() => {
+        (async () => {
+        setQuestions(await DataStore.query(Question))})()
+    })
 
     //pre: none
     //args: label is the filter we are setting a value for
@@ -27,7 +31,6 @@ const QuestionsPage = () => {
     function openPopup(label) {
         setFilterEditing(label)
         setIsPopupOpen(true);
-        console.log(filters)
     }
 
     //pre: filterEditing has a value
@@ -46,7 +49,6 @@ const QuestionsPage = () => {
     //post: removes that filter from filters, if it is there
     function removeFilter(filter) {
         let newFilters = {...filters}
-        console.log(filter)
         delete newFilters[filter]
         setFilters(newFilters)
     }
@@ -66,7 +68,6 @@ const QuestionsPage = () => {
     // args: a, the question for which it is being checked if it fits the filters
     // returns: boolean representing whether a fits all current filters
     function filterOK (a) {
-        console.log(filters)
         for (const [k, value] of Object.entries(filters)) {
             let key = actualProperties[k]
             switch (filterTypes[k]) {
@@ -141,7 +142,7 @@ const QuestionsPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <ul style={{margin: "2vh 0 2vh 2vw", padding: "0"}}>
+                <ul style={{margin: "0 0 0 2vw", padding: "0"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
                     <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"/upload/QuestionUpload"}></UploadButton></li>
                 </ul>

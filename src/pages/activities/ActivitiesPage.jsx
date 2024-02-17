@@ -2,15 +2,13 @@ import ActivityList from "./ActivityList";
 import FilterBar from "./FilterBar";
 import FilterEntry from "./FilterEntry";
 import UploadButton from "../upload/UploadButton.jsx";
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
 
 Amplify.configure(config);
-
-const activities = await DataStore.query(Activity);
 
 // page that displays the activities pulled from the database
 const ActivitiesPage = () => {
@@ -20,6 +18,12 @@ const ActivitiesPage = () => {
     const [filters, setFilters] = useState({});
     const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
     const filterBarRef = useRef(null);
+    const [activities, setActivities] = useState([])
+
+    useEffect(() => {
+        (async () => {
+        setActivities(await DataStore.query(Activity))})()
+    })
 
     //pre: none
     //args: label is the filter we are setting a value for
@@ -139,7 +143,7 @@ const ActivitiesPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <ul style={{margin: "2vh 0 2vh 2vw", padding: "0"}}>
+                <ul style={{margin: "0 0 0 2vw", padding: "0"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
                     <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"/upload/ActivityUpload"}></UploadButton></li>
                 </ul>
