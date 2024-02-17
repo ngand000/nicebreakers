@@ -1,5 +1,5 @@
 # User Manual
-- How to Filter Activities by Group Size
+** - How to Filter Activities by Group Size **
   1. Ensure you are on the "Activities" tab.
   2. Click on the red "Group Size" button.
   3. Enter either:
@@ -7,7 +7,7 @@
      b. A valid range of the number of participants (e.g: 3-5)
   4. Press the close button.
   5. All activities that can accommodate the desired amount of participants will be displayed.
-- How to Filter Activities by Age
+** - How to Filter Activities by Age **
   1. Ensure you are on the "Activities" tab.
   2. Click on the green "Ages" button.
   3. Enter either:
@@ -15,7 +15,7 @@
      b. A valid range of participant ages (e.g: 11-15)
   4. Press the close button.
   5. All activities that can accommodate the selected participant age will be displayed.
-- How to Filter Activities by Duration
+** - How to Filter Activities by Duration **
   1. Ensure you are on the "Activities" tab.
   2. Click on the blue "Duration (min)" button.
   3. Enter either:
@@ -23,11 +23,11 @@
      b. A valid range of the minutes available to conduct the icebreaker activity (e.g: 35-60)
   4. Press the close button.
   5. All activities that can accommodate the desired duration will be displayed.
-- How to Filter Endorsed Activities
+** - How to Filter Endorsed Activities **
   1. Ensure you are on the "Activities" tab.
   2. Click on the purple "Endorsed" button.
   3. All activities that are endorsed by moderators will be displayed.
-- How to Upload an Activity
+** - How to Upload an Activity **
   1. Ensure you are on the "Activities" tab.
   2. Click on the "Upload" button.
   3. Enter:
@@ -40,7 +40,7 @@
      g. In "Upload Photos," upload diagrams, photos, or other resources needed to understand and play the game.
   4. Press the "Upload" button.
   6. Your new activity is now displayed in our database!
-- How to Filter Questions by Age
+** - How to Filter Questions by Age **
   1. Ensure you are on the "Questions" tab.
   2. Click on the green "Ages" button.
   3. Enter either:
@@ -48,11 +48,11 @@
      b. A valid range of participant ages (e.g: 11-15)
   4. Press the close button.
   5. All questions that can accommodate the selected participant age will be displayed.
-- How to Filter Endorsed Questions
+** - How to Filter Endorsed Questions **
   1. Ensure you are on the "Questions" tab.
   2. Click on the purple "Endorsed" button.
   3. All questions that are endorsed by moderators will be displayed.
-- How to Upload a Question
+** - How to Upload a Question **
   1. Ensure you are on the "Questions" tab.
   2. Click on the "Upload" button.
   3. Enter:
