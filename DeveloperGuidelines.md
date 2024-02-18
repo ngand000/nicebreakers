@@ -13,6 +13,8 @@ Coding guideline:
 - CSS Style Guidelines https://google.github.io/styleguide/htmlcssguide.html 
 - We chose both of these style guidelines because they are fairly simple but will still keep our code orderly and clean with a style that everyone on our team likes. We preferred some of the style choices in these above other style guidelines we found, such as when to use React classes vs functions (and not to use React.createClass). We will enforce the style by requiring pull requests to merge changes, so that another team member will always have to check your code before it’s added, and they will make sure that your code has proper style.
 
+How to report a Bug
+- Go to the public nicebreakers github repository: https://github.com/ngand000/nicebreakers. And in the "issues" tab create a new issue in the top right. Provide a detailed description of the issue, any specifics needed to replicate it and the relevant files/webpages that are involved in this issue.
 
 How to add a new tests:
 - In the .test.jsx file (in src directory) for the page you are adding a test for, you add a new test() with the name and a function that should run to completion without any assertion fails
