@@ -29,7 +29,7 @@ Test/Build/Start Pre-requirements:
 How to Build/Run System:
 - Clone the nicebreakers repository onto your local machine from the public github: https://github.com/ngand000/nicebreakers into your prefered IDE
 - CD into the nicebreakers root directory and run: “amplify init”
-    - If asked to login with Amplify Credentials, see a team member to get added to the Amplify Database
+    - If asked to login with Amplify Credentials, email ngand000@uw.edu to ask to get added to the Amplify Database
 - Still CD’d into the nicebreakers root directory and run: “amplify pull”
     - Install any dependencies that command line may prompt you with, likely in format “npm install @amplify/[X]”
 - Still CD’d in the nicebreakers root directory, run “npm start”
@@ -40,7 +40,7 @@ How to Build/Run System:
 How to Test:
 - Clone the nicebreakers repository onto your local machine from the public github: https://github.com/ngand000/nicebreakers
 - CD into the nicebreakers root directory and run: “amplify init”
-    - If asked to login with Amplify Credentials, see a team member to get added to the Amplify Database
+    - If asked to login with Amplify Credentials, email ngand000@uw.edu to ask to get added to the Amplify Database
 - Still CD’d into the nicebreakers root directory and run: “amplify pull”
     - Install any dependencies that command line may prompt you with, likely in format “npm install @amplify/[X]”
 - Still CD’d in the nicebreakers root directory, run “npm test”
