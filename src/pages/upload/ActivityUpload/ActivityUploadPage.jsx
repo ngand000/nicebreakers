@@ -244,7 +244,7 @@ const UploadPage = (props) => {
     return (
         <div>
             <div className="header">
-                <img src={"logoplaceholder.png"} alt={"logo"}/>
+                <img src={"../../../../logoplaceholder.png"} alt={"logo"}/>
                 <text className="title">Upload Activity</text>
             </div>
             <form id ="uploadActivity" style={{width: "80%", marginLeft: "10%"}}>
