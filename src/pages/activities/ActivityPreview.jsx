@@ -1,8 +1,6 @@
 import React from "react"
 import "./ActivityPreview.css"
 import {useNavigate} from "react-router-dom"
-import { DataStore } from 'aws-amplify/datastore';
-import { Activity } from "../../models"
 
 // The preview for a single activity pulled from the database
 export default function ActivityPreview({activity}) {
@@ -11,15 +9,6 @@ export default function ActivityPreview({activity}) {
 
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
-    }
-
-    const updateLikeCount = async(event) => {
-        event.preventDefault();
-        await DataStore.save(
-            Activity.copyOf(activity, updated => {
-                updated.likes = activity.likes + 1;
-            })
-        );
     }
 
     const innerDivStyle = {
@@ -50,20 +39,18 @@ export default function ActivityPreview({activity}) {
 
     const endorseStyle = {position: "absolute", top: "2%", right: "2%", width: "3vmin"}
 
-    return ( <div className={"outerDivStyle"}>
+    return ( <div className={"outerDivStyle"} onClick={() => {navigate("post?id=" + activity.id)}}>
             <div style={innerDivStyle}>
-                <div onClick={() => {navigate("post?id=" + activity.id)}}>
-                    <div style={nameStyle}>
-                        {activity.name}
-                    </div>
-                    <p style={abstractStyle}>
-                        {activity.abstract}
-                    </p>
-                    {activity.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
+                <div style={nameStyle}>
+                    {activity.name}
                 </div>
+                <p style={abstractStyle}>
+                    {activity.abstract}
+                </p>
+                {activity.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
                 <div style={bottomBar}>
                     <div style={iconWithText}>
-                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent)}/>
+                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"}/>
                         <div style={likeNumStyle}>
                             {activity.likes > 10000 ? activity.likes.toExponential() : activity.likes}
                         </div>
