@@ -11,7 +11,6 @@ export default function ActivityPreview({activity}) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
     }
 
-
     const innerDivStyle = {
         border: "1px",
         borderStyle: "solid",
