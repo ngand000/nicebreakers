@@ -36,7 +36,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2024-02-13T22:13:48.486Z",
+      "lastPushTimeStamp": "2024-02-06T22:29:36.574Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apinicebreakers"
@@ -62,7 +62,9 @@
           ]
         },
         "signupAttributes": [],
-        "socialProviders": [],
+        "socialProviders": [
+          "GOOGLE"
+        ],
         "usernameAttributes": [
           "EMAIL"
         ],
@@ -76,19 +78,19 @@
         "UserPoolId": "us-west-2_pwzwlq8TM",
         "AppClientIDWeb": "3r4dum550cvhtbsv5ii3pomc69",
         "AppClientID": "4e6otd4ck4o3nmmqc2k3ar1kkl",
-        "HostedUIDomain": "4u24r9i5cg74-staging",
         "IdentityPoolId": "us-west-2:51410c04-c961-4cd9-a32e-8feb356e8740",
         "UserPoolArn": "arn:aws:cognito-idp:us-west-2:741451776109:userpool/us-west-2_pwzwlq8TM",
         "IdentityPoolName": "testAuthIdentityPool__staging",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"]}",
-        "UserPoolName": "NiceBreakers"
+        "UserPoolName": "NiceBreakers",
+        "HostedUIDomain": "4u24r9i5cg74-staging",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"]}"
       },
-      "lastPushTimeStamp": "2024-02-13T22:13:48.625Z",
+      "lastPushTimeStamp": "2024-02-06T22:29:36.691Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/auth/NiceBreakers-cloudformation-template.json",
         "logicalId": "authNiceBreakers"
       },
-      "lastPushDirHash": "NFitavlKAId7irYsLBuNrIbLH8U="
+      "lastPushDirHash": "h8f0Gv21AfP757w+iHkzknIJF7I="
     }
   },
   "storage": {
@@ -100,7 +102,7 @@
         "BucketName": "nicebreakers-storage-c9bdab74222128-staging",
         "Region": "us-west-2"
       },
-      "lastPushTimeStamp": "2024-02-13T22:13:48.491Z",
+      "lastPushTimeStamp": "2024-02-06T22:29:36.578Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3nicebreakersstoragec9bdab74"
