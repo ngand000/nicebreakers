@@ -10,7 +10,7 @@ export default function QuestionPreview({question}) {
         event.preventDefault();
         await DataStore.save(
             Question.copyOf(question, updated => {
-                updated.likes = String(Number(question.likes) + 1);
+                updated.likes = question.likes + 1;
             })
         );
     }
