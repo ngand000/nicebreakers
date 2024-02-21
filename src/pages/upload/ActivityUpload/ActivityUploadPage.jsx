@@ -199,7 +199,6 @@ const UploadPage = (props) => {
                     author: authorVal,
                     abstract: activityAbstract,
                     likes: 0,
-                    pictures: userImages,
                     playerCount: [Number(playerCountMin), Number(playerCountMax)],
                     duration: [Number(durationMin), Number(durationMax)],
                     ageRange: [Number(ageMin), Number(ageMax)],
