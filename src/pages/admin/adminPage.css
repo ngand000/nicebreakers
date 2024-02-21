@@ -13,6 +13,9 @@
 .divStyle::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
 }
+/*.{report.id} {*/
+
+/*}*/
 
 .outerDivStyle {
     display: block;
