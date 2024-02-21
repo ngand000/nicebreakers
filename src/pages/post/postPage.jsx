@@ -2,9 +2,10 @@ import {useSearchParams} from "react-router-dom";
 import { Amplify } from 'aws-amplify';
 import { Activity } from '../../models';
 import config from '../../aws-exports.js';
-import {useEffect, useState, React} from "react";
+import {useEffect, useState} from "react";
 import {DataStore} from "aws-amplify/datastore";
 import "./postPage.css"
+import ImageWithCaption from "./ImageWithCaption";
 
 Amplify.configure(config);
 
@@ -21,6 +22,17 @@ const PostPage = () => {
         setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postParams.get('id'))])))[0])})()
     })
 
+    const updateLikeCount = async(event, changeVal) => {
+        event.preventDefault();
+        if (changeVal > 0 || activity.likes > 0) {
+            await DataStore.save(
+                Activity.copyOf(activity, updated => {
+                    updated.likes = activity.likes + changeVal;
+                })
+            );
+        }
+    }
+
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
 
     const titleStyle = {margin: "auto 1vmin auto 0"}
@@ -28,6 +40,8 @@ const PostPage = () => {
     const valueStyle = {margin: "auto 0 auto 0"}
 
     const attributesStyle = {display: "flex"}
+
+    const images = {display: "flex", overflowX: "scroll"}
 
     return (<div>
             {activity && (<div>
@@ -60,7 +74,13 @@ const PostPage = () => {
                 <h2>Description:</h2>
                 <p className={"descStyle"}>{activity.description}</p>
                 <h2>Images</h2>
-                {/*images go here*/}
+                <div style={images}>
+                    {activity.captions && activity.captions.map((caption, i) => {
+                        return <ImageWithCaption caption={caption} id={activity.id} imageNum={i} />}
+                    )}
+                </div>
+                <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
+                <img className={"likeDislikeStyle"} src={"dislikeplaceholder.webp"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
             </div>)}
         </div>
     )
