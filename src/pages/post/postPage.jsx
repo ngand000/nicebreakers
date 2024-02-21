@@ -24,11 +24,13 @@ const PostPage = () => {
 
     const updateLikeCount = async(event, changeVal) => {
         event.preventDefault();
-        await DataStore.save(
-            Activity.copyOf(activity, updated => {
-                updated.likes = activity.likes + changeVal;
-            })
-        );
+        if (changeVal > 0 || activity.likes > 0) {
+            await DataStore.save(
+                Activity.copyOf(activity, updated => {
+                    updated.likes = activity.likes + changeVal;
+                })
+            );
+        }
     }
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
