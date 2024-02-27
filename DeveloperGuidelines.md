@@ -23,7 +23,7 @@ How to add a new tests:
 Test/Build/Start Pre-requirements:
 - You can technically do these anywhere and use path varibles, but we reccomend doing these in the nicebreakers root directory after cloning the repository for ease
     - If you don’t already have it, Install Node.js: https://nodejs.org/en
-    - If you don’t already have it, Install npm (should be included with Node.js): https://www.npmjs.com/
+    - If you don’t already have it, Install npm (should be included with Node.js): https://www.npmjs.com/. A 64-bit version is required for Amplify
     - If you don’t already have it, Install AWS Amplify: https://docs.amplify.aws/javascript/tools/cli/start/set-up-cli/
 
 How to Build/Run System:
