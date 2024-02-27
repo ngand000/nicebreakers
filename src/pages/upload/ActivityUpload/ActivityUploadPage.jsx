@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../../models';
 import { Amplify } from 'aws-amplify';
+import { uploadData } from 'aws-amplify/storage';
+import { remove } from 'aws-amplify/storage';
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
 
@@ -25,6 +27,7 @@ const UploadPage = (props) => {
     const [ageMin, ageMinSetter] = useState(0);
     const [ageMax, ageMaxSetter] = useState(1);
     const [userImages, userImageSetter] = useState([]);
+    const [userImageTypes, userImageTypesSetter] = useState([]);
 
     const filterNames = ["activityName", "activityAbstract", "activityDescription", "authorVal", "playerCountMin", "playerCountMax", "durationMin", "durationMax", "ageMin", "ageMax"];
 
@@ -67,15 +70,18 @@ const UploadPage = (props) => {
         }
         const currFiles = event.target.files;
         const tempFiles = [];
+        const tempFileTypes = [];
         for (let i = 0; i < currFiles.length; i++) {
             const currFile = currFiles[i];
             if (currFile && currFile.type.startsWith('image/')) {
                 tempFiles.push(currFile);
+                tempFileTypes.push(String(currFile.type).split('image/').pop());
             } else {
                 alert(currFile.name + " is not an image file (jpeg, png, etc)");
             }
         }
         userImageSetter(tempFiles);
+        userImageTypesSetter(tempFileTypes);
     };
 
     //pre: state varibles are non-null
@@ -190,8 +196,10 @@ const UploadPage = (props) => {
     //        populated with user inputs
     //        and false if push failed
     const queryPush = async() => {
+        let currActivity = null;
+        let i = 0;
         try {
-            await DataStore.save(
+            currActivity = await DataStore.save(
                 new Activity({
                     name: activityName,
                     description: activityDescription,
@@ -199,7 +207,8 @@ const UploadPage = (props) => {
                     author: authorVal,
                     abstract: activityAbstract,
                     likes: 0,
-                    pictures: userImages,
+                    fileTypes: userImageTypes,
+                    captions: [],
                     playerCount: [Number(playerCountMin), Number(playerCountMax)],
                     duration: [Number(durationMin), Number(durationMax)],
                     ageRange: [Number(ageMin), Number(ageMax)],
@@ -208,9 +217,22 @@ const UploadPage = (props) => {
                     tags: null,
                 })
             );
+            for (i = 0; i < userImages.length; i++) {
+                await uploadData({
+                    key: currActivity.id + "img" + i + "." + userImageTypes[i],
+                    data: userImages[i],
+                }).result;
+            }
             alert("Uploaded Successfully");
             return true;
         } catch (error) {
+            console.log(error);
+            for (let j = 0; j < i; j++) {
+                await remove({key: currActivity.id + "img" + j + "." + userImageTypes[j]});
+            }
+            if (currActivity) {
+                await DataStore.delete(currActivity);
+            }
             alert("Error in submitting activity");
             return false;
         }
@@ -296,7 +318,7 @@ const UploadPage = (props) => {
                 </div>
                 <br/>
                 <div className="color-box" style={{backgroundColor: "rgb(169,246,187)"}}>
-                    <label className="feild-entry-title" htmlFor={"photos"}>Upload photos (Unsupported):</label>
+                    <label className="feild-entry-title" htmlFor={"photos"}>Upload photos:</label>
                     <input className="small-input" type="file" accept="image/*" id="activityPics" name="activityPics" multiple onChange={(thisEvent) => handleFileInput(thisEvent)}/>
                 </div>
                 <br/>

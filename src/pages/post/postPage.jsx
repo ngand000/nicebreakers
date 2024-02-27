@@ -75,8 +75,8 @@ const PostPage = () => {
                 <p className={"descStyle"}>{activity.description}</p>
                 <h2>Images</h2>
                 <div style={images}>
-                    {activity.captions && activity.captions.map((caption, i) => {
-                        return <ImageWithCaption caption={caption} id={activity.id} imageNum={i} />}
+                    {activity.fileTypes && activity.fileTypes.map((fileType, i) => {
+                        return <ImageWithCaption caption={activity.captions[i]} id={activity.id} imageNum={i} imgType={fileType}/>}
                     )}
                 </div>
                 <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
