@@ -1,0 +1,6 @@
+.filterBarStyle {
+    display: flex;
+    padding: 1vh 1vw 3vh 5vw;
+    font-size: 5vmin;
+    overflow-x: auto;
+}

@@ -1,0 +1,17 @@
+.outerDivStyle2 {
+    display: block;
+    width: 30.66%;
+    height: 20vh;
+    padding: 2vh 1.33% 2vh 1.33%;
+    transition-timing-function: ease-out;
+    transition:
+            width 0.25s,
+            height 0.25s,
+            padding 0.25s
+}
+
+.outerDivStyle2:hover {
+    padding: 1vh 0.67% 1vh 0.67%;
+    width: 32%;
+    height: 22vh;
+}

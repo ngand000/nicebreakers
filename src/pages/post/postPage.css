@@ -1,0 +1,30 @@
+.descStyle {
+    border: solid;
+    border-width: 5px;
+    border-radius: 10px;
+    border-color: rgb(150, 150, 150);
+    margin: 0 5px 0 5px;
+}
+
+.titleAndValueStyle {
+    display: flex;
+    border: solid;
+    border-width: 5px;
+    border-radius: 10px;
+    flex-shrink: 1;
+    margin: 20px 5px 5px 5px;
+    width: 20%
+}
+
+.likeDislikeStyle {
+    display: flex;
+    flex-shrink: 1;
+    margin: 2% 1% 1% 1%;
+    padding: 1vh 1vw 1vh 1vw;
+    border: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    flex-shrink: 1;
+    width: 3vmin;
+    height: auto;
+}

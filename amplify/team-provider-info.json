@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nicebreakers-staging-222128-authRole",
+      "UnauthRoleArn": "arn:aws:iam::741451776109:role/amplify-nicebreakers-staging-222128-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::741451776109:role/amplify-nicebreakers-staging-222128-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-nicebreakers-staging-222128-deployment",
+      "UnauthRoleName": "amplify-nicebreakers-staging-222128-unauthRole",
+      "StackName": "amplify-nicebreakers-staging-222128",
+      "StackId": "arn:aws:cloudformation:us-west-2:741451776109:stack/amplify-nicebreakers-staging-222128/985e9ca0-b4bd-11ee-bff7-0abe089ba2cf",
+      "AmplifyAppId": "d3pb2yef2pgy2m"
+    },
+    "categories": {
+      "auth": {
+        "NiceBreakers": {}
+      },
+      "storage": {
+        "s3nicebreakersstoragec9bdab74": {}
+      }
+    }
+  }
+}
