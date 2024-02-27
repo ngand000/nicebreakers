@@ -108,7 +108,7 @@ const UploadPage = (props) => {
             await DataStore.save(
                 new Question({
                     question: questionText,
-                    likes: "0",
+                    likes: 0,
                     ageRange: [Number(ageMin), Number(ageMax)],
                     endorsed: false,
                     tags: null,
