@@ -1,17 +1,19 @@
 import {useSearchParams} from "react-router-dom";
 import { Amplify } from 'aws-amplify';
-import { Activity } from '../../models';
+import {Activity} from '../../models';
 import config from '../../aws-exports.js';
 import {useEffect, useState} from "react";
 import {DataStore} from "aws-amplify/datastore";
 import "./postPage.css"
 import ImageWithCaption from "./ImageWithCaption";
+import ReportPopup from "./ReportPopup";
 
 Amplify.configure(config);
 
 const PostPage = () => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
@@ -43,7 +45,10 @@ const PostPage = () => {
 
     const images = {display: "flex", overflowX: "scroll"}
 
+    const bottomBar = {display: "flex"}
+
     return (<div>
+            {isPopupOpen && <ReportPopup closePopup={setIsPopupOpen} id={activity.id}/>}
             {activity && (<div>
                 <div style={headerStyle}>
                     <img src={"logoplaceholder.png"} alt={"logo"}/>
@@ -75,12 +80,15 @@ const PostPage = () => {
                 <p className={"descStyle"}>{activity.description}</p>
                 <h2>Images</h2>
                 <div style={images}>
-                    {activity.captions && activity.captions.map((caption, i) => {
-                        return <ImageWithCaption caption={caption} id={activity.id} imageNum={i} />}
+                    {activity.fileTypes && activity.fileTypes.map((fileType, i) => {
+                        return <ImageWithCaption caption={activity.captions[i]} id={activity.id} imageNum={i} imgType={fileType}/>}
                     )}
                 </div>
-                <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
-                <img className={"likeDislikeStyle"} src={"dislikeplaceholder.webp"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
+                <div style={bottomBar}>
+                    <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
+                    <img className={"likeDislikeStyle"} src={"dislikeplaceholder.webp"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
+                    <button className={"reportStyle"} onClick={() => setIsPopupOpen(true)}> Report </button>
+                </div>
             </div>)}
         </div>
     )

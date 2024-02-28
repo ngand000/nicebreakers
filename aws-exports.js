@@ -8,6 +8,19 @@ const config =  {
           defaultAuthMode: 'apiKey',
           apiKey: 'da2-apegeouguzap3bibhsxtsz5sse'
         }
+    },
+    Auth: {
+      identityPoolId: 'us-west-2:51410c04-c961-4cd9-a32e-8feb356e8740', //REQUIRED - Amazon Cognito Identity Pool ID
+      region: 'us-west-2', // REQUIRED - Amazon Cognito Region
+      userPoolId: 'us-west-2_pwzwlq8TM', //OPTIONAL - Amazon Cognito User Pool ID
+      userPoolWebClientId: '3r4dum550cvhtbsv5ii3pomc69' //OPTIONAL - Amazon Cognito Web Client ID
+    },
+    Storage: {
+      AWSS3: {
+        bucket: 'nicebreakers-storage-c9bdab74222128-staging', //REQUIRED -  Amazon S3 bucket name
+        region: 'us-west-2', //OPTIONAL -  Amazon service region
+        isObjectLockEnabled: false //OPTIONAl - Object Lock parameter
+      }
     }
 };
 
