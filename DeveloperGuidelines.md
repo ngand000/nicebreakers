@@ -11,20 +11,23 @@ Repository Layout:
 Coding guideline:
 - React Style Guidelines https://airbnb.io/javascript/react/#basic-rules 
 - CSS Style Guidelines https://google.github.io/styleguide/htmlcssguide.html 
-- We chose both of these style guidelines because they are fairly simple but will still keep our code orderly and clean with a style that everyone on our team likes. We preferred some of the style choices in these above other style guidelines we found, such as when to use React classes vs functions (and not to use React.createClass). We will enforce the style by requiring pull requests to merge changes, so that another team member will always have to check your code before it’s added, and they will make sure that your code has proper style.
+- We chose both of these style guidelines because they are fairly simple but will still keep our code orderly and clean with a style that everyone on our team likes. We preferred some of the style choices in these style guidelines we found, such as when to use React classes vs functions (and not to use React.createClass). We will enforce the style by requiring pull requests to merge changes, so that another team member will always have to check your code before it’s added, and they will make sure that your code has proper style.
 
 How to report a Bug
-- Go to the public nicebreakers github repository: https://github.com/ngand000/nicebreakers. And in the "issues" tab create a new issue in the top right. Provide a detailed description of the issue, any specifics needed to replicate it and the relevant files/webpages that are involved in this issue.
+- Go to the public nicebreakers github repository: https://github.com/ngand000/nicebreakers. And in the "issues" tab create a new issue in the top right. Provide a detailed description of the issue, any specifics needed to replicate it, and the relevant files/webpages that are involved in this issue.
 
 How to add a new tests:
-- In the .test.jsx file (in src directory) for the page you are adding a test for, you add a new test() with the name and a function that should run to completion without any assertion fails
-    - If there is no .test.jsx file for the page you want to test, simply create one then do the above
+- In the cooresponding [PageName].test.jsx (in the respective subfolder within the src/pages directory) for the page you are adding a test for, you add a new test() method with its name and a function that should run to completion without any assertion fails
+    - If there is no [PageName].test.jsx file for the page you want to test, simply create one then do the above
+- Use Jest with the React Testing Library for syntax and conventions, or alternatively look at our test files (ex: src\pages\activities\ActivityPreview.test.jsx)
+    - Helpful Jest Documentation: https://jestjs.io/docs/tutorial-react
+    - Helpful React Testing Library Resource: https://testing-library.com/docs/react-testing-library/example-intro
 
 Test/Build/Start Pre-requirements:
 - You can technically do these anywhere and use path varibles, but we reccomend doing these in the nicebreakers root directory after cloning the repository for ease
     - If you don’t already have it, Install Node.js: https://nodejs.org/en
     - If you don’t already have it, Install npm (should be included with Node.js): https://www.npmjs.com/
-    - If you don’t already have it, Install AWS Amplify: https://docs.amplify.aws/javascript/tools/cli/start/set-up-cli/
+    - If you don’t already have it, Install AWS Amplify CLI: https://docs.amplify.aws/javascript/tools/cli/start/set-up-cli/
 
 How to Build/Run System:
 - Clone the nicebreakers repository onto your local machine from the public github: https://github.com/ngand000/nicebreakers into your prefered IDE
