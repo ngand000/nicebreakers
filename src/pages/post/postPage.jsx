@@ -64,7 +64,7 @@ const PostPage = () => {
                     </div>
                     <div style={{borderColor: "rgb(49,224,255)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Duration: </h3>
-                        <p style={valueStyle}>{rangeToString(activity.duration)} {activity.duration == [1,1] ? "minute" : "minutes"}</p>
+                        <p style={valueStyle}>{rangeToString(activity.duration)} {activity.duration === [1,1] ? "minute" : "minutes"}</p>
                     </div>
                     <div style={{borderColor: "rgb(100,77,255)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Likes: </h3>

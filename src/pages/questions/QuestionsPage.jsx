@@ -112,7 +112,7 @@ const QuestionsPage = () => {
             const vwUnits = (filterBarRef.current.offsetWidth/window.innerWidth) * 100;
             setUploadButtonOffset(74 - vwUnits);
         }
-    }, [filterBarRef.current]);
+    }, []);
 
     // pre: numerical is non-null
     // post: none
