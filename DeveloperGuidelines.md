@@ -32,7 +32,8 @@
     - If asked to login with Amplify Credentials, email ngand000@uw.edu to ask to get added to the Amplify Database
 - Still CD’d into the nicebreakers root directory and run: “amplify pull”
     - Install any dependencies that command line may prompt you with, likely in format “npm install @amplify/[X]”
-- Still CD’d in the nicebreakers root directory, run “npm start”
+- Still in the root directory, run "npm install"
+- Still in the root directory, run “npm start”
     - If it asks you to install react-scripts, do so with the given command
     - Then rerun “npm start”
 - A localhost:3000 port should open on your web browser with the App rendered
