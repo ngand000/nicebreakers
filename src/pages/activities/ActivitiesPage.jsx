@@ -6,7 +6,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../models';
 import { Amplify } from 'aws-amplify';
-import config from '../../../aws-exports.js';
+import config from '../../aws-exports.js';
 
 Amplify.configure(config);
 
