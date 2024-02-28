@@ -1,7 +1,7 @@
 import {useSearchParams} from "react-router-dom";
 import { Amplify } from 'aws-amplify';
 import { Activity } from '../../models';
-import config from '../../aws-exports.js';
+import config from '../../../aws-exports.js';
 import {useEffect, useState} from "react";
 import {DataStore} from "aws-amplify/datastore";
 import "./postPage.css"
