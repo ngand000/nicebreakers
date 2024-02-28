@@ -1,5 +1,5 @@
 name: Nicebreakers CI
-run-name: ${{ github.actor }}'s push is is auto-running CI
+run-name: ${{ github.actor }}'s push is auto-running CI
 on: [push]
 jobs:
   GitHub-Actions-Default:
