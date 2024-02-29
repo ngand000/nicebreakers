@@ -59,19 +59,19 @@ const PostPage = () => {
                         <h3 style={titleStyle}> Author: </h3>
                         <p style={valueStyle}>{activity.author}</p>
                     </div>
-                    <div style={{borderColor: "rgb(255,152,152)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(48,139,255)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Group Size: </h3>
                         <p style={valueStyle}>{rangeToString(activity.playerCount)} people</p>
                     </div>
-                    <div style={{borderColor: "rgb(170,255,113)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(73,171,252)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Age Range: </h3>
                         <p style={valueStyle}>{rangeToString(activity.ageRange)} years</p>
                     </div>
-                    <div style={{borderColor: "rgb(49,224,255)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(79,239,255)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Duration: </h3>
                         <p style={valueStyle}>{rangeToString(activity.duration)} {activity.duration === [1,1] ? "minute" : "minutes"}</p>
                     </div>
-                    <div style={{borderColor: "rgb(100,77,255)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(185,255,253)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Likes: </h3>
                         <p style={valueStyle}>{activity.likes}</p>
                     </div>
