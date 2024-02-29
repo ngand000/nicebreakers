@@ -1,5 +1,95 @@
 export const schema = {
     "models": {
+        "Account": {
+            "name": "Account",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userEmail": {
+                    "name": "userEmail",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "postsLiked": {
+                    "name": "postsLiked",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": false
+                },
+                "postsReported": {
+                    "name": "postsReported",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": false
+                },
+                "postDisliked": {
+                    "name": "postDisliked",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": false
+                },
+                "Admin": {
+                    "name": "Admin",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Accounts",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Report": {
             "name": "Report",
             "fields": {
@@ -10,17 +100,17 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "author": {
-                    "name": "author",
+                "reason": {
+                    "name": "reason",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
-                "report": {
-                    "name": "report",
+                "postId": {
+                    "name": "postId",
                     "isArray": false,
-                    "type": "String",
+                    "type": "ID",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -86,7 +176,7 @@ export const schema = {
                 "likes": {
                     "name": "likes",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -118,6 +208,13 @@ export const schema = {
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
+                    "attributes": []
+                },
+                "timesReported": {
+                    "name": "timesReported",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -295,7 +392,7 @@ export const schema = {
                     "name": "abstract",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "likes": {
@@ -305,21 +402,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "pictures": {
-                    "name": "pictures",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
                 "captions": {
                     "name": "captions",
                     "isArray": true,
                     "type": "String",
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true
+                    "isArrayNullable": false
                 },
                 "playerCount": {
                     "name": "playerCount",
@@ -352,20 +441,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "setup": {
-                    "name": "setup",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "tags": {
-                    "name": "tags",
+                "fileTypes": {
+                    "name": "fileTypes",
                     "isArray": true,
                     "type": "String",
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true
+                    "isArrayNullable": false
+                },
+                "timesReported": {
+                    "name": "timesReported",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -413,5 +502,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "c8dbe5b468fbd76f22d75d7d7b0bc20a"
+    "version": "066a757a841055411d3dd773bc075f4a"
 };

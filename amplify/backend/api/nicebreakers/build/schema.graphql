@@ -1,7 +1,21 @@
+type Account @aws_iam @aws_api_key {
+  id: ID!
+  userEmail: AWSEmail
+  postsLiked: [ID]!
+  postsReported: [ID]!
+  postDisliked: [ID]!
+  Admin: Boolean
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
 type Report @aws_iam @aws_api_key {
   id: ID!
-  author: String!
-  report: String!
+  reason: String!
+  postId: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -12,11 +26,12 @@ type Report @aws_iam @aws_api_key {
 type Question @aws_iam @aws_api_key {
   id: ID!
   question: String!
-  likes: String!
+  likes: Int!
   ageRange: [Int!]!
   endorsed: Boolean
   tags: [String]
   author: String
+  timesReported: Int!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -42,16 +57,15 @@ type Activity @aws_iam @aws_api_key {
   description: String!
   Comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
   author: String!
-  abstract: String
+  abstract: String!
   likes: Int!
-  pictures: [String]
-  captions: [String]
+  captions: [String]!
   playerCount: [Int!]!
   duration: [Int!]!
   ageRange: [Int!]!
   endorsed: Boolean
-  setup: Int!
-  tags: [String]
+  fileTypes: [String]!
+  timesReported: Int!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -209,23 +223,29 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelReportConnection @aws_api_key @aws_iam {
-  items: [Report]!
+type ModelAccountConnection @aws_api_key @aws_iam {
+  items: [Account]!
   nextToken: String
   startedAt: AWSTimestamp
 }
 
-input ModelReportFilterInput {
+input ModelAccountFilterInput {
   id: ModelIDInput
-  author: ModelStringInput
-  report: ModelStringInput
-  and: [ModelReportFilterInput]
-  or: [ModelReportFilterInput]
-  not: ModelReportFilterInput
+  userEmail: ModelStringInput
+  postsLiked: ModelIDInput
+  postsReported: ModelIDInput
+  postDisliked: ModelIDInput
+  Admin: ModelBooleanInput
+  and: [ModelAccountFilterInput]
+  or: [ModelAccountFilterInput]
+  not: ModelAccountFilterInput
   _deleted: ModelBooleanInput
 }
 
 type Query {
+  getAccount(id: ID!): Account @aws_api_key @aws_iam
+  listAccounts(filter: ModelAccountFilterInput, limit: Int, nextToken: String): ModelAccountConnection @aws_api_key @aws_iam
+  syncAccounts(filter: ModelAccountFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelAccountConnection @aws_api_key @aws_iam
   getReport(id: ID!): Report @aws_api_key @aws_iam
   listReports(filter: ModelReportFilterInput, limit: Int, nextToken: String): ModelReportConnection @aws_api_key @aws_iam
   syncReports(filter: ModelReportFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReportConnection @aws_api_key @aws_iam
@@ -241,35 +261,47 @@ type Query {
   syncActivities(filter: ModelActivityFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelActivityConnection @aws_api_key @aws_iam
 }
 
-input ModelReportConditionInput {
-  author: ModelStringInput
-  report: ModelStringInput
-  and: [ModelReportConditionInput]
-  or: [ModelReportConditionInput]
-  not: ModelReportConditionInput
+input ModelAccountConditionInput {
+  userEmail: ModelStringInput
+  postsLiked: ModelIDInput
+  postsReported: ModelIDInput
+  postDisliked: ModelIDInput
+  Admin: ModelBooleanInput
+  and: [ModelAccountConditionInput]
+  or: [ModelAccountConditionInput]
+  not: ModelAccountConditionInput
   _deleted: ModelBooleanInput
 }
 
-input CreateReportInput {
+input CreateAccountInput {
   id: ID
-  author: String!
-  report: String!
+  userEmail: AWSEmail
+  postsLiked: [ID]!
+  postsReported: [ID]!
+  postDisliked: [ID]!
+  Admin: Boolean
   _version: Int
 }
 
-input UpdateReportInput {
+input UpdateAccountInput {
   id: ID!
-  author: String
-  report: String
+  userEmail: AWSEmail
+  postsLiked: [ID]
+  postsReported: [ID]
+  postDisliked: [ID]
+  Admin: Boolean
   _version: Int
 }
 
-input DeleteReportInput {
+input DeleteAccountInput {
   id: ID!
   _version: Int
 }
 
 type Mutation {
+  createAccount(input: CreateAccountInput!, condition: ModelAccountConditionInput): Account @aws_api_key @aws_iam
+  updateAccount(input: UpdateAccountInput!, condition: ModelAccountConditionInput): Account @aws_api_key @aws_iam
+  deleteAccount(input: DeleteAccountInput!, condition: ModelAccountConditionInput): Account @aws_api_key @aws_iam
   createReport(input: CreateReportInput!, condition: ModelReportConditionInput): Report @aws_api_key @aws_iam
   updateReport(input: UpdateReportInput!, condition: ModelReportConditionInput): Report @aws_api_key @aws_iam
   deleteReport(input: DeleteReportInput!, condition: ModelReportConditionInput): Report @aws_api_key @aws_iam
@@ -284,16 +316,22 @@ type Mutation {
   deleteActivity(input: DeleteActivityInput!, condition: ModelActivityConditionInput): Activity @aws_api_key @aws_iam
 }
 
-input ModelSubscriptionReportFilterInput {
+input ModelSubscriptionAccountFilterInput {
   id: ModelSubscriptionIDInput
-  author: ModelSubscriptionStringInput
-  report: ModelSubscriptionStringInput
-  and: [ModelSubscriptionReportFilterInput]
-  or: [ModelSubscriptionReportFilterInput]
+  userEmail: ModelSubscriptionStringInput
+  postsLiked: ModelSubscriptionIDInput
+  postsReported: ModelSubscriptionIDInput
+  postDisliked: ModelSubscriptionIDInput
+  Admin: ModelSubscriptionBooleanInput
+  and: [ModelSubscriptionAccountFilterInput]
+  or: [ModelSubscriptionAccountFilterInput]
   _deleted: ModelBooleanInput
 }
 
 type Subscription {
+  onCreateAccount(filter: ModelSubscriptionAccountFilterInput): Account @aws_subscribe(mutations: ["createAccount"]) @aws_api_key @aws_iam
+  onUpdateAccount(filter: ModelSubscriptionAccountFilterInput): Account @aws_subscribe(mutations: ["updateAccount"]) @aws_api_key @aws_iam
+  onDeleteAccount(filter: ModelSubscriptionAccountFilterInput): Account @aws_subscribe(mutations: ["deleteAccount"]) @aws_api_key @aws_iam
   onCreateReport(filter: ModelSubscriptionReportFilterInput): Report @aws_subscribe(mutations: ["createReport"]) @aws_api_key @aws_iam
   onUpdateReport(filter: ModelSubscriptionReportFilterInput): Report @aws_subscribe(mutations: ["updateReport"]) @aws_api_key @aws_iam
   onDeleteReport(filter: ModelSubscriptionReportFilterInput): Report @aws_subscribe(mutations: ["deleteReport"]) @aws_api_key @aws_iam
@@ -308,6 +346,59 @@ type Subscription {
   onDeleteActivity(filter: ModelSubscriptionActivityFilterInput): Activity @aws_subscribe(mutations: ["deleteActivity"]) @aws_api_key @aws_iam
 }
 
+type ModelReportConnection @aws_api_key @aws_iam {
+  items: [Report]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelReportFilterInput {
+  id: ModelIDInput
+  reason: ModelStringInput
+  postId: ModelIDInput
+  and: [ModelReportFilterInput]
+  or: [ModelReportFilterInput]
+  not: ModelReportFilterInput
+  _deleted: ModelBooleanInput
+}
+
+input ModelReportConditionInput {
+  reason: ModelStringInput
+  postId: ModelIDInput
+  and: [ModelReportConditionInput]
+  or: [ModelReportConditionInput]
+  not: ModelReportConditionInput
+  _deleted: ModelBooleanInput
+}
+
+input CreateReportInput {
+  id: ID
+  reason: String!
+  postId: ID!
+  _version: Int
+}
+
+input UpdateReportInput {
+  id: ID!
+  reason: String
+  postId: ID
+  _version: Int
+}
+
+input DeleteReportInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionReportFilterInput {
+  id: ModelSubscriptionIDInput
+  reason: ModelSubscriptionStringInput
+  postId: ModelSubscriptionIDInput
+  and: [ModelSubscriptionReportFilterInput]
+  or: [ModelSubscriptionReportFilterInput]
+  _deleted: ModelBooleanInput
+}
+
 type ModelQuestionConnection @aws_api_key @aws_iam {
   items: [Question]!
   nextToken: String
@@ -317,11 +408,12 @@ type ModelQuestionConnection @aws_api_key @aws_iam {
 input ModelQuestionFilterInput {
   id: ModelIDInput
   question: ModelStringInput
-  likes: ModelStringInput
+  likes: ModelIntInput
   ageRange: ModelIntInput
   endorsed: ModelBooleanInput
   tags: ModelStringInput
   author: ModelStringInput
+  timesReported: ModelIntInput
   and: [ModelQuestionFilterInput]
   or: [ModelQuestionFilterInput]
   not: ModelQuestionFilterInput
@@ -330,11 +422,12 @@ input ModelQuestionFilterInput {
 
 input ModelQuestionConditionInput {
   question: ModelStringInput
-  likes: ModelStringInput
+  likes: ModelIntInput
   ageRange: ModelIntInput
   endorsed: ModelBooleanInput
   tags: ModelStringInput
   author: ModelStringInput
+  timesReported: ModelIntInput
   and: [ModelQuestionConditionInput]
   or: [ModelQuestionConditionInput]
   not: ModelQuestionConditionInput
@@ -344,22 +437,24 @@ input ModelQuestionConditionInput {
 input CreateQuestionInput {
   id: ID
   question: String!
-  likes: String!
+  likes: Int!
   ageRange: [Int!]!
   endorsed: Boolean
   tags: [String]
   author: String
+  timesReported: Int!
   _version: Int
 }
 
 input UpdateQuestionInput {
   id: ID!
   question: String
-  likes: String
+  likes: Int
   ageRange: [Int!]
   endorsed: Boolean
   tags: [String]
   author: String
+  timesReported: Int
   _version: Int
 }
 
@@ -371,11 +466,12 @@ input DeleteQuestionInput {
 input ModelSubscriptionQuestionFilterInput {
   id: ModelSubscriptionIDInput
   question: ModelSubscriptionStringInput
-  likes: ModelSubscriptionStringInput
+  likes: ModelSubscriptionIntInput
   ageRange: ModelSubscriptionIntInput
   endorsed: ModelSubscriptionBooleanInput
   tags: ModelSubscriptionStringInput
   author: ModelSubscriptionStringInput
+  timesReported: ModelSubscriptionIntInput
   and: [ModelSubscriptionQuestionFilterInput]
   or: [ModelSubscriptionQuestionFilterInput]
   _deleted: ModelBooleanInput
@@ -452,14 +548,13 @@ input ModelActivityFilterInput {
   author: ModelStringInput
   abstract: ModelStringInput
   likes: ModelIntInput
-  pictures: ModelStringInput
   captions: ModelStringInput
   playerCount: ModelIntInput
   duration: ModelIntInput
   ageRange: ModelIntInput
   endorsed: ModelBooleanInput
-  setup: ModelIntInput
-  tags: ModelStringInput
+  fileTypes: ModelStringInput
+  timesReported: ModelIntInput
   and: [ModelActivityFilterInput]
   or: [ModelActivityFilterInput]
   not: ModelActivityFilterInput
@@ -472,14 +567,13 @@ input ModelActivityConditionInput {
   author: ModelStringInput
   abstract: ModelStringInput
   likes: ModelIntInput
-  pictures: ModelStringInput
   captions: ModelStringInput
   playerCount: ModelIntInput
   duration: ModelIntInput
   ageRange: ModelIntInput
   endorsed: ModelBooleanInput
-  setup: ModelIntInput
-  tags: ModelStringInput
+  fileTypes: ModelStringInput
+  timesReported: ModelIntInput
   and: [ModelActivityConditionInput]
   or: [ModelActivityConditionInput]
   not: ModelActivityConditionInput
@@ -491,16 +585,15 @@ input CreateActivityInput {
   name: String!
   description: String!
   author: String!
-  abstract: String
+  abstract: String!
   likes: Int!
-  pictures: [String]
-  captions: [String]
+  captions: [String]!
   playerCount: [Int!]!
   duration: [Int!]!
   ageRange: [Int!]!
   endorsed: Boolean
-  setup: Int!
-  tags: [String]
+  fileTypes: [String]!
+  timesReported: Int!
   _version: Int
 }
 
@@ -511,14 +604,13 @@ input UpdateActivityInput {
   author: String
   abstract: String
   likes: Int
-  pictures: [String]
   captions: [String]
   playerCount: [Int!]
   duration: [Int!]
   ageRange: [Int!]
   endorsed: Boolean
-  setup: Int
-  tags: [String]
+  fileTypes: [String]
+  timesReported: Int
   _version: Int
 }
 
@@ -534,14 +626,13 @@ input ModelSubscriptionActivityFilterInput {
   author: ModelSubscriptionStringInput
   abstract: ModelSubscriptionStringInput
   likes: ModelSubscriptionIntInput
-  pictures: ModelSubscriptionStringInput
   captions: ModelSubscriptionStringInput
   playerCount: ModelSubscriptionIntInput
   duration: ModelSubscriptionIntInput
   ageRange: ModelSubscriptionIntInput
   endorsed: ModelSubscriptionBooleanInput
-  setup: ModelSubscriptionIntInput
-  tags: ModelSubscriptionStringInput
+  fileTypes: ModelSubscriptionStringInput
+  timesReported: ModelSubscriptionIntInput
   and: [ModelSubscriptionActivityFilterInput]
   or: [ModelSubscriptionActivityFilterInput]
   _deleted: ModelBooleanInput

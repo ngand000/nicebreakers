@@ -167,7 +167,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-nicebreakers-staging-222128-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/4f823942b8f0cac68f31bbe16daaecbc6f159dc7",
+          "S3DeploymentRootKey": "amplify-appsync-files/b9486e1cbb876d4e26d8a1dac1bdfcb2c2d23c3a",
           "env": "staging"
         }
       }
@@ -178,7 +178,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/auth/NiceBreakers-cloudformation-template.json",
         "Parameters": {
           "identityPoolName": "testAuthIdentityPool",
-          "allowUnauthenticatedIdentities": false,
+          "allowUnauthenticatedIdentities": true,
           "resourceNameTruncated": "nicebrc823e8cb",
           "userPoolName": "NiceBreakers",
           "autoVerifiedAttributes": "email",
@@ -226,12 +226,6 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "hostedUI": true,
-          "hostedUIDomainName": "4u24r9i5cg74",
-          "authProvidersUserPool": "Google",
-          "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"username\":\"sub\"}}]",
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponsehttps://4u24r9i5cg74-staging.auth.us-west-2.amazoncognito.com/oauth2/idpresponse\"]}",
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"707121433785-tjhpdo8ql6slkveiv5ibmcl5ep0f5omd.apps.googleusercontent.com\",\"client_secret\":\"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\"}]",
           "env": "staging"
         }
       }
@@ -242,8 +236,8 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "Parameters": {
           "bucketName": "nicebreakers-storage-c9bdab74",
-          "selectedGuestPermissions": "",
-          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket",
+          "selectedGuestPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket",
+          "selectedAuthenticatedPermissions": "s3:GetObject,s3:ListBucket,s3:PutObject",
           "unauthRoleName": {
             "Ref": "UnauthRoleName"
           },
@@ -258,13 +252,13 @@
           "authPolicyName": "s3_amplify_fe08ad48",
           "unauthPolicyName": "s3_amplify_fe08ad48",
           "AuthenticatedAllowList": "ALLOW",
-          "GuestAllowList": "DISALLOW",
-          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject",
-          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject",
-          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject",
+          "GuestAllowList": "ALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:GetObject,s3:PutObject",
+          "s3PermissionsAuthenticatedProtected": "s3:GetObject,s3:PutObject",
+          "s3PermissionsAuthenticatedPublic": "s3:GetObject,s3:PutObject",
           "s3PermissionsAuthenticatedUploads": "s3:PutObject",
-          "s3PermissionsGuestPublic": "DISALLOW",
-          "s3PermissionsGuestUploads": "DISALLOW",
+          "s3PermissionsGuestPublic": "s3:PutObject,s3:GetObject",
+          "s3PermissionsGuestUploads": "s3:PutObject",
           "env": "staging"
         }
       }

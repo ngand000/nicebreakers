@@ -23,11 +23,11 @@
             }
           ],
           "defaultAuthentication": {
+            "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 30,
               "description": "api key description"
-            },
-            "authenticationType": "API_KEY"
+            }
           }
         },
         "GraphQLAPIIdOutput": "plmohenfz5ax5px5b2ryznxykq",
@@ -36,11 +36,12 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2024-02-13T22:18:56.347Z",
+      "lastPushTimeStamp": "2024-02-29T06:52:56.589Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apinicebreakers"
-      }
+      },
+      "lastPushDirHash": "iTvmx2u4JrxrugfSBuBYKojEFVk="
     }
   },
   "auth": {
@@ -81,7 +82,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "NiceBreakers"
       },
-      "lastPushTimeStamp": "2024-02-13T22:18:56.349Z",
+      "lastPushTimeStamp": "2024-02-29T06:52:56.590Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/auth/NiceBreakers-cloudformation-template.json",
         "logicalId": "authNiceBreakers"
@@ -97,7 +98,7 @@
         "BucketName": "nicebreakers-storage-c9bdab74222128-staging",
         "Region": "us-west-2"
       },
-      "lastPushTimeStamp": "2024-02-13T22:18:56.352Z",
+      "lastPushTimeStamp": "2024-02-29T06:52:59.090Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-nicebreakers-staging-222128-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3nicebreakersstoragec9bdab74"

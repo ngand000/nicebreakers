@@ -6,14 +6,50 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/
 
 
 
+type EagerAccount = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Account, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userEmail?: string | null;
+  readonly postsLiked: (string | null)[];
+  readonly postsReported: (string | null)[];
+  readonly postDisliked: (string | null)[];
+  readonly Admin?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyAccount = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Account, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userEmail?: string | null;
+  readonly postsLiked: (string | null)[];
+  readonly postsReported: (string | null)[];
+  readonly postDisliked: (string | null)[];
+  readonly Admin?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Account = LazyLoading extends LazyLoadingDisabled ? EagerAccount : LazyAccount
+
+export declare const Account: (new (init: ModelInit<Account>) => Account) & {
+  copyOf(source: Account, mutator: (draft: MutableModel<Account>) => MutableModel<Account> | void): Account;
+}
+
 type EagerReport = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Report, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly author: string;
-  readonly report: string;
+  readonly reason: string;
+  readonly postId: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -24,8 +60,8 @@ type LazyReport = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly author: string;
-  readonly report: string;
+  readonly reason: string;
+  readonly postId: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -43,11 +79,12 @@ type EagerQuestion = {
   };
   readonly id: string;
   readonly question: string;
-  readonly likes: string;
+  readonly likes: number;
   readonly ageRange: number[];
   readonly endorsed?: boolean | null;
   readonly tags?: (string | null)[] | null;
   readonly author?: string | null;
+  readonly timesReported: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -59,11 +96,12 @@ type LazyQuestion = {
   };
   readonly id: string;
   readonly question: string;
-  readonly likes: string;
+  readonly likes: number;
   readonly ageRange: number[];
   readonly endorsed?: boolean | null;
   readonly tags?: (string | null)[] | null;
   readonly author?: string | null;
+  readonly timesReported: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -116,16 +154,15 @@ type EagerActivity = {
   readonly description: string;
   readonly Comments?: (Comment | null)[] | null;
   readonly author: string;
-  readonly abstract?: string | null;
+  readonly abstract: string;
   readonly likes: number;
-  readonly pictures?: (string | null)[] | null;
-  readonly captions?: (string | null)[] | null;
+  readonly captions: (string | null)[];
   readonly playerCount: number[];
   readonly duration: number[];
   readonly ageRange: number[];
   readonly endorsed?: boolean | null;
-  readonly setup: number;
-  readonly tags?: (string | null)[] | null;
+  readonly fileTypes: (string | null)[];
+  readonly timesReported: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -140,16 +177,15 @@ type LazyActivity = {
   readonly description: string;
   readonly Comments: AsyncCollection<Comment>;
   readonly author: string;
-  readonly abstract?: string | null;
+  readonly abstract: string;
   readonly likes: number;
-  readonly pictures?: (string | null)[] | null;
-  readonly captions?: (string | null)[] | null;
+  readonly captions: (string | null)[];
   readonly playerCount: number[];
   readonly duration: number[];
   readonly ageRange: number[];
   readonly endorsed?: boolean | null;
-  readonly setup: number;
-  readonly tags?: (string | null)[] | null;
+  readonly fileTypes: (string | null)[];
+  readonly timesReported: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

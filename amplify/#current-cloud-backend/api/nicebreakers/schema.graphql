@@ -1,17 +1,27 @@
+type Account @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userEmail: AWSEmail
+  postsLiked: [ID]!
+  postsReported: [ID]!
+  postDisliked: [ID]!
+  Admin: Boolean
+}
+
 type Report @model @auth(rules: [{allow: public}]) {
   id: ID!
-  author: String!
-  report: String!
+  reason: String!
+  postId: ID!
 }
 
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
   question: String!
-  likes: String!
+  likes: Int!
   ageRange: [Int!]!
   endorsed: Boolean
   tags: [String]
   author: String
+  timesReported: Int!
 }
 
 type Comment @model @auth(rules: [{allow: public}]) {
@@ -27,14 +37,14 @@ type Activity @model @auth(rules: [{allow: public}]) {
   description: String!
   Comments: [Comment] @hasMany(indexName: "byActivity", fields: ["id"])
   author: String!
-  abstract: String
+  abstract: String!
   likes: Int!
-  pictures: [String]
-  captions: [String]
+  captions: [String]!
   playerCount: [Int!]!
   duration: [Int!]!
   ageRange: [Int!]!
   endorsed: Boolean
-  setup: Int!
-  tags: [String]
+  fileTypes: [String]!
+  timesReported: Int!
 }
+ 

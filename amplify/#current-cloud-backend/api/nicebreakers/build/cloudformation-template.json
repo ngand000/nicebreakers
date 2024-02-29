@@ -123,7 +123,7 @@
                     ]
                 },
                 "Description": "api key description",
-                "Expires": 1709420233
+                "Expires": 1711753371
             }
         },
         "GraphQLAPINONEDS95A13CF0": {
@@ -309,6 +309,82 @@
                 ]
             }
         },
+        "Account": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "https://s3.",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            ".",
+                            {
+                                "Ref": "AWS::URLSuffix"
+                            },
+                            "/",
+                            {
+                                "Ref": "S3DeploymentBucket"
+                            },
+                            "/",
+                            {
+                                "Ref": "S3DeploymentRootKey"
+                            },
+                            "/stacks/Account.json"
+                        ]
+                    ]
+                },
+                "Parameters": {
+                    "DynamoDBModelTableReadIOPS": {
+                        "Ref": "DynamoDBModelTableReadIOPS"
+                    },
+                    "DynamoDBModelTableWriteIOPS": {
+                        "Ref": "DynamoDBModelTableWriteIOPS"
+                    },
+                    "DynamoDBBillingMode": {
+                        "Ref": "DynamoDBBillingMode"
+                    },
+                    "DynamoDBEnablePointInTimeRecovery": {
+                        "Ref": "DynamoDBEnablePointInTimeRecovery"
+                    },
+                    "DynamoDBEnableServerSideEncryption": {
+                        "Ref": "DynamoDBEnableServerSideEncryption"
+                    },
+                    "referencetotransformerrootstackenv10C5A902Ref": {
+                        "Ref": "env"
+                    },
+                    "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPI",
+                            "ApiId"
+                        ]
+                    },
+                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPINONEDS95A13CF0",
+                            "Name"
+                        ]
+                    },
+                    "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+                        "Ref": "S3DeploymentBucket"
+                    },
+                    "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+                        "Ref": "S3DeploymentRootKey"
+                    },
+                    "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+                        "Ref": "authRoleName"
+                    },
+                    "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+                        "Ref": "unauthRoleName"
+                    }
+                }
+            },
+            "DependsOn": [
+                "GraphQLAPITransformerSchema3CB2AE18"
+            ]
+        },
         "Report": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
@@ -361,23 +437,59 @@
                             "ApiId"
                         ]
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
                         "Ref": "S3DeploymentBucket"
                     },
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId": {
+                        "Fn::GetAtt": [
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId": {
+                        "Fn::GetAtt": [
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
+                        ]
+                    },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
                         "Ref": "authRoleName"
                     },
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
+                    },
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId": {
+                        "Fn::GetAtt": [
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId": {
+                        "Fn::GetAtt": [
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId": {
+                        "Fn::GetAtt": [
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId": {
+                        "Fn::GetAtt": [
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId": {
+                        "Fn::GetAtt": [
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId"
+                        ]
                     }
                 }
             },
@@ -443,16 +555,16 @@
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportQuerygetReportauth0FunctionQuerygetReportauth0FunctionAppSyncFunction3354F810FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportQuerygetReportauth0FunctionQuerygetReportauth0FunctionAppSyncFunction3354F810FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportQuerygetReportpostAuth0FunctionQuerygetReportpostAuth0FunctionAppSyncFunction69F3D0A8FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportQuerygetReportpostAuth0FunctionQuerygetReportpostAuth0FunctionAppSyncFunction69F3D0A8FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
                         ]
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -461,34 +573,34 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationcreateReportinit0FunctionMutationcreateReportinit0FunctionAppSyncFunction5DC396ABFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationcreateReportinit0FunctionMutationcreateReportinit0FunctionAppSyncFunction5DC396ABFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationcreateReportauth0FunctionMutationcreateReportauth0FunctionAppSyncFunction7371DEE7FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationcreateReportauth0FunctionMutationcreateReportauth0FunctionAppSyncFunction7371DEE7FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationupdateReportinit0FunctionMutationupdateReportinit0FunctionAppSyncFunction1C877527FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationupdateReportinit0FunctionMutationupdateReportinit0FunctionAppSyncFunction1C877527FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportSubscriptiononCreateReportauth0FunctionSubscriptiononCreateReportauth0FunctionAppSyncFunction0B1E14FBFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportSubscriptiononCreateReportauth0FunctionSubscriptiononCreateReportauth0FunctionAppSyncFunction0B1E14FBFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportSubscriptionOnCreateReportDataResolverFnSubscriptionOnCreateReportDataResolverFnAppSyncFunction3DDFE0BEFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportSubscriptionOnCreateReportDataResolverFnSubscriptionOnCreateReportDataResolverFnAppSyncFunction3DDFE0BEFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId"
                         ]
                     }
                 }
@@ -555,16 +667,16 @@
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportQuerygetReportauth0FunctionQuerygetReportauth0FunctionAppSyncFunction3354F810FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportQuerygetReportauth0FunctionQuerygetReportauth0FunctionAppSyncFunction3354F810FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportQuerygetReportpostAuth0FunctionQuerygetReportpostAuth0FunctionAppSyncFunction69F3D0A8FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportQuerygetReportpostAuth0FunctionQuerygetReportpostAuth0FunctionAppSyncFunction69F3D0A8FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
                         ]
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -579,34 +691,34 @@
                             "Name"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationcreateReportinit0FunctionMutationcreateReportinit0FunctionAppSyncFunction5DC396ABFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationcreateReportinit0FunctionMutationcreateReportinit0FunctionAppSyncFunction5DC396ABFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationcreateReportauth0FunctionMutationcreateReportauth0FunctionAppSyncFunction7371DEE7FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationcreateReportauth0FunctionMutationcreateReportauth0FunctionAppSyncFunction7371DEE7FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationupdateReportinit0FunctionMutationupdateReportinit0FunctionAppSyncFunction1C877527FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationupdateReportinit0FunctionMutationupdateReportinit0FunctionAppSyncFunction1C877527FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportSubscriptiononCreateReportauth0FunctionSubscriptiononCreateReportauth0FunctionAppSyncFunction0B1E14FBFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportSubscriptiononCreateReportauth0FunctionSubscriptiononCreateReportauth0FunctionAppSyncFunction0B1E14FBFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportSubscriptionOnCreateReportDataResolverFnSubscriptionOnCreateReportDataResolverFnAppSyncFunction3DDFE0BEFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportSubscriptionOnCreateReportDataResolverFnSubscriptionOnCreateReportDataResolverFnAppSyncFunction3DDFE0BEFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId"
                         ]
                     }
                 }
@@ -673,16 +785,16 @@
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportQuerygetReportauth0FunctionQuerygetReportauth0FunctionAppSyncFunction3354F810FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportQuerygetReportauth0FunctionQuerygetReportauth0FunctionAppSyncFunction3354F810FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportQuerygetReportpostAuth0FunctionQuerygetReportpostAuth0FunctionAppSyncFunction69F3D0A8FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportQuerygetReportpostAuth0FunctionQuerygetReportpostAuth0FunctionAppSyncFunction69F3D0A8FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
                         ]
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -691,34 +803,34 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationcreateReportinit0FunctionMutationcreateReportinit0FunctionAppSyncFunction5DC396ABFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationcreateReportinit0FunctionMutationcreateReportinit0FunctionAppSyncFunction5DC396ABFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationcreateReportauth0FunctionMutationcreateReportauth0FunctionAppSyncFunction7371DEE7FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationcreateReportauth0FunctionMutationcreateReportauth0FunctionAppSyncFunction7371DEE7FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportMutationupdateReportinit0FunctionMutationupdateReportinit0FunctionAppSyncFunction1C877527FunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportMutationupdateReportinit0FunctionMutationupdateReportinit0FunctionAppSyncFunction1C877527FunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportSubscriptiononCreateReportauth0FunctionSubscriptiononCreateReportauth0FunctionAppSyncFunction0B1E14FBFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportSubscriptiononCreateReportauth0FunctionSubscriptiononCreateReportauth0FunctionAppSyncFunction0B1E14FBFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackReportNestedStackReportNestedStackResourceB9F235A1OutputstransformerrootstackReportSubscriptionOnCreateReportDataResolverFnSubscriptionOnCreateReportDataResolverFnAppSyncFunction3DDFE0BEFunctionId": {
+                    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId": {
                         "Fn::GetAtt": [
-                            "Report",
-                            "Outputs.transformerrootstackReportSubscriptionOnCreateReportDataResolverFnSubscriptionOnCreateReportDataResolverFnAppSyncFunction3DDFE0BEFunctionId"
+                            "Account",
+                            "Outputs.transformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId"
                         ]
                     }
                 }
@@ -841,6 +953,7 @@
             "DependsOn": [
                 "GraphQLAPI",
                 "GraphQLAPITransformerSchema3CB2AE18",
+                "Account",
                 "Report",
                 "Question",
                 "Comment",

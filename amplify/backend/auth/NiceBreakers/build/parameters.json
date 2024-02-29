@@ -1,6 +1,6 @@
 {
   "identityPoolName": "testAuthIdentityPool",
-  "allowUnauthenticatedIdentities": false,
+  "allowUnauthenticatedIdentities": true,
   "resourceNameTruncated": "nicebrc823e8cb",
   "userPoolName": "NiceBreakers",
   "autoVerifiedAttributes": [

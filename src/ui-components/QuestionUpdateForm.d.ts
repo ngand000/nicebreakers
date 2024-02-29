@@ -24,19 +24,21 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type QuestionUpdateFormInputValues = {
     question?: string;
-    likes?: string;
+    likes?: number;
     ageRange?: number[];
     endorsed?: boolean;
     tags?: string[];
     author?: string;
+    timesReported?: number;
 };
 export declare type QuestionUpdateFormValidationValues = {
     question?: ValidationFunction<string>;
-    likes?: ValidationFunction<string>;
+    likes?: ValidationFunction<number>;
     ageRange?: ValidationFunction<number>;
     endorsed?: ValidationFunction<boolean>;
     tags?: ValidationFunction<string>;
     author?: ValidationFunction<string>;
+    timesReported?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type QuestionUpdateFormOverridesProps = {
@@ -47,6 +49,7 @@ export declare type QuestionUpdateFormOverridesProps = {
     endorsed?: PrimitiveOverrideProps<SwitchFieldProps>;
     tags?: PrimitiveOverrideProps<TextFieldProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
+    timesReported?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type QuestionUpdateFormProps = React.PropsWithChildren<{
     overrides?: QuestionUpdateFormOverridesProps | undefined | null;

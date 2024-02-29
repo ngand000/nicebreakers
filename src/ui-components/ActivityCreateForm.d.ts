@@ -27,14 +27,13 @@ export declare type ActivityCreateFormInputValues = {
     author?: string;
     abstract?: string;
     likes?: number;
-    pictures?: string[];
     captions?: string[];
     playerCount?: number[];
     duration?: number[];
     ageRange?: number[];
     endorsed?: boolean;
-    setup?: number;
-    tags?: string[];
+    fileTypes?: string[];
+    timesReported?: number;
 };
 export declare type ActivityCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -42,14 +41,13 @@ export declare type ActivityCreateFormValidationValues = {
     author?: ValidationFunction<string>;
     abstract?: ValidationFunction<string>;
     likes?: ValidationFunction<number>;
-    pictures?: ValidationFunction<string>;
     captions?: ValidationFunction<string>;
     playerCount?: ValidationFunction<number>;
     duration?: ValidationFunction<number>;
     ageRange?: ValidationFunction<number>;
     endorsed?: ValidationFunction<boolean>;
-    setup?: ValidationFunction<number>;
-    tags?: ValidationFunction<string>;
+    fileTypes?: ValidationFunction<string>;
+    timesReported?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ActivityCreateFormOverridesProps = {
@@ -59,14 +57,13 @@ export declare type ActivityCreateFormOverridesProps = {
     author?: PrimitiveOverrideProps<TextFieldProps>;
     abstract?: PrimitiveOverrideProps<TextFieldProps>;
     likes?: PrimitiveOverrideProps<TextFieldProps>;
-    pictures?: PrimitiveOverrideProps<TextFieldProps>;
     captions?: PrimitiveOverrideProps<TextFieldProps>;
     playerCount?: PrimitiveOverrideProps<TextFieldProps>;
     duration?: PrimitiveOverrideProps<TextFieldProps>;
     ageRange?: PrimitiveOverrideProps<TextFieldProps>;
     endorsed?: PrimitiveOverrideProps<SwitchFieldProps>;
-    setup?: PrimitiveOverrideProps<TextFieldProps>;
-    tags?: PrimitiveOverrideProps<TextFieldProps>;
+    fileTypes?: PrimitiveOverrideProps<TextFieldProps>;
+    timesReported?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ActivityCreateFormProps = React.PropsWithChildren<{
     overrides?: ActivityCreateFormOverridesProps | undefined | null;
