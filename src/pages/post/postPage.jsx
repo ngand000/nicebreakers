@@ -39,6 +39,8 @@ const PostPage = () => {
 
     const titleStyle = {margin: "auto 1vmin auto 0"}
 
+    const logoStyle = {width: "10vmin", margin: "1vw 2vw 0 0"}
+
     const valueStyle = {margin: "auto 0 auto 0"}
 
     const attributesStyle = {display: "flex"}
@@ -51,7 +53,7 @@ const PostPage = () => {
             {isPopupOpen && <ReportPopup closePopup={setIsPopupOpen} id={activity.id}/>}
             {activity && (<div>
                 <div style={headerStyle}>
-                    <img src={"logoplaceholder.png"} alt={"logo"}/>
+                    <a href={'/'}> <img src={"logoplaceholder.png"} alt={"logo"} style={logoStyle}/> </a>
                     <h1>{activity.name}</h1>
                 </div>
                 <div style={attributesStyle}>
