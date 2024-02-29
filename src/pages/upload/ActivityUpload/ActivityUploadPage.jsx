@@ -4,6 +4,8 @@ import { Activity } from '../../../models';
 import { Amplify } from 'aws-amplify';
 import { uploadData } from 'aws-amplify/storage';
 import { remove } from 'aws-amplify/storage';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
 
@@ -331,4 +333,4 @@ const UploadPage = (props) => {
     )
 }
 
-export default UploadPage;
+export default withAuthenticator(UploadPage);
