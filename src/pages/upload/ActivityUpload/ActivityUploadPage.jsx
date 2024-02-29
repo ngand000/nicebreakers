@@ -270,54 +270,54 @@ const UploadPage = (props) => {
                 <text className="title">Upload Activity</text>
             </div>
             <form id ="uploadActivity" style={{width: "80%", marginLeft: "10%"}}>
-                <div className="color-box" style={{backgroundColor: "rgb(255,187,89)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(48,139,255)"}}>
                     <label className="feild-entry-title" style={{marginLeft: "4vw"}} for={"activityName"}>Activity Name:</label>
                     <input className="name-entry-box" type={"text"} id={"activity"} value={activityName} onChange={(thisEvent) => inputHandler(thisEvent, activityNameSetter)}/>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(215, 109, 236)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(79,239,255)"}}>
                     <label className="feild-entry-title" htmlFor={"activityDescription"}>Abstract:</label>
                     <textarea id="abstract-entry-box" className="question-entry-box" style={{width: "95%", height: "20vh"}} name={"Abstract"} form={"uploadAbstract"} placeholder={abstractPlaceHolder} onFocus={() => togglePlaceHolder(abstractToggler, abstractPlaceHolder, "Enter your Abstract here!")} onBlur={() => togglePlaceHolder(abstractToggler, abstractPlaceHolder, "Enter your Abstract here!")} value={activityAbstract} onChange={(thisEvent) => inputHandler(thisEvent, activityAbstractSetter)}></textarea>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(255,252,123)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(73,171,252)"}}>
                     <label className="feild-entry-title" htmlFor={"activityDescription"}>Description:</label>
                     <textarea id="question-entry-box" className="question-entry-box" style={{width: "95%", height: "20vh"}} name={"Description"} form={"uploadActivity"} placeholder={descriptionPlaceHolder} onFocus={() => togglePlaceHolder(descriptionToggler, descriptionPlaceHolder, "Enter your Description here!")} onBlur={() => togglePlaceHolder(descriptionToggler, descriptionPlaceHolder, "Enter your Description here!")} value={activityDescription} onChange={(thisEvent) => inputHandler(thisEvent, activityDescriptionSetter)}></textarea>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(182,255,123)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(120,193,255)"}}>
                     <label className="feild-entry-title" htmlFor={"authorName"}>Author:</label>
                     <input className="author-field" type={"text"} id={"author"} value={authorVal} onChange={(thisEvent) => inputHandler(thisEvent, authorValSetter)}/>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(215, 109, 236)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(48,139,255)"}}>
                     <label className="feild-entry-title" style={{marginLeft: "2vw"}} htmlFor={"ageRange"}>Player Count:</label>
                     <ul style={{margin: "2vh 0 2vh 2vw", padding: "0", display: "flex", listStyleType: "none"}}>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(255,94,94)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"minPlayers"} value={playerCountMin} onChange={(thisEvent) => inputHandler(thisEvent, playerCountMinSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"minPlayers"} value={playerCountMin} onChange={(thisEvent) => inputHandler(thisEvent, playerCountMinSetter)}/></div></li>
                         <li><div className="feild-entry-title" style={{display: "inline-block", paddingTop: "5vh"}}>to</div></li>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(169,246,187)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"maxPlayers"} value={playerCountMax} onChange={(thisEvent) => inputHandler(thisEvent, playerCountMaxSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"maxPlayers"} value={playerCountMax} onChange={(thisEvent) => inputHandler(thisEvent, playerCountMaxSetter)}/></div></li>
                     </ul>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(189,250,248)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(79,239,255)"}}>
                     <label className="feild-entry-title" style={{marginLeft: "2vw"}} htmlFor={"ageRange"}>Duration (min):</label>
                     <ul style={{margin: "2vh 0 2vh 2vw", padding: "0", display: "flex", listStyleType: "none"}}>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(255,252,123)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="60" id={"minTime"} value={durationMin} onChange={(thisEvent) => inputHandler(thisEvent, durationMinSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="60" id={"minTime"} value={durationMin} onChange={(thisEvent) => inputHandler(thisEvent, durationMinSetter)}/></div></li>
                         <li><div className="feild-entry-title" style={{display: "inline-block", paddingTop: "5vh"}}>to</div></li>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(148, 148, 242)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="60" id={"maxTime"} value={durationMax} onChange={(thisEvent) => inputHandler(thisEvent, duarationMaxSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="60" id={"maxTime"} value={durationMax} onChange={(thisEvent) => inputHandler(thisEvent, duarationMaxSetter)}/></div></li>
                     </ul>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(255,94,94)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(73,171,252)"}}>
                     <label className="feild-entry-title" style={{marginLeft: "2vw"}} htmlFor={"ageRange"}>Age Range:</label>
                     <ul style={{margin: "2vh 0 2vh 2vw", padding: "0", display: "flex", listStyleType: "none"}}>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(255,187,89)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="99" id={"minAge"} value={ageMin} onChange={(thisEvent) => inputHandler(thisEvent, ageMinSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="99" id={"minAge"} value={ageMin} onChange={(thisEvent) => inputHandler(thisEvent, ageMinSetter)}/></div></li>
                         <li><div className="feild-entry-title" style={{display: "inline-block", paddingTop: "5vh"}}>to</div></li>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(182,255,123)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"maxAge"} value={ageMax} onChange={(thisEvent) => inputHandler(thisEvent, ageMaxSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="99" id={"maxAge"} value={ageMax} onChange={(thisEvent) => inputHandler(thisEvent, ageMaxSetter)}/></div></li>
                     </ul>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(169,246,187)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(120,193,255)"}}>
                     <label className="feild-entry-title" htmlFor={"photos"}>Upload photos:</label>
                     <input className="small-input" type="file" accept="image/*" id="activityPics" name="activityPics" multiple onChange={(thisEvent) => handleFileInput(thisEvent)}/>
                 </div>
