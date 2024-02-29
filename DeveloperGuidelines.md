@@ -33,6 +33,7 @@
 - Clone the nicebreakers repository onto your local machine from the public github: https://github.com/ngand000/nicebreakers into your preferred IDE
 - CD into the nicebreakers root directory and run: “amplify init”
     - If asked to log in with Amplify Credentials, email ngand000@uw.edu to ask to get added to the Amplify Database
+    - Select the option to sign in with AWS account, it should redirect you to a sign in page on your default web browser
 - Still CD’d into the nicebreakers root directory and run: “amplify pull”
     - Install any dependencies that command line may prompt you with, likely in the format “npm install @amplify/[X]”
 - Still in the root directory, run "npm install"
@@ -45,6 +46,7 @@
 - Clone the nicebreakers repository onto your local machine from the public github: https://github.com/ngand000/nicebreakers
 - CD into the nicebreakers root directory and run: “amplify init”
     - If asked to log in with Amplify Credentials, email ngand000@uw.edu to ask to get added to the Amplify Database
+    - Select the option to sign in with AWS account, it should redirect you to a sign in page on your default web browser
 - Still CD’d into the nicebreakers root directory and run: “amplify pull”
     - Install any dependencies that command line may prompt you with, likely in the format “npm install @amplify/[X]”
 - Still CD’d in the nicebreakers root directory, run “npm test”
