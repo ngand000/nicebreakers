@@ -101,7 +101,7 @@ const ActivitiesPage = () => {
     function compareLikes(a, b) {
         return b.likes-a.likes
     }
-
+ 
     const filterTypes = {"Group Size": "rangeOut", "Ages": "rangeOut", "Duration(min)": "rangeIn", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
