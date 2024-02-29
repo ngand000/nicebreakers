@@ -16,7 +16,6 @@ const QuestionsPage = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [filterEditing, setFilterEditing] = useState("");
     const [filters, setFilters] = useState({});
-    const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
     const filterBarRef = useRef(null);
     const [questions, setQuestions] = useState([])
 
@@ -102,27 +101,6 @@ const QuestionsPage = () => {
         return b.likes-a.likes
     }
 
-    // pre: none
-    // post: none
-    // args none
-    // returns the number of vw units to offset
-    // the upload button from the filter bar
-    useEffect(() => {
-        if (filterBarRef.current) {
-            const vwUnits = (filterBarRef.current.offsetWidth/window.innerWidth) * 100;
-            setUploadButtonOffset(74 - vwUnits);
-        }
-    }, [filterBarRef.current]);
-
-    // pre: numerical is non-null
-    // post: none
-    // args numerical, the number of vw to offset upload button
-    // returns stirng representing number of vw units
-    // to offset upload button
-    function getUploadButtonOffset(numerical) {
-        return numerical + "vw";
-    }
-
     const filterTypes = {"Ages": "rangeOut", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
@@ -142,9 +120,9 @@ const QuestionsPage = () => {
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <ul style={{margin: "0 0 0 2vw", padding: "0"}}>
+                <ul style={{margin: "0 10vw 0 2vw", padding: "0", display: "flex"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
-                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"/upload/QuestionUpload"}></UploadButton></li>
+                    <li style={{display: "inline-block", marginLeft: "auto"}}><UploadButton uploadType={"/upload/QuestionUpload"}></UploadButton></li>
                 </ul>
                 <QuestionsList questions={questions.filter(filterOK).sort(compareLikes)} />
             </div>

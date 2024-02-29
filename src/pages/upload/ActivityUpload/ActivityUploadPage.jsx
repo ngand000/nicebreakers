@@ -263,10 +263,12 @@ const UploadPage = (props) => {
         window.location.href = "/";
     }
 
+    const logoStyle = {width: "15vmin", margin: "1vw 2vw 0 0"}
+
     return (
         <div>
             <div className="header">
-                <img src={"../../../../logoplaceholder.png"} alt={"logo"}/>
+                <a href={'/'}> <img src={"../../../../logoplaceholder.png"} alt={"logo"} style={logoStyle}/> </a>
                 <text className="title">Upload Activity</text>
             </div>
             <form id ="uploadActivity" style={{width: "80%", marginLeft: "10%"}}>
