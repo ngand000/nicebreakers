@@ -7,8 +7,10 @@ import {DataStore} from "aws-amplify/datastore";
 import { Account } from '../../models';
 import "./postPage.css"
 import ImageWithCaption from "./ImageWithCaption";
+import { Authenticator } from '@aws-amplify/ui-react';
 import ReportPopup from "./ReportPopup";
 import { getCurrentUser } from 'aws-amplify/auth';
+import { signIn } from 'aws-amplify/auth';
 
 
 
@@ -18,39 +20,46 @@ const PostPage = () => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    var username = null;
-    var userId = null;
+    const [user, setUser] = useState({})
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
     }
 
+    async function currentAuthenticatedUser() {
+    try {
+        const { username, userId, signInDetails } = await getCurrentUser();
+        setUser({userId : userId})
+    } catch (err) {
+        console.log(err);
+    }
+    }
     useEffect(() => {
         (async () => {
-        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postParams.get('id'))])))[0])})()
+        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postParams.get('id'))])))[0])})();
     })
-
     useEffect(() => {
-        (
-            async () => {
-                try {
-                  const { usernameGet, userIdGet, signInDetails } = await getCurrentUser();
-                  userId = userIdGet;
-                  username = usernameGet;
-                } catch (err) {
-                  console.log(err);
-                }
-              }
-        )()
-    })
+        /**
+         * This keeps `post` fresh.
+         */
+        const sub = DataStore.observeQuery(Activity, (c) =>
+            c.id.eq(postParams.get('id'))
+        ).subscribe(({ items }) => {
+            setActivity(items[0]);
+        });
+        return () => {
+            sub.unsubscribe();
+        };
+      }, [])
 
     const updateLikeCount = async(event, changeVal) => {
         /* Models in DataStore are immutable. To update a record you must use the copyOf function
         to apply updates to the item’s fields rather than mutating the instance directly */
-        const original = await DataStore.query(Account, (c) => c.userEmail.eq(userId));
+        const { username, userId, signInDetails } = await getCurrentUser();
+        const original = await DataStore.query(Account, (c) => c.userId.eq(userId));
         if (original.length == 0) {
             await DataStore.save(
                 new Account({
-                    "userEmail": userId,
+                    "userId": userId,
                     "postsLiked":  [],
                     "postsReported":  [],
                     "postDisliked":  [],
@@ -58,10 +67,9 @@ const PostPage = () => {
                 })
             );
         }
-        const update = await DataStore.query(Account, (c) => c.userEmail.eq(userId));
-        console.log(update[0])
-        if ((changeVal > 0 && activity.likes > 0) && update[0].postsLiked.find((element) => element == activity.id) == undefined) {
-            const updatedAccount = await DataStore.save(
+        const update = await DataStore.query(Account, (c) => c.userId.eq(userId));
+        if ((changeVal > 0) && update[0].postsLiked.find((element) => element == activity.id) == undefined) {
+            await DataStore.save(
                 Account.copyOf(update[0], updated => {
                 const updateArray = updated.postsLiked.slice();
                 updateArray.push(activity.id);
@@ -74,6 +82,7 @@ const PostPage = () => {
                     updated.postDisliked = updateArrayDisliked
                     changeVal++;
                 }
+                console.log(update[0])
                 })
             );
             await DataStore.save(
@@ -82,8 +91,8 @@ const PostPage = () => {
                 })
             );
             event.preventDefault();
-        } else if ((changeVal < 0 && activity.likes > 0) && update[0].postDisliked.find((element) => element == activity.id) == undefined) {
-            const updatedAccount = await DataStore.save(
+        } else if ((changeVal < 0) && update[0].postDisliked.find((element) => element == activity.id) == undefined) {
+            await DataStore.save(
                 Account.copyOf(update[0], updated => {
                 const updateArray = updated.postDisliked.slice();
                 updateArray.push(activity.id);
@@ -96,6 +105,7 @@ const PostPage = () => {
                     updated.postsLiked = updateArrayliked
                     changeVal--;
                 }
+                console.log(update[0])
                 })
             );
             await DataStore.save(
@@ -105,7 +115,7 @@ const PostPage = () => {
             );
         } else {
             changeVal = changeVal * -1;
-            const updatedAccount = await DataStore.save(
+            await DataStore.save(
                 Account.copyOf(update[0], updated => {
                     // Check for if in disliked and remove it from there if it is
                     const index = updated.postDisliked.indexOf(activity.id);
@@ -121,6 +131,7 @@ const PostPage = () => {
                         updateArrayliked.splice(index2, 1);
                         updated.postsLiked = updateArrayliked
                     }
+                    console.log(update[0])
                 })
             );
             await DataStore.save(
@@ -180,11 +191,13 @@ const PostPage = () => {
                         return <ImageWithCaption caption={activity.captions[i]} id={activity.id} imageNum={i} imgType={fileType}/>}
                     )}
                 </div>
+                <Authenticator>
                 <div style={bottomBar}>
                     <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
                     <img className={"likeDislikeStyle"} src={"dislikeplaceholder.webp"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
                     <button className={"reportStyle"} onClick={() => setIsPopupOpen(true)}> Report </button>
                 </div>
+                </Authenticator>
             </div>)}
         </div>
     )
