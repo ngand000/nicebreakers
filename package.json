@@ -1,7 +1,7 @@
 {
   "name": "nicebreakers",
   "version": "0.1.0",
-  "homepage": "https://ngand000.github.io/",
+  "homepage": "https://ngand000.github.io/nicebreakers",
   "private": true,
   "dependencies": {
     "@aws-amplify/storage": "^6.0.17",
