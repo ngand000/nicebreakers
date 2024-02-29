@@ -113,6 +113,7 @@ const UploadPage = (props) => {
                     endorsed: false,
                     tags: null,
                     author: authorVal,
+                    timesReported: 0,
                 })
             );
             alert("Uploaded Successfully");

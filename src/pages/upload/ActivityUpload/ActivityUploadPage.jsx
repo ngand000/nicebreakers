@@ -215,6 +215,7 @@ const UploadPage = (props) => {
                     endorsed: false,
                     setup: 0,
                     tags: null,
+                    timesReported: 0,
                 })
             );
             for (i = 0; i < userImages.length; i++) {
