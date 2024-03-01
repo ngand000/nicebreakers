@@ -6,13 +6,15 @@ import { Question } from "../../models";
 // The preview for a single question pulled from the database
 export default function QuestionPreview({question}) {
 
-    const updateLikeCount = async(event) => {
+    const updateLikeCount = async(event, changeVal) => {
         event.preventDefault();
-        await DataStore.save(
-            Question.copyOf(question, updated => {
-                updated.likes = question.likes + 1;
-            })
-        );
+        if (changeVal > 0 || question.likes > 0) {
+            await DataStore.save(
+                Question.copyOf(question, updated => {
+                    updated.likes = question.likes + changeVal;
+                })
+            );
+        }
     }
     
     const innerDivStyle = {
@@ -46,7 +48,8 @@ export default function QuestionPreview({question}) {
                 {question.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
                 <div style={bottomBar}>
                     <div style={iconWithText}>
-                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent)}/>
+                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
+                        <img style={icon} src={"dislikeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
                         <div style={likeNumStyle}>
                             {question.likes}
                         </div>
