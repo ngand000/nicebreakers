@@ -4,7 +4,6 @@ import {Activity} from '../../models';
 import config from '../../aws-exports.js';
 import {useEffect, useState} from "react";
 import {DataStore} from "aws-amplify/datastore";
-import {useNavigate} from "react-router-dom"
 import "./postPage.css"
 import ImageWithCaption from "./ImageWithCaption";
 import ReportPopup from "./ReportPopup";
@@ -14,7 +13,6 @@ Amplify.configure(config);
 const PostPage = () => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
-    const navigate = useNavigate()
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     function rangeToString(r) {
