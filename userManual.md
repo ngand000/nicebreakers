@@ -6,11 +6,11 @@
   - Nicebreakers is a social media for finding icebreakers
 
 - Why do I need it?
-  - If you have ever planned a social event then you know how important it is to have engaging icebreakers to break past small talk. Unfortunatly, icebreakers are hard to come up with and the best you can find are just pre-compiled lists of icebreakers rather than something customzied to your needs. Nicebreakers solves this problem by providing you an interactive one-stop-shop for all your icebreaker needs.
+  - If you have ever planned a social event then you know how important it is to have engaging icebreakers to break past small talk. Unfortunately, icebreakers are hard to come up with and the best you can find are just pre-compiled lists of icebreakers rather than something customized to your needs. Nicebreakers solves this problem by providing you with an interactive one-stop-shop for all your icebreaker needs.
 
 - What does it do?
   - Nicebreakers is a website where users can post and search through uploaded icebreaker activities and questions based on a variety of filters such as age range, play time, etc... This enables you to find icebreakers that are designed for your particular event's needs.
-  - Nicebreakers is a live website that enables you to see the latest icebreakers as well as your faviouite classics, all in one consolidated website. It also features likes-based ranking to help you see which games are most popular with fellow users.
+  - Nicebreakers is a live website that enables you to see the latest icebreakers as well as your favourite classics, all in one consolidated website. It also features likes-based ranking to help you see which games are most popular with fellow users.
 
 ## How to Install Software
 
@@ -28,8 +28,8 @@
 - Start up your web-browser and simply visit this website:
   - https://deployable-page.d3pb2yef2pgy2m.amplifyapp.com/
 
-- Alternativly if you wish you can follow the "How to Build/Run System" instructions in the DeveloperGuidelines to run this app on a localhost port
-  - Warning: this option requires extra software and authentication with the team, it is not reccomended if you are not a developer
+- Alternatively, if you wish you can follow the "How to Build/Run System" instructions in the Developer Guidelines to run this app on a localhost port
+  - Warning: this option requires extra software and authentication with the team, it is not recommended if you are not a developer
 
 ## How to Use the Software
 
@@ -45,14 +45,14 @@
 - Activities Page (landing page)
   - Scroll up and down to look through activity previews. They contain:
     - Activity name
-    - Endorsment badge (if applicable)
+    - Endorsement badge (if applicable)
     - Activity abstract
     - Like count
     - Time duration
     - Group Size
   - Click various filter options to apply them
     - Some filters have a popup input value(s) in the format "x" or "x-y"
-      - Close the popup when finished inputing
+      - Close the popup when finished inputting
   - Outbound Pages:
     - Click on "Questions" in the top-right to view the Questions Page
     - Click on the "Upload" button in the top-right to upload an activity
@@ -61,20 +61,20 @@
 - Questions Page
   - Scroll up and down to look through questions. They will contain:
     - Question text
-    - Endorsment Badge (if applicable)
+    - Endorsement Badge (if applicable)
     - Like count
   - Click various filter options to apply them
     - Some filters have a popup input value(s) in the format "x" or "x-y"
-      - Close the popup when finished inputing
+      - Close the popup when finished inputting
   - Click the like button on a question to increment its like count
     - (Will be limited to one like per post when log in implemented)
   - Outbound Pages:
-    - Click on "Activites" in the top-right to view the Activities Page
+    - Click on "Activities" in the top-right to view the Activities Page
     - Click on the "Upload" button in the top-right to upload a question
 
 - Activity Upload Page
-  - Scroll up and down to view various feilds
-  - Input the following feilds about your activity (please be appropriate and safe):
+  - Scroll up and down to view various fields
+  - Input the following fields about your activity (please be appropriate and safe):
     - Activity Name
     - Abstract (for the Activities Page preview)
     - Description (for the full post page)
@@ -84,7 +84,7 @@
     - Age range (0 to 99 years)
     - Upload photo(s) related to the activity
   - Outbound Pages:
-    - Click the Back button or the Nicebreakers logo to return to the Activites Page without uploading
+    - Click the Back button or the Nicebreakers logo to return to the Activities Page without uploading
     - Click the upload button to upload your activity
       - (Will be limited to accounts only when log in implemented)
       - You should get an alert if you have any malformed inputs, and not be redirected
@@ -92,8 +92,8 @@
       - You should get an alert if the activity uploaded successfully, and you will be redirected to the Activities Page
 
 - Questions Upload Page
-  - Scroll up and down to view various feilds
-  - Input the following feilds about your question (please be appropriate and safe):
+  - Scroll up and down to view various fields
+  - Input the following fields about your question (please be appropriate and safe):
     - Question content
     - Author Name (will be prefilled when log in implemented)
     - Age range (0 to 99 years)
@@ -116,31 +116,31 @@
   - Click the like button to increment the like count of this activity
     - (Will be limited to one like per post when log in implemented)
   - Click the dislike button to decrement the like count of this activity
-    - (Will be limited to one dilike per post when log in implemented)
+    - (Will be limited to one dislike per post when log in implemented)
   - Click the report button to report this post for a violation
     - Enter a reason the the given popup box
     - Click Go Back to cancel your report and exit popup
     - Click Report to file the report and exit popup
   - Outbound Pages:
-    - Click the Nicebreakers logo to return to the Activites Page
+    - Click the Nicebreakers logo to return to the Activities Page
 
 ## How to Report a Bug
 
 - Go to the public nicebreakers github repository issue page: https://github.com/ngand000/nicebreakers/issues
 - Click "New issue" in the top-right
 - Please mark the bug with a "Bug" tag and a severity tag "Critical/Notable/Inconvenience/Negligible"
-- If you have multiple bugs and can isolate them, please file them seperatly
+- If you have multiple bugs and can isolate them, please file them separately
 - Follow the following template to help us follow-up on your bug:
   
   - Contact Info: (Optional) Please give email, phone, etc so we can contact you if needed
   
-  - Bug Summary: Give a breif but specific overview of the bug. Sugguested format: "A functionality on B webpage does C when input is D but I expected it to do E."
+  - Bug Summary: Give a brief but specific overview of the bug. Suggested format: "A functionality on B webpage does C when input is D but I expected it to do E."
   
   - Steps to Reproduce: Please walk through all relevant steps to reproduce your bug. Try to generalize as much as possible (ex: upload png file vs upload smile-face.png) and remove any steps that are not essential to creating the bug (such as "log-in to account" if bug also appears in guest mode)
   
   - Expected Behaviour: Please detail what you expected the website to do as a result of your above steps. Can be left out if the Bug summary section covers this sufficiently.
 
-  - Actual Behaviour: Please detail in what ways the actual observed behviour of the website deviated from your expected behaviour. Can be left out if the Bug summary section covers this sufficiently.
+  - Actual Behaviour: Please detail in what ways the actually observed behaviour of the website deviated from your expected behaviour. Can be left out if the Bug summary section covers this sufficiently.
 
   - Relevant Files: Please include any relevant files, error logs, screenshots, or other media that causes or is made by the issue
 
@@ -190,7 +190,7 @@
   - Other Comments:
 
 
-- For additional bug report formating help please reference: https://bugzilla.mozilla.org/page.cgi?id=bug-writing.html
+- For additional bug report formatting help please reference: https://bugzilla.mozilla.org/page.cgi?id=bug-writing.html
 
 
 ## Known Bugs

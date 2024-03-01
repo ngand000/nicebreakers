@@ -76,7 +76,7 @@
 - Adding Github Actions is as simple as creating a .github/workflows folder in your repository and putting yml files into it to run as tests
 - To Create a CI test
     - Starting at the main nicebreakers directory -> .github/workflows
-    - Create a new [CIUNITNAME].yml file, or make a new entry under jobs in the exising NicebreakersCI.yml file (like Github-Actions-Default and Build-and-Run-Tests)
+    - Create a new [CIUNITNAME].yml file, or make a new entry under jobs in the existing NicebreakersCI.yml file (like Github-Actions-Default and Build-and-Run-Tests)
     - Label its name, run-name, on, and jobs field as per yml file format
         - For help look online and/or at our yml file
 - To view CI build history go to our public github page -> actions
