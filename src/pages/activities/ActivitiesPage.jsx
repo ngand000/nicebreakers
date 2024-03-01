@@ -125,11 +125,7 @@ const ActivitiesPage = () => {
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
                 <ul style={{margin: "0 10vw 0 2vw", padding: "0", display: "flex"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
-<<<<<<< HEAD
-                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"upload/ActivityUpload"}></UploadButton></li>
-=======
-                    <li style={{display: "inline-block", marginLeft: "auto"}}><UploadButton uploadType={"/upload/ActivityUpload"}></UploadButton></li>
->>>>>>> origin
+                    <li style={{display: "inline-block", marginLeft: "auto"}}><UploadButton uploadType={"upload/ActivityUpload"}></UploadButton></li>
                 </ul>
                 <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
             </div>

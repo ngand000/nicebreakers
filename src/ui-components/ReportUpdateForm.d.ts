@@ -23,18 +23,18 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type ReportUpdateFormInputValues = {
-    author?: string;
-    report?: string;
+    reason?: string;
+    postId?: string;
 };
 export declare type ReportUpdateFormValidationValues = {
-    author?: ValidationFunction<string>;
-    report?: ValidationFunction<string>;
+    reason?: ValidationFunction<string>;
+    postId?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ReportUpdateFormOverridesProps = {
     ReportUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    author?: PrimitiveOverrideProps<TextFieldProps>;
-    report?: PrimitiveOverrideProps<TextFieldProps>;
+    reason?: PrimitiveOverrideProps<TextFieldProps>;
+    postId?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ReportUpdateFormProps = React.PropsWithChildren<{
     overrides?: ReportUpdateFormOverridesProps | undefined | null;

@@ -23,18 +23,18 @@ export default function ReportUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    author: "",
-    report: "",
+    reason: "",
+    postId: "",
   };
-  const [author, setAuthor] = React.useState(initialValues.author);
-  const [report, setReport] = React.useState(initialValues.report);
+  const [reason, setReason] = React.useState(initialValues.reason);
+  const [postId, setPostId] = React.useState(initialValues.postId);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = reportRecord
       ? { ...initialValues, ...reportRecord }
       : initialValues;
-    setAuthor(cleanValues.author);
-    setReport(cleanValues.report);
+    setReason(cleanValues.reason);
+    setPostId(cleanValues.postId);
     setErrors({});
   };
   const [reportRecord, setReportRecord] = React.useState(reportModelProp);
@@ -49,8 +49,8 @@ export default function ReportUpdateForm(props) {
   }, [idProp, reportModelProp]);
   React.useEffect(resetStateValues, [reportRecord]);
   const validations = {
-    author: [{ type: "Required" }],
-    report: [{ type: "Required" }],
+    reason: [{ type: "Required" }],
+    postId: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -78,8 +78,8 @@ export default function ReportUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          author,
-          report,
+          reason,
+          postId,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -127,54 +127,54 @@ export default function ReportUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Author"
+        label="Reason"
         isRequired={true}
         isReadOnly={false}
-        value={author}
+        value={reason}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              author: value,
-              report,
+              reason: value,
+              postId,
             };
             const result = onChange(modelFields);
-            value = result?.author ?? value;
+            value = result?.reason ?? value;
           }
-          if (errors.author?.hasError) {
-            runValidationTasks("author", value);
+          if (errors.reason?.hasError) {
+            runValidationTasks("reason", value);
           }
-          setAuthor(value);
+          setReason(value);
         }}
-        onBlur={() => runValidationTasks("author", author)}
-        errorMessage={errors.author?.errorMessage}
-        hasError={errors.author?.hasError}
-        {...getOverrideProps(overrides, "author")}
+        onBlur={() => runValidationTasks("reason", reason)}
+        errorMessage={errors.reason?.errorMessage}
+        hasError={errors.reason?.hasError}
+        {...getOverrideProps(overrides, "reason")}
       ></TextField>
       <TextField
-        label="Report"
+        label="Post id"
         isRequired={true}
         isReadOnly={false}
-        value={report}
+        value={postId}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              author,
-              report: value,
+              reason,
+              postId: value,
             };
             const result = onChange(modelFields);
-            value = result?.report ?? value;
+            value = result?.postId ?? value;
           }
-          if (errors.report?.hasError) {
-            runValidationTasks("report", value);
+          if (errors.postId?.hasError) {
+            runValidationTasks("postId", value);
           }
-          setReport(value);
+          setPostId(value);
         }}
-        onBlur={() => runValidationTasks("report", report)}
-        errorMessage={errors.report?.errorMessage}
-        hasError={errors.report?.hasError}
-        {...getOverrideProps(overrides, "report")}
+        onBlur={() => runValidationTasks("postId", postId)}
+        errorMessage={errors.postId?.errorMessage}
+        hasError={errors.postId?.hasError}
+        {...getOverrideProps(overrides, "postId")}
       ></TextField>
       <Flex
         justifyContent="space-between"
