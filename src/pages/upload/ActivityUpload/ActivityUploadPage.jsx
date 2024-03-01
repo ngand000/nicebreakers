@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../../models';
+import {useNavigate} from "react-router-dom"
 import { Amplify } from 'aws-amplify';
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
@@ -25,6 +26,9 @@ const UploadPage = (props) => {
     const [ageMin, ageMinSetter] = useState(0);
     const [ageMax, ageMaxSetter] = useState(1);
     const [userImages, userImageSetter] = useState([]);
+
+    const navigate = useNavigate()
+
 
     const filterNames = ["activityName", "activityAbstract", "activityDescription", "authorVal", "playerCountMin", "playerCountMax", "durationMin", "durationMax", "ageMin", "ageMax"];
 
@@ -232,7 +236,7 @@ const UploadPage = (props) => {
     //returns: redirects to respective viewing page
     const goBack = (event) => {
         event.preventDefault();
-        window.location.href = "/";
+        navigate("/");
     }
 
     return (

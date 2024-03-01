@@ -4,6 +4,7 @@ import { Activity } from '../../models';
 import config from '../../aws-exports.js';
 import {useEffect, useState, React} from "react";
 import {DataStore} from "aws-amplify/datastore";
+import {useNavigate} from "react-router-dom"
 import "./postPage.css"
 
 Amplify.configure(config);
@@ -11,6 +12,7 @@ Amplify.configure(config);
 const PostPage = () => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
+    const navigate = useNavigate()
 
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
