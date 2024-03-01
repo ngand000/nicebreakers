@@ -88,7 +88,7 @@ const PostPage = () => {
                 </div>
                 <div style={bottomBar}>
                     <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
-                    <img className={"likeDislikeStyle"} src={"dislikeplaceholder.webp"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
+                    <img className={"likeDislikeStyle"} src={"dislikeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
                     <button className={"reportStyle"} onClick={() => setIsPopupOpen(true)}> Report </button>
                 </div>
             </div>)}
