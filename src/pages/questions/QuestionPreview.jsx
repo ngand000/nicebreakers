@@ -4,7 +4,7 @@ import { DataStore } from 'aws-amplify/datastore';
 import { Question } from "../../models";
 
 // The preview for a single question pulled from the database
-export default function QuestionPreview({question}) {
+export default function QuestionPreview({question, openReport}) {
 
     const updateLikeCount = async(event, changeVal) => {
         event.preventDefault();
@@ -54,6 +54,7 @@ export default function QuestionPreview({question}) {
                             {question.likes}
                         </div>
                     </div>
+                    <button className={"reportStyle"} onClick={() => openReport(question.id)}> Report </button>
                 </div>
             </div>
         </div>)
