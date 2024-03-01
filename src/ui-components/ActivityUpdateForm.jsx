@@ -195,14 +195,13 @@ export default function ActivityUpdateForm(props) {
     author: "",
     abstract: "",
     likes: "",
-    pictures: [],
     captions: [],
     playerCount: [],
     duration: [],
     ageRange: [],
     endorsed: false,
-    setup: "",
-    tags: [],
+    fileTypes: [],
+    timesReported: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -211,7 +210,6 @@ export default function ActivityUpdateForm(props) {
   const [author, setAuthor] = React.useState(initialValues.author);
   const [abstract, setAbstract] = React.useState(initialValues.abstract);
   const [likes, setLikes] = React.useState(initialValues.likes);
-  const [pictures, setPictures] = React.useState(initialValues.pictures);
   const [captions, setCaptions] = React.useState(initialValues.captions);
   const [playerCount, setPlayerCount] = React.useState(
     initialValues.playerCount
@@ -219,8 +217,10 @@ export default function ActivityUpdateForm(props) {
   const [duration, setDuration] = React.useState(initialValues.duration);
   const [ageRange, setAgeRange] = React.useState(initialValues.ageRange);
   const [endorsed, setEndorsed] = React.useState(initialValues.endorsed);
-  const [setup, setSetup] = React.useState(initialValues.setup);
-  const [tags, setTags] = React.useState(initialValues.tags);
+  const [fileTypes, setFileTypes] = React.useState(initialValues.fileTypes);
+  const [timesReported, setTimesReported] = React.useState(
+    initialValues.timesReported
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = activityRecord
@@ -231,8 +231,6 @@ export default function ActivityUpdateForm(props) {
     setAuthor(cleanValues.author);
     setAbstract(cleanValues.abstract);
     setLikes(cleanValues.likes);
-    setPictures(cleanValues.pictures ?? []);
-    setCurrentPicturesValue("");
     setCaptions(cleanValues.captions ?? []);
     setCurrentCaptionsValue("");
     setPlayerCount(cleanValues.playerCount ?? []);
@@ -242,9 +240,9 @@ export default function ActivityUpdateForm(props) {
     setAgeRange(cleanValues.ageRange ?? []);
     setCurrentAgeRangeValue("");
     setEndorsed(cleanValues.endorsed);
-    setSetup(cleanValues.setup);
-    setTags(cleanValues.tags ?? []);
-    setCurrentTagsValue("");
+    setFileTypes(cleanValues.fileTypes ?? []);
+    setCurrentFileTypesValue("");
+    setTimesReported(cleanValues.timesReported);
     setErrors({});
   };
   const [activityRecord, setActivityRecord] = React.useState(activityModelProp);
@@ -258,8 +256,6 @@ export default function ActivityUpdateForm(props) {
     queryData();
   }, [idProp, activityModelProp]);
   React.useEffect(resetStateValues, [activityRecord]);
-  const [currentPicturesValue, setCurrentPicturesValue] = React.useState("");
-  const picturesRef = React.createRef();
   const [currentCaptionsValue, setCurrentCaptionsValue] = React.useState("");
   const captionsRef = React.createRef();
   const [currentPlayerCountValue, setCurrentPlayerCountValue] =
@@ -269,22 +265,21 @@ export default function ActivityUpdateForm(props) {
   const durationRef = React.createRef();
   const [currentAgeRangeValue, setCurrentAgeRangeValue] = React.useState("");
   const ageRangeRef = React.createRef();
-  const [currentTagsValue, setCurrentTagsValue] = React.useState("");
-  const tagsRef = React.createRef();
+  const [currentFileTypesValue, setCurrentFileTypesValue] = React.useState("");
+  const fileTypesRef = React.createRef();
   const validations = {
     name: [{ type: "Required" }],
     description: [{ type: "Required" }],
     author: [{ type: "Required" }],
-    abstract: [],
+    abstract: [{ type: "Required" }],
     likes: [{ type: "Required" }],
-    pictures: [],
     captions: [],
     playerCount: [{ type: "Required" }],
     duration: [{ type: "Required" }],
     ageRange: [{ type: "Required" }],
     endorsed: [],
-    setup: [{ type: "Required" }],
-    tags: [],
+    fileTypes: [],
+    timesReported: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -317,14 +312,13 @@ export default function ActivityUpdateForm(props) {
           author,
           abstract,
           likes,
-          pictures,
           captions,
           playerCount,
           duration,
           ageRange,
           endorsed,
-          setup,
-          tags,
+          fileTypes,
+          timesReported,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -385,14 +379,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -421,14 +414,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -457,14 +449,13 @@ export default function ActivityUpdateForm(props) {
               author: value,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -481,7 +472,7 @@ export default function ActivityUpdateForm(props) {
       ></TextField>
       <TextField
         label="Abstract"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={abstract}
         onChange={(e) => {
@@ -493,14 +484,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract: value,
               likes,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.abstract ?? value;
@@ -533,14 +523,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes: value,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.likes ?? value;
@@ -565,71 +554,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures: values,
-              captions,
-              playerCount,
-              duration,
-              ageRange,
-              endorsed,
-              setup,
-              tags,
-            };
-            const result = onChange(modelFields);
-            values = result?.pictures ?? values;
-          }
-          setPictures(values);
-          setCurrentPicturesValue("");
-        }}
-        currentFieldValue={currentPicturesValue}
-        label={"Pictures"}
-        items={pictures}
-        hasError={errors?.pictures?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("pictures", currentPicturesValue)
-        }
-        errorMessage={errors?.pictures?.errorMessage}
-        setFieldValue={setCurrentPicturesValue}
-        inputFieldRef={picturesRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Pictures"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentPicturesValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.pictures?.hasError) {
-              runValidationTasks("pictures", value);
-            }
-            setCurrentPicturesValue(value);
-          }}
-          onBlur={() => runValidationTasks("pictures", currentPicturesValue)}
-          errorMessage={errors.pictures?.errorMessage}
-          hasError={errors.pictures?.hasError}
-          ref={picturesRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "pictures")}
-        ></TextField>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              name,
-              description,
-              author,
-              abstract,
-              likes,
-              pictures,
               captions: values,
               playerCount,
               duration,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             values = result?.captions ?? values;
@@ -679,14 +610,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount: values,
               duration,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             values = result?.playerCount ?? values;
@@ -742,14 +672,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount,
               duration: values,
               ageRange,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             values = result?.duration ?? values;
@@ -803,14 +732,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange: values,
               endorsed,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             values = result?.ageRange ?? values;
@@ -868,14 +796,13 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange,
               endorsed: value,
-              setup,
-              tags,
+              fileTypes,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.endorsed ?? value;
@@ -890,13 +817,69 @@ export default function ActivityUpdateForm(props) {
         hasError={errors.endorsed?.hasError}
         {...getOverrideProps(overrides, "endorsed")}
       ></SwitchField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              author,
+              abstract,
+              likes,
+              captions,
+              playerCount,
+              duration,
+              ageRange,
+              endorsed,
+              fileTypes: values,
+              timesReported,
+            };
+            const result = onChange(modelFields);
+            values = result?.fileTypes ?? values;
+          }
+          setFileTypes(values);
+          setCurrentFileTypesValue("");
+        }}
+        currentFieldValue={currentFileTypesValue}
+        label={"File types"}
+        items={fileTypes}
+        hasError={errors?.fileTypes?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("fileTypes", currentFileTypesValue)
+        }
+        errorMessage={errors?.fileTypes?.errorMessage}
+        setFieldValue={setCurrentFileTypesValue}
+        inputFieldRef={fileTypesRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="File types"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentFileTypesValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.fileTypes?.hasError) {
+              runValidationTasks("fileTypes", value);
+            }
+            setCurrentFileTypesValue(value);
+          }}
+          onBlur={() => runValidationTasks("fileTypes", currentFileTypesValue)}
+          errorMessage={errors.fileTypes?.errorMessage}
+          hasError={errors.fileTypes?.hasError}
+          ref={fileTypesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "fileTypes")}
+        ></TextField>
+      </ArrayField>
       <TextField
-        label="Setup"
+        label="Times reported"
         isRequired={true}
         isReadOnly={false}
         type="number"
         step="any"
-        value={setup}
+        value={timesReported}
         onChange={(e) => {
           let value = isNaN(parseInt(e.target.value))
             ? e.target.value
@@ -908,85 +891,27 @@ export default function ActivityUpdateForm(props) {
               author,
               abstract,
               likes,
-              pictures,
               captions,
               playerCount,
               duration,
               ageRange,
               endorsed,
-              setup: value,
-              tags,
+              fileTypes,
+              timesReported: value,
             };
             const result = onChange(modelFields);
-            value = result?.setup ?? value;
+            value = result?.timesReported ?? value;
           }
-          if (errors.setup?.hasError) {
-            runValidationTasks("setup", value);
+          if (errors.timesReported?.hasError) {
+            runValidationTasks("timesReported", value);
           }
-          setSetup(value);
+          setTimesReported(value);
         }}
-        onBlur={() => runValidationTasks("setup", setup)}
-        errorMessage={errors.setup?.errorMessage}
-        hasError={errors.setup?.hasError}
-        {...getOverrideProps(overrides, "setup")}
+        onBlur={() => runValidationTasks("timesReported", timesReported)}
+        errorMessage={errors.timesReported?.errorMessage}
+        hasError={errors.timesReported?.hasError}
+        {...getOverrideProps(overrides, "timesReported")}
       ></TextField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              name,
-              description,
-              author,
-              abstract,
-              likes,
-              pictures,
-              captions,
-              playerCount,
-              duration,
-              ageRange,
-              endorsed,
-              setup,
-              tags: values,
-            };
-            const result = onChange(modelFields);
-            values = result?.tags ?? values;
-          }
-          setTags(values);
-          setCurrentTagsValue("");
-        }}
-        currentFieldValue={currentTagsValue}
-        label={"Tags"}
-        items={tags}
-        hasError={errors?.tags?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("tags", currentTagsValue)
-        }
-        errorMessage={errors?.tags?.errorMessage}
-        setFieldValue={setCurrentTagsValue}
-        inputFieldRef={tagsRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Tags"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentTagsValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.tags?.hasError) {
-              runValidationTasks("tags", value);
-            }
-            setCurrentTagsValue(value);
-          }}
-          onBlur={() => runValidationTasks("tags", currentTagsValue)}
-          errorMessage={errors.tags?.errorMessage}
-          hasError={errors.tags?.hasError}
-          ref={tagsRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "tags")}
-        ></TextField>
-      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

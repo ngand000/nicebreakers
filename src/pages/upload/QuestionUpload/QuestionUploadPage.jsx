@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import {Question} from '../../../models';
 import { Amplify } from 'aws-amplify';
+import {useNavigate} from "react-router-dom"
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
 
@@ -17,6 +18,8 @@ const UploadPage = (props) => {
     const [authorVal, authorValSetter] = useState("");
     const [ageMin, ageMinSetter] = useState(0);
     const [ageMax, ageMaxSetter] = useState(1);
+
+    const navigate = useNavigate()
 
     const filterNames = ["questionText", "authorVal", "ageMin", "ageMax"];
 
@@ -145,7 +148,7 @@ const UploadPage = (props) => {
     //returns: redirects to respective viewing page
     const goBack = (event) => {
         event.preventDefault();
-        window.location.href = "/questions";
+        navigate("/questions");
     }
 
     const logoStyle = {width: "15vmin", margin: "1vw 2vw 0 0"}

@@ -6,6 +6,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../models';
 import { Amplify } from 'aws-amplify';
+import {useNavigate} from "react-router-dom"
 import config from '../../aws-exports.js';
 
 Amplify.configure(config);
@@ -18,7 +19,8 @@ const ActivitiesPage = () => {
     const [filters, setFilters] = useState({});
     const filterBarRef = useRef(null);
     const [activities, setActivities] = useState([])
-
+    const navigate = useNavigate()
+    
     useEffect(() => {
         (async () => {
         setActivities(await DataStore.query(Activity))})()
@@ -116,14 +118,14 @@ const ActivitiesPage = () => {
         <div>
             <div style={headerStyle}>
                 <img style={logoStyle} src={"logoplaceholder.png"} alt={"logo"}/>
-                <a href={"/"} style={thisLinkStyle}>Activities</a>
-                <a href={"/questions"} style={otherLinkStyle}>Questions</a>
+                <div onClick={() => {navigate("")}} style={thisLinkStyle}>Activities</div>
+                <div onClick={() => {navigate("questions")}} style={otherLinkStyle}>Questions</div>
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
                 <ul style={{margin: "0 10vw 0 2vw", padding: "0", display: "flex"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
-                    <li style={{display: "inline-block", marginLeft: "auto"}}><UploadButton uploadType={"/upload/ActivityUpload"}></UploadButton></li>
+                    <li style={{display: "inline-block", marginLeft: "auto"}}><UploadButton uploadType={"upload/ActivityUpload"}></UploadButton></li>
                 </ul>
                 <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
             </div>

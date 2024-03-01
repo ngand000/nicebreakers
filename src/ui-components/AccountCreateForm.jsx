@@ -19,7 +19,7 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { Question } from "../models";
+import { Account } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify/datastore";
 function ArrayField({
@@ -177,7 +177,7 @@ function ArrayField({
     </React.Fragment>
   );
 }
-export default function QuestionCreateForm(props) {
+export default function AccountCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -189,48 +189,48 @@ export default function QuestionCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    question: "",
-    likes: "",
-    ageRange: [],
-    endorsed: false,
-    tags: [],
-    author: "",
-    timesReported: "",
+    userId: "",
+    postsLiked: [],
+    postsReported: [],
+    postDisliked: [],
+    Admin: false,
   };
-  const [question, setQuestion] = React.useState(initialValues.question);
-  const [likes, setLikes] = React.useState(initialValues.likes);
-  const [ageRange, setAgeRange] = React.useState(initialValues.ageRange);
-  const [endorsed, setEndorsed] = React.useState(initialValues.endorsed);
-  const [tags, setTags] = React.useState(initialValues.tags);
-  const [author, setAuthor] = React.useState(initialValues.author);
-  const [timesReported, setTimesReported] = React.useState(
-    initialValues.timesReported
+  const [userId, setUserId] = React.useState(initialValues.userId);
+  const [postsLiked, setPostsLiked] = React.useState(initialValues.postsLiked);
+  const [postsReported, setPostsReported] = React.useState(
+    initialValues.postsReported
   );
+  const [postDisliked, setPostDisliked] = React.useState(
+    initialValues.postDisliked
+  );
+  const [Admin, setAdmin] = React.useState(initialValues.Admin);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setQuestion(initialValues.question);
-    setLikes(initialValues.likes);
-    setAgeRange(initialValues.ageRange);
-    setCurrentAgeRangeValue("");
-    setEndorsed(initialValues.endorsed);
-    setTags(initialValues.tags);
-    setCurrentTagsValue("");
-    setAuthor(initialValues.author);
-    setTimesReported(initialValues.timesReported);
+    setUserId(initialValues.userId);
+    setPostsLiked(initialValues.postsLiked);
+    setCurrentPostsLikedValue("");
+    setPostsReported(initialValues.postsReported);
+    setCurrentPostsReportedValue("");
+    setPostDisliked(initialValues.postDisliked);
+    setCurrentPostDislikedValue("");
+    setAdmin(initialValues.Admin);
     setErrors({});
   };
-  const [currentAgeRangeValue, setCurrentAgeRangeValue] = React.useState("");
-  const ageRangeRef = React.createRef();
-  const [currentTagsValue, setCurrentTagsValue] = React.useState("");
-  const tagsRef = React.createRef();
+  const [currentPostsLikedValue, setCurrentPostsLikedValue] =
+    React.useState("");
+  const postsLikedRef = React.createRef();
+  const [currentPostsReportedValue, setCurrentPostsReportedValue] =
+    React.useState("");
+  const postsReportedRef = React.createRef();
+  const [currentPostDislikedValue, setCurrentPostDislikedValue] =
+    React.useState("");
+  const postDislikedRef = React.createRef();
   const validations = {
-    question: [{ type: "Required" }],
-    likes: [{ type: "Required" }],
-    ageRange: [{ type: "Required" }],
-    endorsed: [],
-    tags: [],
-    author: [],
-    timesReported: [{ type: "Required" }],
+    userId: [{ type: "Required" }],
+    postsLiked: [],
+    postsReported: [],
+    postDisliked: [],
+    Admin: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -258,13 +258,11 @@ export default function QuestionCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          question,
-          likes,
-          ageRange,
-          endorsed,
-          tags,
-          author,
-          timesReported,
+          userId,
+          postsLiked,
+          postsReported,
+          postDisliked,
+          Admin,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -294,7 +292,7 @@ export default function QuestionCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(new Question(modelFields));
+          await DataStore.save(new Account(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -307,273 +305,218 @@ export default function QuestionCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "QuestionCreateForm")}
+      {...getOverrideProps(overrides, "AccountCreateForm")}
       {...rest}
     >
       <TextField
-        label="Question"
+        label="User id"
         isRequired={true}
         isReadOnly={false}
-        value={question}
+        value={userId}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              question: value,
-              likes,
-              ageRange,
-              endorsed,
-              tags,
-              author,
-              timesReported,
+              userId: value,
+              postsLiked,
+              postsReported,
+              postDisliked,
+              Admin,
             };
             const result = onChange(modelFields);
-            value = result?.question ?? value;
+            value = result?.userId ?? value;
           }
-          if (errors.question?.hasError) {
-            runValidationTasks("question", value);
+          if (errors.userId?.hasError) {
+            runValidationTasks("userId", value);
           }
-          setQuestion(value);
+          setUserId(value);
         }}
-        onBlur={() => runValidationTasks("question", question)}
-        errorMessage={errors.question?.errorMessage}
-        hasError={errors.question?.hasError}
-        {...getOverrideProps(overrides, "question")}
-      ></TextField>
-      <TextField
-        label="Likes"
-        isRequired={true}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={likes}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              question,
-              likes: value,
-              ageRange,
-              endorsed,
-              tags,
-              author,
-              timesReported,
-            };
-            const result = onChange(modelFields);
-            value = result?.likes ?? value;
-          }
-          if (errors.likes?.hasError) {
-            runValidationTasks("likes", value);
-          }
-          setLikes(value);
-        }}
-        onBlur={() => runValidationTasks("likes", likes)}
-        errorMessage={errors.likes?.errorMessage}
-        hasError={errors.likes?.hasError}
-        {...getOverrideProps(overrides, "likes")}
+        onBlur={() => runValidationTasks("userId", userId)}
+        errorMessage={errors.userId?.errorMessage}
+        hasError={errors.userId?.hasError}
+        {...getOverrideProps(overrides, "userId")}
       ></TextField>
       <ArrayField
         onChange={async (items) => {
           let values = items;
           if (onChange) {
             const modelFields = {
-              question,
-              likes,
-              ageRange: values,
-              endorsed,
-              tags,
-              author,
-              timesReported,
+              userId,
+              postsLiked: values,
+              postsReported,
+              postDisliked,
+              Admin,
             };
             const result = onChange(modelFields);
-            values = result?.ageRange ?? values;
+            values = result?.postsLiked ?? values;
           }
-          setAgeRange(values);
-          setCurrentAgeRangeValue("");
+          setPostsLiked(values);
+          setCurrentPostsLikedValue("");
         }}
-        currentFieldValue={currentAgeRangeValue}
-        label={"Age range"}
-        items={ageRange}
-        hasError={errors?.ageRange?.hasError}
+        currentFieldValue={currentPostsLikedValue}
+        label={"Posts liked"}
+        items={postsLiked}
+        hasError={errors?.postsLiked?.hasError}
         runValidationTasks={async () =>
-          await runValidationTasks("ageRange", currentAgeRangeValue)
+          await runValidationTasks("postsLiked", currentPostsLikedValue)
         }
-        errorMessage={errors?.ageRange?.errorMessage}
-        setFieldValue={setCurrentAgeRangeValue}
-        inputFieldRef={ageRangeRef}
+        errorMessage={errors?.postsLiked?.errorMessage}
+        setFieldValue={setCurrentPostsLikedValue}
+        inputFieldRef={postsLikedRef}
         defaultFieldValue={""}
       >
         <TextField
-          label="Age range"
-          isRequired={true}
+          label="Posts liked"
+          isRequired={false}
           isReadOnly={false}
-          type="number"
-          step="any"
-          value={currentAgeRangeValue}
+          value={currentPostsLikedValue}
           onChange={(e) => {
-            let value = isNaN(parseInt(e.target.value))
-              ? e.target.value
-              : parseInt(e.target.value);
-            if (errors.ageRange?.hasError) {
-              runValidationTasks("ageRange", value);
+            let { value } = e.target;
+            if (errors.postsLiked?.hasError) {
+              runValidationTasks("postsLiked", value);
             }
-            setCurrentAgeRangeValue(value);
+            setCurrentPostsLikedValue(value);
           }}
-          onBlur={() => runValidationTasks("ageRange", currentAgeRangeValue)}
-          errorMessage={errors.ageRange?.errorMessage}
-          hasError={errors.ageRange?.hasError}
-          ref={ageRangeRef}
+          onBlur={() =>
+            runValidationTasks("postsLiked", currentPostsLikedValue)
+          }
+          errorMessage={errors.postsLiked?.errorMessage}
+          hasError={errors.postsLiked?.hasError}
+          ref={postsLikedRef}
           labelHidden={true}
-          {...getOverrideProps(overrides, "ageRange")}
+          {...getOverrideProps(overrides, "postsLiked")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              userId,
+              postsLiked,
+              postsReported: values,
+              postDisliked,
+              Admin,
+            };
+            const result = onChange(modelFields);
+            values = result?.postsReported ?? values;
+          }
+          setPostsReported(values);
+          setCurrentPostsReportedValue("");
+        }}
+        currentFieldValue={currentPostsReportedValue}
+        label={"Posts reported"}
+        items={postsReported}
+        hasError={errors?.postsReported?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("postsReported", currentPostsReportedValue)
+        }
+        errorMessage={errors?.postsReported?.errorMessage}
+        setFieldValue={setCurrentPostsReportedValue}
+        inputFieldRef={postsReportedRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Posts reported"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentPostsReportedValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.postsReported?.hasError) {
+              runValidationTasks("postsReported", value);
+            }
+            setCurrentPostsReportedValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("postsReported", currentPostsReportedValue)
+          }
+          errorMessage={errors.postsReported?.errorMessage}
+          hasError={errors.postsReported?.hasError}
+          ref={postsReportedRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "postsReported")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              userId,
+              postsLiked,
+              postsReported,
+              postDisliked: values,
+              Admin,
+            };
+            const result = onChange(modelFields);
+            values = result?.postDisliked ?? values;
+          }
+          setPostDisliked(values);
+          setCurrentPostDislikedValue("");
+        }}
+        currentFieldValue={currentPostDislikedValue}
+        label={"Post disliked"}
+        items={postDisliked}
+        hasError={errors?.postDisliked?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("postDisliked", currentPostDislikedValue)
+        }
+        errorMessage={errors?.postDisliked?.errorMessage}
+        setFieldValue={setCurrentPostDislikedValue}
+        inputFieldRef={postDislikedRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Post disliked"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentPostDislikedValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.postDisliked?.hasError) {
+              runValidationTasks("postDisliked", value);
+            }
+            setCurrentPostDislikedValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("postDisliked", currentPostDislikedValue)
+          }
+          errorMessage={errors.postDisliked?.errorMessage}
+          hasError={errors.postDisliked?.hasError}
+          ref={postDislikedRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "postDisliked")}
         ></TextField>
       </ArrayField>
       <SwitchField
-        label="Endorsed"
+        label="Admin"
         defaultChecked={false}
         isDisabled={false}
-        isChecked={endorsed}
+        isChecked={Admin}
         onChange={(e) => {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              question,
-              likes,
-              ageRange,
-              endorsed: value,
-              tags,
-              author,
-              timesReported,
+              userId,
+              postsLiked,
+              postsReported,
+              postDisliked,
+              Admin: value,
             };
             const result = onChange(modelFields);
-            value = result?.endorsed ?? value;
+            value = result?.Admin ?? value;
           }
-          if (errors.endorsed?.hasError) {
-            runValidationTasks("endorsed", value);
+          if (errors.Admin?.hasError) {
+            runValidationTasks("Admin", value);
           }
-          setEndorsed(value);
+          setAdmin(value);
         }}
-        onBlur={() => runValidationTasks("endorsed", endorsed)}
-        errorMessage={errors.endorsed?.errorMessage}
-        hasError={errors.endorsed?.hasError}
-        {...getOverrideProps(overrides, "endorsed")}
+        onBlur={() => runValidationTasks("Admin", Admin)}
+        errorMessage={errors.Admin?.errorMessage}
+        hasError={errors.Admin?.hasError}
+        {...getOverrideProps(overrides, "Admin")}
       ></SwitchField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              question,
-              likes,
-              ageRange,
-              endorsed,
-              tags: values,
-              author,
-              timesReported,
-            };
-            const result = onChange(modelFields);
-            values = result?.tags ?? values;
-          }
-          setTags(values);
-          setCurrentTagsValue("");
-        }}
-        currentFieldValue={currentTagsValue}
-        label={"Tags"}
-        items={tags}
-        hasError={errors?.tags?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("tags", currentTagsValue)
-        }
-        errorMessage={errors?.tags?.errorMessage}
-        setFieldValue={setCurrentTagsValue}
-        inputFieldRef={tagsRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Tags"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentTagsValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.tags?.hasError) {
-              runValidationTasks("tags", value);
-            }
-            setCurrentTagsValue(value);
-          }}
-          onBlur={() => runValidationTasks("tags", currentTagsValue)}
-          errorMessage={errors.tags?.errorMessage}
-          hasError={errors.tags?.hasError}
-          ref={tagsRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "tags")}
-        ></TextField>
-      </ArrayField>
-      <TextField
-        label="Author"
-        isRequired={false}
-        isReadOnly={false}
-        value={author}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              question,
-              likes,
-              ageRange,
-              endorsed,
-              tags,
-              author: value,
-              timesReported,
-            };
-            const result = onChange(modelFields);
-            value = result?.author ?? value;
-          }
-          if (errors.author?.hasError) {
-            runValidationTasks("author", value);
-          }
-          setAuthor(value);
-        }}
-        onBlur={() => runValidationTasks("author", author)}
-        errorMessage={errors.author?.errorMessage}
-        hasError={errors.author?.hasError}
-        {...getOverrideProps(overrides, "author")}
-      ></TextField>
-      <TextField
-        label="Times reported"
-        isRequired={true}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={timesReported}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              question,
-              likes,
-              ageRange,
-              endorsed,
-              tags,
-              author,
-              timesReported: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.timesReported ?? value;
-          }
-          if (errors.timesReported?.hasError) {
-            runValidationTasks("timesReported", value);
-          }
-          setTimesReported(value);
-        }}
-        onBlur={() => runValidationTasks("timesReported", timesReported)}
-        errorMessage={errors.timesReported?.errorMessage}
-        hasError={errors.timesReported?.hasError}
-        {...getOverrideProps(overrides, "timesReported")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

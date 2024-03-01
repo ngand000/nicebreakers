@@ -4,6 +4,7 @@ import FilterEntry from "../activities/FilterEntry";
 import UploadButton from "../upload/UploadButton.jsx";
 import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
+import {useNavigate} from "react-router-dom"
 import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
 import config from '../../aws-exports.js';
@@ -18,6 +19,7 @@ const QuestionsPage = () => {
     const [filters, setFilters] = useState({});
     const filterBarRef = useRef(null);
     const [questions, setQuestions] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         (async () => {
@@ -115,8 +117,8 @@ const QuestionsPage = () => {
         <div>
             <div style={headerStyle}>
                 <img style={logoStyle} src={"logoplaceholder.png"} alt={"logo"}/>
-                <a href={"/"} style={otherLinkStyle}>Activities</a>
-                <a href={"/questions"} style={thisLinkStyle}>Questions</a>
+                <div onClick={() => {navigate("/")}} style={otherLinkStyle}>Activities</div>
+                <div onClick={() => {navigate("")}} style={thisLinkStyle}>Questions</div>
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
