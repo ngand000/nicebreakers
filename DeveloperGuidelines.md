@@ -45,11 +45,13 @@
 - Still in the root directory, run "npm install"
 - Based on what you want to do, follow the respective directions below.
 
-## How to Build System:
+## How to Build a Release of the System:
+- Make any desired changes to the code as you may wish
 - Still in the root directory, run “npm run build”
     - If it asks you to install react-scripts, do so with the given command
     - Then rerun “npm run build”
-- A build folder will be created in your the respository root which you can serve as a static site
+- A build folder will be created in your the respository root which is your new release
+- If you wish to serve the build as a static site on a localhost port to test it out do the following:
     - CD into the nicebreakers root directory
         - Your IDE terminal may not work for this, open command prompt or its equivalent for your OS
     - Run "npm install -g serve"
