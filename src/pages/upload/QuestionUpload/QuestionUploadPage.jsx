@@ -103,22 +103,26 @@ const UploadPage = (props) => {
     //pre: none
     //post: none
     //args: none
-    //return, none, pushes new Activity to remote database
+    //return, true if pushes new Question to remote database
     //        populated with user inputs
+    //        and false if push failed
     const queryPush = async() => {
         try {
             await DataStore.save(
                 new Question({
                     question: questionText,
-                    likes: "0",
+                    likes: 0,
                     ageRange: [Number(ageMin), Number(ageMax)],
                     endorsed: false,
-                    tage: null,
+                    tags: null,
                     author: authorVal,
                 })
             );
+            alert("Uploaded Successfully");
+            return true;
         } catch (error) {
             alert("Error in submitting question");
+            return false;
         }
     };
 
@@ -128,11 +132,13 @@ const UploadPage = (props) => {
     //returns: calls the filter check and if all
     //         checks pass, submits query to database
     //         add redirects to respective viewing page
-    const checkSubmit = (event) => {
+    const checkSubmit = async(event) => {
         event.preventDefault();
         if (filterChecks()) {
-            queryPush();
-            window.location.href = "/questions";
+            const queryStatus = await queryPush();
+            if (queryStatus) {
+                window.location.href = "/questions";
+            }
         }
     };
 
@@ -145,29 +151,31 @@ const UploadPage = (props) => {
         navigate("/questions");
     }
 
+    const logoStyle = {width: "15vmin", margin: "1vw 2vw 0 0"}
+
     return (
         <div>
             <div className="header">
-                <img src={"logoplaceholder.png"} alt={"logo"}/>
+                <a href={'/'}> <img src={"../../../../logoplaceholder.png"} alt={"logo"} style={logoStyle}/> </a>
                 <text className="title">Upload Question</text>
             </div>
             <form id ="uploadQuestion" style={{width: "80%", marginLeft: "10%"}}>
-                <div className="color-box" style={{backgroundColor: "rgb(255,252,123)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(48,139,255)"}}>
                     <label className="feild-entry-title" htmlFor={"authorName"}>Question:</label>
                     <textarea id="question-entry-box" className="question-entry-box" name={"Question"} form={"uploadQuestion"} placeholder={textboxPlaceHolder} onFocus={togglePlaceHolder} onBlur={togglePlaceHolder} value={questionText} onChange={(thisEvent) => inputHandler(thisEvent, questionTextSetter)}></textarea>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(182,255,123)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(79,239,255)"}}>
                     <label className="feild-entry-title" htmlFor={"authorName"}>Author:</label>
                     <input className="author-field" type={"text"} id={"author"} value={authorVal} onChange={(thisEvent) => inputHandler(thisEvent, authorValSetter)}/>
                 </div>
                 <br/>
-                <div className="color-box" style={{backgroundColor: "rgb(255,94,94)"}}>
+                <div className="color-box" style={{backgroundColor: "rgb(73,171,252)"}}>
                     <label className="feild-entry-title" style={{marginLeft: "2vw"}} htmlFor={"ageRange"}>Age Range:</label>
                     <ul style={{margin: "2vh 0 2vh 2vw", padding: "0", display: "flex", listStyleType: "none"}}>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(255,187,89)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="100" id={"minAge"} value={ageMin} onChange={(thisEvent) => inputHandler(thisEvent, ageMinSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="0" max="100" id={"minAge"} value={ageMin} onChange={(thisEvent) => inputHandler(thisEvent, ageMinSetter)}/></div></li>
                         <li><div className="feild-entry-title" style={{display: "inline-block", paddingTop: "5vh"}}>to</div></li>
-                        <li><div className="color-box" style={{backgroundColor: "rgb(182,255,123)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="100" id={"maxAge"} value={ageMax} onChange={(thisEvent) => inputHandler(thisEvent, ageMaxSetter)}/></div></li>
+                        <li><div className="color-box" style={{backgroundColor: "rgb(148,148,148)", display: "inline-block"}}><input className="small-input" type="number" min="1" max="100" id={"maxAge"} value={ageMax} onChange={(thisEvent) => inputHandler(thisEvent, ageMaxSetter)}/></div></li>
                     </ul>
                 </div>
                 <br/>

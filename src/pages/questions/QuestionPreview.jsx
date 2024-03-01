@@ -1,9 +1,20 @@
 import React from "react"
 import "./QuestionPreview.css"
+import { DataStore } from 'aws-amplify/datastore';
+import { Question } from "../../models";
 
 // The preview for a single question pulled from the database
 export default function QuestionPreview({question}) {
 
+    const updateLikeCount = async(event) => {
+        event.preventDefault();
+        await DataStore.save(
+            Question.copyOf(question, updated => {
+                updated.likes = question.likes + 1;
+            })
+        );
+    }
+    
     const innerDivStyle = {
         border: "1px",
         borderStyle: "solid",
@@ -35,7 +46,7 @@ export default function QuestionPreview({question}) {
                 {question.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
                 <div style={bottomBar}>
                     <div style={iconWithText}>
-                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"}/>
+                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent)}/>
                         <div style={likeNumStyle}>
                             {question.likes}
                         </div>
