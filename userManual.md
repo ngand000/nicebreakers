@@ -68,6 +68,12 @@
       - Close the popup when finished inputting
   - Click the like button on a question to increment its like count
     - (Will be limited to one like per post when log in implemented)
+  - Click the dislike button on a question to decrement its like count
+      - (Will be limited to one dislike per post when log in implemented)
+  - Click the report button to report this question for a violation
+    - Enter a reason in the given popup box
+    - Click Go Back to cancel your report and exit popup
+    - Click Report to file the report and exit popup
   - Outbound Pages:
     - Click on "Activities" in the top-right to view the Activities Page
     - Click on the "Upload" button in the top-right to upload a question
@@ -118,7 +124,7 @@
   - Click the dislike button to decrement the like count of this activity
     - (Will be limited to one dislike per post when log in implemented)
   - Click the report button to report this post for a violation
-    - Enter a reason the the given popup box
+    - Enter a reason in the given popup box
     - Click Go Back to cancel your report and exit popup
     - Click Report to file the report and exit popup
   - Outbound Pages:
