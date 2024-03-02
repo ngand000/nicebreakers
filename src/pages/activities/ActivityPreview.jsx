@@ -3,7 +3,7 @@ import "./ActivityPreview.css"
 import {useNavigate} from "react-router-dom"
 
 // The preview for a single activity pulled from the database
-export default function ActivityPreview({activity}) {
+export default function ActivityPreview({activity, admin}) {
 
     const navigate = useNavigate()
 
@@ -14,6 +14,14 @@ export default function ActivityPreview({activity}) {
     function formatExp(n) {
         let ns = n.toExponential().split("e")
         return ns[0].substr(0, 1) + "e" + ns[1].substr(1)
+    }
+
+    function onClick() {
+        if (admin) {
+            admin(activity.id)
+        } else {
+            navigate("post?id=" + activity.id)
+        }
     }
 
     const innerDivStyle = {
@@ -44,7 +52,7 @@ export default function ActivityPreview({activity}) {
 
     const endorseStyle = {position: "absolute", top: "2%", right: "2%", width: "3vmin"}
 
-    return ( <div className={"outerDivStyle"} onClick={() => {navigate("post?id=" + activity.id)}}>
+    return ( <div className={"outerDivStyle"} onClick={onClick}>
             <div style={innerDivStyle}>
                 <div style={nameStyle}>
                     {activity.name}

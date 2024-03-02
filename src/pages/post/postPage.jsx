@@ -10,7 +10,7 @@ import ReportPopup from "./ReportPopup";
 
 Amplify.configure(config);
 
-const PostPage = () => {
+const PostPage = ({id}) => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -21,7 +21,10 @@ const PostPage = () => {
 
     useEffect(() => {
         (async () => {
-        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postParams.get('id'))])))[0])})()
+            if (!id) {
+                id = postParams.get('id')
+            }
+        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(id)])))[0])})()
     })
 
     const updateLikeCount = async(event, changeVal) => {
