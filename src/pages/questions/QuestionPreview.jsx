@@ -4,16 +4,24 @@ import { DataStore } from 'aws-amplify/datastore';
 import { Question } from "../../models";
 
 // The preview for a single question pulled from the database
-export default function QuestionPreview({question, openReport}) {
+export default function QuestionPreview({question, openReport, admin}) {
 
     const updateLikeCount = async(event, changeVal) => {
-        event.preventDefault();
-        if (changeVal > 0 || question.likes > 0) {
-            await DataStore.save(
-                Question.copyOf(question, updated => {
-                    updated.likes = question.likes + changeVal;
-                })
-            );
+        if (!admin) {
+            event.preventDefault();
+            if (changeVal > 0 || question.likes > 0) {
+                await DataStore.save(
+                    Question.copyOf(question, updated => {
+                        updated.likes = question.likes + changeVal;
+                    })
+                );
+            }
+        }
+    }
+
+    function onClick() {
+        if (admin) {
+            admin(question.id)
         }
     }
     
@@ -41,7 +49,7 @@ export default function QuestionPreview({question, openReport}) {
     const endorseStyle = {position: "absolute", top: "0", right: "0", width: "3vmin"}
 
     return ( <div className={"outerDivStyle2"}>
-            <div style={innerDivStyle}>
+            <div style={innerDivStyle} onClick={onClick}>
                 <div style={questionStyle}>
                     {question.question}
                 </div>
@@ -54,7 +62,7 @@ export default function QuestionPreview({question, openReport}) {
                             {question.likes}
                         </div>
                     </div>
-                    <button className={"reportStyle"} onClick={() => openReport(question.id)}> Report </button>
+                    {!admin && <button className={"reportStyle"} onClick={() => openReport(question.id)}> Report </button>}
                 </div>
             </div>
         </div>)

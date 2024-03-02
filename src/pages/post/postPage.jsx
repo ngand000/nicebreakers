@@ -14,6 +14,7 @@ const PostPage = ({id}) => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [postID, setPostID] = useState()
 
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
@@ -22,9 +23,11 @@ const PostPage = ({id}) => {
     useEffect(() => {
         (async () => {
             if (!id) {
-                id = postParams.get('id')
+                setPostID(postParams.get('id'))
+            } else {
+                setPostID(id)
             }
-        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(id)])))[0])})()
+        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postID)])))[0])})()
     })
 
     const updateLikeCount = async(event, changeVal) => {
