@@ -7,6 +7,7 @@
 /amplify
 /src/amplifyconfiguration.json
 /src/aws-exports.js
+/src/ui-components
 # testing
 /coverage
 
