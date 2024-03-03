@@ -274,7 +274,7 @@ const UploadPage = (props) => {
         <div>
             <div className="header">
                 <a href={'/'}> <img src={"../../../../logoplaceholder.png"} alt={"logo"} style={logoStyle}/> </a>
-                <text className="title">Upload Activity</text>
+                <h1 className="title">Upload Activity</h1>
             </div>
             <form id ="uploadActivity" style={{width: "80%", marginLeft: "10%"}}>
                 <div className="color-box" style={{backgroundColor: "rgb(48,139,255)"}}>

@@ -41,11 +41,11 @@ const PostPage = ({id}) => {
         }
     }
 
-    const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
+    const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "flex-start", alignContent: "center"}
 
-    const titleStyle = {margin: "auto 1vmin auto 0"}
+    const titleStyle = {margin: "auto auto auto auto"}
 
-    const logoStyle = {width: "10vmin", margin: "1vw 2vw 0 0"}
+    const logoStyle = {height: "16vmin", margin: "0 1vmin 0 auto"}
 
     const valueStyle = {margin: "auto 0 auto 0"}
 
@@ -60,7 +60,7 @@ const PostPage = ({id}) => {
             {activity && (<div>
                 <div style={headerStyle}>
                     <a href={'/'}> <img src={"logoplaceholder.png"} alt={"logo"} style={logoStyle}/> </a>
-                    <h1>{activity.name}</h1>
+                    <h1 style={{margin: "auto auto auto auto"}}>{activity.name}</h1>
                 </div>
                 <div style={attributesStyle}>
                     <div className={"titleAndValueStyle"}>
