@@ -3,6 +3,7 @@ import {Activity, Question, Report} from '../../models';
 import config from '../../aws-exports.js';
 import {useEffect, useState, React} from "react";
 import {DataStore} from "aws-amplify/datastore";
+import { remove } from 'aws-amplify/storage';
 import ReportList from './ReportList'
 import "./adminPage.css"
 import ActivityList from "../activities/ActivityList";
@@ -81,10 +82,18 @@ const AdminPage = () => {
         return
     }
 
-    async function remove() {
+    async function removePost() {
         let q = questionID !== undefined
         let id = q ? questionID : activityID
-        await DataStore.delete((q ? Question : Activity), (r) => r.id.eq(id))
+        if (q) {
+            await DataStore.delete(Question, (r) => r.id.eq(id))
+        } else {
+            const original =  await DataStore.query(Activity, id)
+            for (let i = 0; i < original.fileTypes.length; i++) {
+                await remove({key: id + "img" + i + "." + original.fileTypes[i]})
+            }
+            await DataStore.delete(Activity, (r) => r.id.eq(id))
+        }
         await DataStore.delete(Report, (r) => r.postId.eq(id))
         await reset(id, q)
         return
@@ -95,14 +104,14 @@ const AdminPage = () => {
             <h1>Reported Activities</h1>
             <ActivityList activities={activities.sort(compareReports)} admin={setActivity} />
             {activityID && <button onClick={resolve}> Resolve </button>}
-            {activityID && <button onClick={remove}> Remove </button>}
+            {activityID && <button onClick={removePost}> Remove </button>}
             {(reports.length > 0 && activityID) && <ReportList reports={reports} />}
             {activityID && <PostPage id={activityID}/>}
             <h1>Reported Questions</h1>
             <QuestionsList questions={questions.sort(compareReports)} admin={setQuestion}/>
             {(reports.length > 0 && questionID) && <ReportList reports={reports} />}
             {questionID && <button onClick={resolve}> Resolve </button>}
-            {questionID && <button onClick={remove}> Remove </button>}
+            {questionID && <button onClick={removePost}> Remove </button>}
         </div>
     )
 
