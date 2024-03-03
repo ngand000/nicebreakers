@@ -130,7 +130,7 @@ const QuestionsPage = () => {
                 <div onClick={() => {navigate("")}} style={thisLinkStyle}>Questions</div>
             </div>
             <div>
-                {isPopupOpen && (isPopupOpen === 1 ? <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />:
+                {(isPopupOpen !== 0) && (isPopupOpen === 1 ? <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />:
                     <ReportPopup closePopup={(a) => {setIsPopupOpen(0)}} id={qid} q={true}/>)}
                 <ul style={{margin: "0 10vw 0 2vw", padding: "0", display: "flex"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar openPopup={openFilterPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
