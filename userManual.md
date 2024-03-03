@@ -40,7 +40,8 @@
   - Once login is implemented, uploading and liking will be restricted to account holders
   - You will still be able to browse and apply filters in Guest mode
   - You can also visit https://deployable-page.d3pb2yef2pgy2m.amplifyapp.com/#/admin to view the admin page
-    - Once login is implemented this will be restricted to privilages accounts
+    - Once login is implemented this will be restricted to privilaged accounts
+      - While admin is public we ask that you please only remove your own posts, to avoid interfering with data and creating unexpected removals
 
 - Upon visiting the website you will be brought to the Activities Preview Page. The design is fairly intuitive so feel free to play around and explore. Reference this documentation for a more in-depth description of each page.
 
