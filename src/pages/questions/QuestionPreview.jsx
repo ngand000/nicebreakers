@@ -4,15 +4,25 @@ import { DataStore } from 'aws-amplify/datastore';
 import { Question } from "../../models";
 
 // The preview for a single question pulled from the database
-export default function QuestionPreview({question}) {
+export default function QuestionPreview({question, openReport, admin}) {
 
-    const updateLikeCount = async(event) => {
-        event.preventDefault();
-        await DataStore.save(
-            Question.copyOf(question, updated => {
-                updated.likes = question.likes + 1;
-            })
-        );
+    const updateLikeCount = async(event, changeVal) => {
+        if (!admin) {
+            event.preventDefault();
+            if (changeVal > 0 || question.likes > 0) {
+                await DataStore.save(
+                    Question.copyOf(question, updated => {
+                        updated.likes = question.likes + changeVal;
+                    })
+                );
+            }
+        }
+    }
+
+    function onClick() {
+        if (admin) {
+            admin(question.id)
+        }
     }
     
     const innerDivStyle = {
@@ -39,18 +49,20 @@ export default function QuestionPreview({question}) {
     const endorseStyle = {position: "absolute", top: "0", right: "0", width: "3vmin"}
 
     return ( <div className={"outerDivStyle2"}>
-            <div style={innerDivStyle}>
+            <div style={innerDivStyle} onClick={onClick}>
                 <div style={questionStyle}>
                     {question.question}
                 </div>
                 {question.endorsed && <img style={endorseStyle} src={"endorseplaceholder.png"} alt={"endorsed"}/>}
                 <div style={bottomBar}>
                     <div style={iconWithText}>
-                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent)}/>
+                        <img style={icon} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
+                        <img style={icon} src={"dislikeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
                         <div style={likeNumStyle}>
                             {question.likes}
                         </div>
                     </div>
+                    {!admin && <button className={"reportStyle"} onClick={() => openReport(question.id)}> Report </button>}
                 </div>
             </div>
         </div>)

@@ -10,10 +10,11 @@ import ReportPopup from "./ReportPopup";
 
 Amplify.configure(config);
 
-const PostPage = () => {
+const PostPage = ({id}) => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [postID, setPostID] = useState()
 
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
@@ -21,7 +22,12 @@ const PostPage = () => {
 
     useEffect(() => {
         (async () => {
-        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postParams.get('id'))])))[0])})()
+            if (!id) {
+                setPostID(postParams.get('id'))
+            } else {
+                setPostID(id)
+            }
+        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postID)])))[0])})()
     })
 
     const updateLikeCount = async(event, changeVal) => {
@@ -115,9 +121,11 @@ const PostPage = () => {
         }
     }
 
-    const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
+    const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "flex-start", alignContent: "center"}
 
-    const titleStyle = {margin: "auto 1vmin auto 0"}
+    const titleStyle = {margin: "auto auto auto auto"}
+
+    const logoStyle = {height: "16vmin", margin: "0 1vmin 0 auto"}
 
     const valueStyle = {margin: "auto 0 auto 0"}
 
@@ -131,27 +139,27 @@ const PostPage = () => {
             {isPopupOpen && <ReportPopup closePopup={setIsPopupOpen} id={activity.id}/>}
             {activity && (<div>
                 <div style={headerStyle}>
-                    <img src={"logoplaceholder.png"} alt={"logo"}/>
-                    <h1>{activity.name}</h1>
+                    <a href={'/'}> <img src={"logoplaceholder.png"} alt={"logo"} style={logoStyle}/> </a>
+                    <h1 style={{margin: "auto auto auto auto"}}>{activity.name}</h1>
                 </div>
                 <div style={attributesStyle}>
                     <div className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Author: </h3>
                         <p style={valueStyle}>{activity.author}</p>
                     </div>
-                    <div style={{borderColor: "rgb(255,152,152)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(48,139,255)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Group Size: </h3>
                         <p style={valueStyle}>{rangeToString(activity.playerCount)} people</p>
                     </div>
-                    <div style={{borderColor: "rgb(170,255,113)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(73,171,252)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Age Range: </h3>
                         <p style={valueStyle}>{rangeToString(activity.ageRange)} years</p>
                     </div>
-                    <div style={{borderColor: "rgb(49,224,255)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(79,239,255)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Duration: </h3>
                         <p style={valueStyle}>{rangeToString(activity.duration)} {activity.duration === [1,1] ? "minute" : "minutes"}</p>
                     </div>
-                    <div style={{borderColor: "rgb(100,77,255)"}} className={"titleAndValueStyle"}>
+                    <div style={{borderColor: "rgb(185,255,253)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Likes: </h3>
                         <p style={valueStyle}>{activity.likes}</p>
                     </div>
@@ -166,7 +174,7 @@ const PostPage = () => {
                 </div>
                 <div style={bottomBar}>
                     <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
-                    <img className={"likeDislikeStyle"} src={"dislikeplaceholder.webp"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
+                    <img className={"likeDislikeStyle"} src={"dislikeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
                     <button className={"reportStyle"} onClick={() => setIsPopupOpen(true)}> Report </button>
                 </div>
             </div>)}

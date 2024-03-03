@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import './App.css';
 import ActivitiesPage from "./pages/activities/ActivitiesPage";
 import PostPage from "./pages/post/postPage";
@@ -11,7 +11,7 @@ function App() {
 
     return (
         <div>
-            <BrowserRouter>
+            <HashRouter>
                 <Routes>
                     { /* Put your page(s) here */}
                     <Route path='/' element ={<ActivitiesPage />}/>s
@@ -21,7 +21,7 @@ function App() {
                     <Route path='/post' element={<PostPage />}/>
                     <Route path='/admin' element={<AdminPage />}/>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </div>
     );
 }

@@ -6,6 +6,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import { DataStore } from 'aws-amplify/datastore';
 import { Activity } from '../../models';
 import { Amplify } from 'aws-amplify';
+import {useNavigate} from "react-router-dom"
 import config from '../../aws-exports.js';
 
 Amplify.configure(config);
@@ -16,10 +17,10 @@ const ActivitiesPage = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [filterEditing, setFilterEditing] = useState("");
     const [filters, setFilters] = useState({});
-    const [uploadButtonOffset, setUploadButtonOffset] = useState(0);
     const filterBarRef = useRef(null);
     const [activities, setActivities] = useState([])
-
+    const navigate = useNavigate()
+    
     useEffect(() => {
         (async () => {
         setActivities(await DataStore.query(Activity))})()
@@ -102,28 +103,7 @@ const ActivitiesPage = () => {
     function compareLikes(a, b) {
         return b.likes-a.likes
     }
-
-    // pre: none
-    // post: none
-    // args none
-    // returns the number of vw units to offset
-    // the upload button from the filter bar
-    useEffect(() => {
-        if (filterBarRef.current) {
-            const vwUnits = (filterBarRef.current.offsetWidth/window.innerWidth) * 100;
-            setUploadButtonOffset(74 - vwUnits);
-        }
-    }, []);
-
-    // pre: numerical is non-null
-    // post: none
-    // args numerical, the number of vw to offset upload button
-    // returns stirng representing number of vw units
-    // to offset upload button
-    function getUploadButtonOffset(numerical) {
-        return numerical + "vw";
-    }
-
+ 
     const filterTypes = {"Group Size": "rangeOut", "Ages": "rangeOut", "Duration(min)": "rangeIn", "Endorsed": "bool"}
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "center", alignContent: "center"}
@@ -138,14 +118,14 @@ const ActivitiesPage = () => {
         <div>
             <div style={headerStyle}>
                 <img style={logoStyle} src={"logoplaceholder.png"} alt={"logo"}/>
-                <a href={"/"} style={thisLinkStyle}>Activities</a>
-                <a href={"/questions"} style={otherLinkStyle}>Questions</a>
+                <div onClick={() => {navigate("")}} style={thisLinkStyle}>Activities</div>
+                <div onClick={() => {navigate("questions")}} style={otherLinkStyle}>Questions</div>
             </div>
             <div>
                 {isPopupOpen && <FilterEntry onClose={closePopup} filter={filterEditing} dtype={filterTypes[filterEditing]} />}
-                <ul style={{margin: "0 0 0 2vw", padding: "0"}}>
+                <ul style={{margin: "0 10vw 0 2vw", padding: "0", display: "flex"}}>
                     <li ref={filterBarRef} style={{display: "inline-block"}}><FilterBar activities openPopup={openPopup} setEndorsed={setEndorsed} removeFilter={removeFilter}/></li>
-                    <li style={{display: "inline-block", marginLeft: getUploadButtonOffset(uploadButtonOffset)}}><UploadButton uploadType={"/upload/ActivityUpload"}></UploadButton></li>
+                    <li style={{display: "inline-block", marginLeft: "auto"}}><UploadButton uploadType={"upload/ActivityUpload"}></UploadButton></li>
                 </ul>
                 <ActivityList activities={activities.filter(filterOK).sort(compareLikes)} />
             </div>

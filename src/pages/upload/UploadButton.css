@@ -15,7 +15,3 @@
             height 0.25s,
             padding 0.25s
 }
-
-.uploadButtonFilterStyle:hover {
-    padding: 1vh 1.5vw 1vh 1.5vw;
-}

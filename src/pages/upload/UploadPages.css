@@ -3,12 +3,11 @@
     display: flex;
     margin: auto;
     width: 90vw;
-    justify-content: center;
+    justify-content: flex-start;
     align-content: center;
 }
 
 .title {
-    text-decoration: underline;
     color: black;
     margin: auto;
     font-size: 10vmin;
@@ -56,10 +55,6 @@
     margin: 4vh 4vw 2vh 4vw;
     padding: 3vmin;
     border-radius: 1vmin;
-}
-
-.color-box:hover {
-    padding: 3vmin 4vmin 3vmin 4vmin;
 }
 
 .small-input {

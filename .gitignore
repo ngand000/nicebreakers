@@ -2,11 +2,11 @@
 
 # dependencies
 /node_modules
+/amplify
 /.pnp
 .pnp.js
-/amplify
-/src/amplifyconfiguration.json
 /src/aws-exports.js
+/src/amplifyconfiguration.json
 /src/ui-components
 # testing
 /coverage
