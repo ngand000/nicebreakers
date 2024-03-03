@@ -7,6 +7,11 @@ import {DataStore} from "aws-amplify/datastore";
 import "./postPage.css"
 import ImageWithCaption from "./ImageWithCaption";
 import ReportPopup from "./ReportPopup";
+import { getCurrentUser } from 'aws-amplify/auth';
+import { signIn } from 'aws-amplify/auth';
+import { Account } from '../../models';
+import { Authenticator } from '@aws-amplify/ui-react';
+
 
 Amplify.configure(config);
 
