@@ -195,6 +195,7 @@ export default function QuestionCreateForm(props) {
     endorsed: false,
     tags: [],
     author: "",
+    timesReported: "",
   };
   const [question, setQuestion] = React.useState(initialValues.question);
   const [likes, setLikes] = React.useState(initialValues.likes);
@@ -202,6 +203,9 @@ export default function QuestionCreateForm(props) {
   const [endorsed, setEndorsed] = React.useState(initialValues.endorsed);
   const [tags, setTags] = React.useState(initialValues.tags);
   const [author, setAuthor] = React.useState(initialValues.author);
+  const [timesReported, setTimesReported] = React.useState(
+    initialValues.timesReported
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setQuestion(initialValues.question);
@@ -212,6 +216,7 @@ export default function QuestionCreateForm(props) {
     setTags(initialValues.tags);
     setCurrentTagsValue("");
     setAuthor(initialValues.author);
+    setTimesReported(initialValues.timesReported);
     setErrors({});
   };
   const [currentAgeRangeValue, setCurrentAgeRangeValue] = React.useState("");
@@ -225,6 +230,7 @@ export default function QuestionCreateForm(props) {
     endorsed: [],
     tags: [],
     author: [],
+    timesReported: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -258,6 +264,7 @@ export default function QuestionCreateForm(props) {
           endorsed,
           tags,
           author,
+          timesReported,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -318,6 +325,7 @@ export default function QuestionCreateForm(props) {
               endorsed,
               tags,
               author,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.question ?? value;
@@ -336,9 +344,13 @@ export default function QuestionCreateForm(props) {
         label="Likes"
         isRequired={true}
         isReadOnly={false}
+        type="number"
+        step="any"
         value={likes}
         onChange={(e) => {
-          let { value } = e.target;
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
               question,
@@ -347,6 +359,7 @@ export default function QuestionCreateForm(props) {
               endorsed,
               tags,
               author,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.likes ?? value;
@@ -372,6 +385,7 @@ export default function QuestionCreateForm(props) {
               endorsed,
               tags,
               author,
+              timesReported,
             };
             const result = onChange(modelFields);
             values = result?.ageRange ?? values;
@@ -430,6 +444,7 @@ export default function QuestionCreateForm(props) {
               endorsed: value,
               tags,
               author,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.endorsed ?? value;
@@ -455,6 +470,7 @@ export default function QuestionCreateForm(props) {
               endorsed,
               tags: values,
               author,
+              timesReported,
             };
             const result = onChange(modelFields);
             values = result?.tags ?? values;
@@ -509,6 +525,7 @@ export default function QuestionCreateForm(props) {
               endorsed,
               tags,
               author: value,
+              timesReported,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -522,6 +539,40 @@ export default function QuestionCreateForm(props) {
         errorMessage={errors.author?.errorMessage}
         hasError={errors.author?.hasError}
         {...getOverrideProps(overrides, "author")}
+      ></TextField>
+      <TextField
+        label="Times reported"
+        isRequired={true}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={timesReported}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              question,
+              likes,
+              ageRange,
+              endorsed,
+              tags,
+              author,
+              timesReported: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.timesReported ?? value;
+          }
+          if (errors.timesReported?.hasError) {
+            runValidationTasks("timesReported", value);
+          }
+          setTimesReported(value);
+        }}
+        onBlur={() => runValidationTasks("timesReported", timesReported)}
+        errorMessage={errors.timesReported?.errorMessage}
+        hasError={errors.timesReported?.hasError}
+        {...getOverrideProps(overrides, "timesReported")}
       ></TextField>
       <Flex
         justifyContent="space-between"
