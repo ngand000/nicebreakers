@@ -39,6 +39,9 @@
 - Currently you can browse, upload, and like on the platform in Guest mode
   - Once login is implemented, uploading and liking will be restricted to account holders
   - You will still be able to browse and apply filters in Guest mode
+  - You can also visit https://deployable-page.d3pb2yef2pgy2m.amplifyapp.com/#/admin to view the admin page
+    - Once login is implemented this will be restricted to privilaged accounts
+      - While admin is public we ask that you please only remove your own posts, to avoid interfering with data and creating unexpected removals
 
 - Upon visiting the website you will be brought to the Activities Preview Page. The design is fairly intuitive so feel free to play around and explore. Reference this documentation for a more in-depth description of each page.
 
@@ -129,6 +132,13 @@
     - Click Report to file the report and exit popup
   - Outbound Pages:
     - Click the Nicebreakers logo to return to the Activities Page
+
+- Report page
+  - This page is not accessible through the main website
+  - Scroll around to view the reported activities/questions
+  - Click a post to view its contents, report message(s), and get admin options
+    - Click "resolve" to reject the report(s) and keep the post up
+    - Click "remove" to approve the report(s) and take down the post
 
 ## How to Report a Bug
 
