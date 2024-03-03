@@ -14,7 +14,7 @@ export default function ReportPopup({closePopup, id, q}) {
 
     async function report() {
         const original = await DataStore.query((q ? Question : Activity), id)
-        const report = await DataStore.save(new Report({postId: id, reason: text}))
+        const report = await DataStore.save(new Report({postId: id, reason: text, isActivity: !q}))
         const n = await DataStore.save((q ? Question : Activity).copyOf(original, updated => {updated.timesReported = original.timesReported + 1}))
         console.log(n)
         console.log(report)

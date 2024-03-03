@@ -10,10 +10,11 @@ import ReportPopup from "./ReportPopup";
 
 Amplify.configure(config);
 
-const PostPage = () => {
+const PostPage = ({id}) => {
     const postParams = useSearchParams()[0]
     const [activity, setActivity] = useState({})
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [postID, setPostID] = useState()
 
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
@@ -21,7 +22,12 @@ const PostPage = () => {
 
     useEffect(() => {
         (async () => {
-        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postParams.get('id'))])))[0])})()
+            if (!id) {
+                setPostID(postParams.get('id'))
+            } else {
+                setPostID(id)
+            }
+        setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postID)])))[0])})()
     })
 
     const updateLikeCount = async(event, changeVal) => {
