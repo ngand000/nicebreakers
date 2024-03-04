@@ -103,15 +103,15 @@ const AdminPage = () => {
         <div className="admin-container">
             <h1>Reported Activities</h1>
             <ActivityList activities={activities.sort(compareReports)} admin={setActivity} />
-            {activityID && <button onClick={resolve}> Resolve </button>}
-            {activityID && <button onClick={removePost}> Remove </button>}
+            {activityID && <button style={{color: "green"}} className={"button"} onClick={resolve}> Resolve </button>}
+            {activityID && <button style={{color: "red"}} className={"button"} onClick={removePost}> Remove </button>}
             {(reports.length > 0 && activityID) && <ReportList reports={reports} />}
             {activityID && <PostPage id={activityID}/>}
             <h1>Reported Questions</h1>
             <QuestionsList questions={questions.sort(compareReports)} admin={setQuestion}/>
+            {questionID && <button style={{color: "green"}} className={"button"} onClick={resolve}> Resolve </button>}
+            {questionID && <button style={{color: "red"}} className={"button"} onClick={removePost}> Remove </button>}
             {(reports.length > 0 && questionID) && <ReportList reports={reports} />}
-            {questionID && <button onClick={resolve}> Resolve </button>}
-            {questionID && <button onClick={removePost}> Remove </button>}
         </div>
     )
 
