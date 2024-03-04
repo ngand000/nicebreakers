@@ -70,6 +70,9 @@ const ActivitiesPage = () => {
     // args: a, the activity for which it is being checked if it fits the filters
     // returns: boolean representing whether a fits all current filters
     function filterOK (a) {
+        if (a.timesReported > 10 && a.timesReported > a.likes*0.5) {
+            return false
+        }
         for (const [k, value] of Object.entries(filters)) {
             let key = actualProperties[k]
             switch (filterTypes[k]) {
