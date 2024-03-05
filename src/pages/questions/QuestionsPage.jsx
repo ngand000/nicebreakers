@@ -7,6 +7,9 @@ import { DataStore } from 'aws-amplify/datastore';
 import {useNavigate} from "react-router-dom"
 import {Question} from '../../models';
 import { Amplify } from 'aws-amplify';
+import Signin from "../components/Signin"
+import { Authenticator } from '@aws-amplify/ui-react';
+import { getCurrentUser } from 'aws-amplify/auth';
 import config from '../../aws-exports.js';
 import ReportPopup from "../post/ReportPopup";
 
@@ -21,6 +24,7 @@ const QuestionsPage = () => {
     const filterBarRef = useRef(null);
     const [questions, setQuestions] = useState([])
     const [qid, setQid] = useState(null)
+    const [isSignedIn, setSignedIn] = useState(true);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -39,8 +43,16 @@ const QuestionsPage = () => {
     //pre: none
     //post: opens report popup so user can report question
     function openReport(id) {
-        setQid(id)
-        setIsPopupOpen(2)
+        (async () => {
+            try {
+                await getCurrentUser();
+                setQid(id)
+                setIsPopupOpen(2)
+                setSignedIn(true);
+            } catch (err) {
+                setSignedIn(false);
+            }
+        })()
     }
 
     //pre: filterEditing has a value
@@ -137,6 +149,11 @@ const QuestionsPage = () => {
                     <li style={{display: "inline-block", marginLeft: "auto"}}><UploadButton uploadType={"/upload/QuestionUpload"}></UploadButton></li>
                 </ul>
                 <QuestionsList questions={questions.filter(filterOK).sort(compareLikes)} openReport = {openReport} />
+                <Signin trigger={!isSignedIn} setTrigger={setSignedIn}>
+                    <h3>Please sign in</h3>
+                    <Authenticator>
+                    </Authenticator>
+                </Signin>
             </div>
         </div>
     )
