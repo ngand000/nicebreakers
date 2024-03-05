@@ -5,6 +5,7 @@ import { Amplify } from 'aws-amplify';
 import {useNavigate} from "react-router-dom"
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
+import {withAuthenticator} from "@aws-amplify/ui-react";
 
 Amplify.configure(config);
 
@@ -189,4 +190,4 @@ const UploadPage = (props) => {
     )
 }
 
-export default UploadPage;
+export default withAuthenticator(UploadPage);
