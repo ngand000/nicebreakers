@@ -38,8 +38,9 @@ const AdminPage = () => {
         const checkAdmin = async () => {
             const {userId} = await getCurrentUser();
             const user = await DataStore.query(Account, (c) => c.userId.eq(userId));
-            console.log(user[0].Admin)
-            setIsAdmin(user[0].Admin)
+            if (user[0]) {
+                setIsAdmin(user[0].Admin)
+            }
         }
 
 
