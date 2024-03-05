@@ -131,7 +131,6 @@ const AdminPage = () => {
         return (<div>Must be admin to view page</div>)
     }
 
-
 }
 
 export default withAuthenticator(AdminPage);
