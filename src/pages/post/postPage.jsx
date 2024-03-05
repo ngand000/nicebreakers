@@ -165,7 +165,7 @@ const PostPage = ({id}) => {
                     </div>
                     <div style={{borderColor: "rgb(185,255,253)"}} className={"titleAndValueStyle"}>
                         <h3 style={titleStyle}> Likes: </h3>
-                        <p style={valueStyle}>{activity.likes}</p>
+                        <p style={valueStyle}>{Math.max(activity.likes, 0)}</p>
                     </div>
                 </div>
                 <h2>Description:</h2>
