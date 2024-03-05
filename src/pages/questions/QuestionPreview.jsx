@@ -7,9 +7,12 @@ import { Account } from '../../models';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { Authenticator } from '@aws-amplify/ui-react';
+import Lock from "../post/Lock";
 
 
 // The preview for a single question pulled from the database
+const lock = new Lock();
+
 export default function QuestionPreview({question, openReport, admin}) {
     const [isSignedIn, setSignedIn] = useState(true);
     const updateLikeCount = async(event, changeVal) => {
@@ -22,6 +25,7 @@ export default function QuestionPreview({question, openReport, admin}) {
                 to apply updates to the item’s fields rather than mutating the instance directly */
                 const original = await DataStore.query(Account, (c) => c.userId.eq(userId));
                 if (original.length === 0) {
+                    lock.lock();
                     await DataStore.save(
                         new Account({
                             "userId": userId,
@@ -32,6 +36,7 @@ export default function QuestionPreview({question, openReport, admin}) {
                         })
                     );
                 }
+                lock.unlock();
                 const update = await DataStore.query(Account, (c) => c.userId.eq(userId));
                 if ((changeVal > 0) && update[0].postsLiked.find((element) => element === question.id) === undefined) {
                     await DataStore.save(

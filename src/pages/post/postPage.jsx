@@ -61,6 +61,7 @@ const PostPage = ({id}) => {
         const { userId } = await getCurrentUser();
         const original = await DataStore.query(Account, (c) => c.userId.eq(userId));
         if (original.length === 0) {
+            lock.lock();
             await DataStore.save(
                 new Account({
                     "userId": userId,
@@ -71,6 +72,8 @@ const PostPage = ({id}) => {
                 })
             );
         }
+        lock.unlock();
+
         const update = await DataStore.query(Account, (c) => c.userId.eq(userId));
         if ((changeVal > 0) && update[0].postsLiked.find((element) => element === activity.id) === undefined) {
             await DataStore.save(
