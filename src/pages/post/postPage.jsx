@@ -8,7 +8,6 @@ import "./postPage.css"
 import ImageWithCaption from "./ImageWithCaption";
 import ReportPopup from "./ReportPopup";
 import { getCurrentUser } from 'aws-amplify/auth';
-import { signIn } from 'aws-amplify/auth';
 import { Account } from '../../models';
 import { Authenticator } from '@aws-amplify/ui-react';
 
@@ -38,9 +37,9 @@ const PostPage = ({id}) => {
     const updateLikeCount = async(event, changeVal) => {
         /* Models in DataStore are immutable. To update a record you must use the copyOf function
         to apply updates to the item’s fields rather than mutating the instance directly */
-        const { username, userId, signInDetails } = await getCurrentUser();
+        const { userId } = await getCurrentUser();
         const original = await DataStore.query(Account, (c) => c.userId.eq(userId));
-        if (original.length == 0) {
+        if (original.length === 0) {
             await DataStore.save(
                 new Account({
                     "userId": userId,
@@ -52,7 +51,7 @@ const PostPage = ({id}) => {
             );
         }
         const update = await DataStore.query(Account, (c) => c.userId.eq(userId));
-        if ((changeVal > 0) && update[0].postsLiked.find((element) => element == activity.id) == undefined) {
+        if ((changeVal > 0) && update[0].postsLiked.find((element) => element === activity.id) === undefined) {
             await DataStore.save(
                 Account.copyOf(update[0], updated => {
                 const updateArray = updated.postsLiked.slice();
@@ -75,7 +74,7 @@ const PostPage = ({id}) => {
                 })
             );
             event.preventDefault();
-        } else if ((changeVal < 0) && update[0].postDisliked.find((element) => element == activity.id) == undefined) {
+        } else if ((changeVal < 0) && update[0].postDisliked.find((element) => element === activity.id) === undefined) {
             await DataStore.save(
                 Account.copyOf(update[0], updated => {
                 const updateArray = updated.postDisliked.slice();
@@ -177,11 +176,13 @@ const PostPage = ({id}) => {
                         return <ImageWithCaption caption={activity.captions[i]} id={activity.id} imageNum={i} imgType={fileType}/>}
                     )}
                 </div>
+                <Authenticator>
                 <div style={bottomBar}>
                     <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
                     <img className={"likeDislikeStyle"} src={"dislikeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
                     <button className={"reportStyle"} onClick={() => setIsPopupOpen(true)}> Report </button>
                 </div>
+                </Authenticator>
             </div>)}
         </div>
     )
