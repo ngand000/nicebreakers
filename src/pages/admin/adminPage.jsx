@@ -1,5 +1,5 @@
 import { Amplify } from "aws-amplify";
-import {Activity, Question, Report} from '../../models';
+import {Account, Activity, Question, Report} from '../../models';
 import config from '../../aws-exports.js';
 import {useEffect, useState, React} from "react";
 import {DataStore} from "aws-amplify/datastore";
@@ -9,6 +9,8 @@ import "./adminPage.css"
 import ActivityList from "../activities/ActivityList";
 import PostPage from "../post/postPage";
 import QuestionsList from "../questions/QuestionsList";
+import {withAuthenticator} from "@aws-amplify/ui-react";
+import {getCurrentUser} from "aws-amplify/auth";
 
 Amplify.configure(config)
 
@@ -20,6 +22,7 @@ const AdminPage = () => {
     const [questions, setQuestions] = useState([]);
     const [activityID, setActivityID] = useState();
     const [questionID, setQuestionID] = useState();
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const fetchReportedPosts = async () => {
@@ -32,7 +35,16 @@ const AdminPage = () => {
             }
         };
 
+        const checkAdmin = async () => {
+            const {userId} = await getCurrentUser();
+            const user = await DataStore.query(Account, (c) => c.userId.eq(userId));
+            console.log(user[0].Admin)
+            setIsAdmin(user[0].Admin)
+        }
+
+
         fetchReportedPosts();
+        checkAdmin();
     }, []);
 
     async function setActivity(id) {
@@ -98,24 +110,27 @@ const AdminPage = () => {
         await reset(id, q)
         return
     }
-    
-    return (
-        <div className="admin-container">
-            <h1>Reported Activities</h1>
-            <ActivityList activities={activities.sort(compareReports)} admin={setActivity} />
-            {activityID && <button onClick={resolve}> Resolve </button>}
-            {activityID && <button onClick={removePost}> Remove </button>}
-            {(reports.length > 0 && activityID) && <ReportList reports={reports} />}
-            {activityID && <PostPage id={activityID}/>}
-            <h1>Reported Questions</h1>
-            <QuestionsList questions={questions.sort(compareReports)} admin={setQuestion}/>
-            {(reports.length > 0 && questionID) && <ReportList reports={reports} />}
-            {questionID && <button onClick={resolve}> Resolve </button>}
-            {questionID && <button onClick={removePost}> Remove </button>}
-        </div>
-    )
+
+    if (isAdmin) {
+        return (<div className="admin-container">
+                <h1>Reported Activities</h1>
+                <ActivityList activities={activities.sort(compareReports)} admin={setActivity}/>
+                {activityID && <button onClick={resolve}> Resolve </button>}
+                {activityID && <button onClick={removePost}> Remove </button>}
+                {(reports.length > 0 && activityID) && <ReportList reports={reports}/>}
+                {activityID && <PostPage id={activityID}/>}
+                <h1>Reported Questions</h1>
+                <QuestionsList questions={questions.sort(compareReports)} admin={setQuestion}/>
+                {(reports.length > 0 && questionID) && <ReportList reports={reports}/>}
+                {questionID && <button onClick={resolve}> Resolve </button>}
+                {questionID && <button onClick={removePost}> Remove </button>}
+            </div>
+        )
+    } else {
+        return (<div>Must be admin to view page</div>)
+    }
 
 
 }
 
-export default AdminPage;
+export default withAuthenticator(AdminPage);
