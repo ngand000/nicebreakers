@@ -7,6 +7,10 @@ import {DataStore} from "aws-amplify/datastore";
 import "./postPage.css"
 import ImageWithCaption from "./ImageWithCaption";
 import ReportPopup from "./ReportPopup";
+import { getCurrentUser } from 'aws-amplify/auth';
+import { Account } from '../../models';
+import { Authenticator } from '@aws-amplify/ui-react';
+
 
 Amplify.configure(config);
 
@@ -31,8 +35,88 @@ const PostPage = ({id}) => {
     })
 
     const updateLikeCount = async(event, changeVal) => {
-        event.preventDefault();
-        if (changeVal > 0 || activity.likes > 0) {
+        /* Models in DataStore are immutable. To update a record you must use the copyOf function
+        to apply updates to the item’s fields rather than mutating the instance directly */
+        const { userId } = await getCurrentUser();
+        const original = await DataStore.query(Account, (c) => c.userId.eq(userId));
+        if (original.length === 0) {
+            await DataStore.save(
+                new Account({
+                    "userId": userId,
+                    "postsLiked":  [],
+                    "postsReported":  [],
+                    "postDisliked":  [],
+                    "Admin": false
+                })
+            );
+        }
+        const update = await DataStore.query(Account, (c) => c.userId.eq(userId));
+        if ((changeVal > 0) && update[0].postsLiked.find((element) => element === activity.id) === undefined) {
+            await DataStore.save(
+                Account.copyOf(update[0], updated => {
+                const updateArray = updated.postsLiked.slice();
+                updateArray.push(activity.id);
+                updated.postsLiked = updateArray;
+                // Check for if in disliked and remove it from there if it is
+                const index = updated.postDisliked.indexOf(activity.id);
+                if (index > -1) {
+                    const updateArrayDisliked = updated.postDisliked;
+                    updateArrayDisliked.splice(index, 1);
+                    updated.postDisliked = updateArrayDisliked
+                    changeVal++;
+                }
+                console.log(update[0])
+                })
+            );
+            await DataStore.save(
+                Activity.copyOf(activity, updated => {
+                    updated.likes = activity.likes + changeVal;
+                })
+            );
+            event.preventDefault();
+        } else if ((changeVal < 0) && update[0].postDisliked.find((element) => element === activity.id) === undefined) {
+            await DataStore.save(
+                Account.copyOf(update[0], updated => {
+                const updateArray = updated.postDisliked.slice();
+                updateArray.push(activity.id);
+                updated.postDisliked = updateArray;
+                // Check for if in liked and remove it from there if it is
+                const index = updated.postsLiked.indexOf(activity.id);
+                if (index > -1) {
+                    const updateArrayliked = updated.postsLiked;
+                    updateArrayliked.splice(index, 1);
+                    updated.postsLiked = updateArrayliked
+                    changeVal--;
+                }
+                console.log(update[0])
+                })
+            );
+            await DataStore.save(
+                Activity.copyOf(activity, updated => {
+                    updated.likes = activity.likes + changeVal;
+                })
+            );
+        } else {
+            changeVal = changeVal * -1;
+            await DataStore.save(
+                Account.copyOf(update[0], updated => {
+                    // Check for if in disliked and remove it from there if it is
+                    const index = updated.postDisliked.indexOf(activity.id);
+                    if (index > -1) {
+                        const updateArrayDisliked = updated.postDisliked;
+                        updateArrayDisliked.splice(index, 1);
+                        updated.postDisliked = updateArrayDisliked
+                    }
+                    // Check for if in liked and remove it from there if it is
+                    const index2 = updated.postsLiked.indexOf(activity.id);
+                    if (index2 > -1) {
+                        const updateArrayliked = updated.postsLiked;
+                        updateArrayliked.splice(index2, 1);
+                        updated.postsLiked = updateArrayliked
+                    }
+                    console.log(update[0])
+                })
+            );
             await DataStore.save(
                 Activity.copyOf(activity, updated => {
                     updated.likes = activity.likes + changeVal;
@@ -92,11 +176,13 @@ const PostPage = ({id}) => {
                         return <ImageWithCaption caption={activity.captions[i]} id={activity.id} imageNum={i} imgType={fileType}/>}
                     )}
                 </div>
+                <Authenticator>
                 <div style={bottomBar}>
                     <img className={"likeDislikeStyle"} src={"likeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, 1)}/>
                     <img className={"likeDislikeStyle"} src={"dislikeplaceholder.png"} alt={"duration"} onClick={(thisEvent) => updateLikeCount(thisEvent, -1)}/>
                     <button className={"reportStyle"} onClick={() => setIsPopupOpen(true)}> Report </button>
                 </div>
+                </Authenticator>
             </div>)}
         </div>
     )
