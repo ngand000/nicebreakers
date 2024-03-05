@@ -1,27 +1,27 @@
-.divStyle {
-    display: flex;
-    flex-wrap: wrap;
-    height: 72vh;
-    width: 90vw;
-    margin: auto;
-    border: solid;
-    overflow: hidden;
-    overflow-y: scroll;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
-}
+/*.divStyle {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    height: 72vh;*/
+/*    width: 90vw;*/
+/*    margin: auto;*/
+/*    border: solid;*/
+/*    overflow: hidden;*/
+/*    overflow-y: scroll;*/
+/*    -ms-overflow-style: none;  !* Internet Explorer 10+ *!*/
+/*    scrollbar-width: none;  !* Firefox *!*/
+/*}*/
 
-.admin-container {
-    display: block;
-    width: 17.33%;
-    height: 36vh;
-    padding: 2vh 1.33% 2vh 1.33%;
-    transition-timing-function: ease-out;
-    transition:
-            width 0.25s,
-            height 0.25s,
-            padding 0.25s
-}
-.divStyle::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
-}
+/*.admin-container {*/
+/*    display: block;*/
+/*    width: 17.33%;*/
+/*    height: 36vh;*/
+/*    padding: 2vh 1.33% 2vh 1.33%;*/
+/*    transition-timing-function: ease-out;*/
+/*    transition:*/
+/*            width 0.25s,*/
+/*            height 0.25s,*/
+/*            padding 0.25s*/
+/*}*/
+/*.divStyle::-webkit-scrollbar {*/
+/*    display: none;  !* Safari and Chrome *!*/
+/*}*/

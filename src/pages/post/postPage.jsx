@@ -7,6 +7,7 @@ import {DataStore} from "aws-amplify/datastore";
 import "./postPage.css"
 import ImageWithCaption from "./ImageWithCaption";
 import ReportPopup from "./ReportPopup";
+import Lock from "./Lock.jsx";
 
 Amplify.configure(config);
 
@@ -30,16 +31,38 @@ const PostPage = ({id}) => {
         setActivity((await DataStore.query(Activity, (a) => a.and(a => [a.id.eq(postID)])))[0])})()
     })
 
-    const updateLikeCount = async(event, changeVal) => {
+    const lock = new Lock();
+
+    const updateLikeCount = async (event, changeVal) => {
         event.preventDefault();
-        if (changeVal > 0 || activity.likes > 0) {
-            await DataStore.save(
-                Activity.copyOf(activity, updated => {
-                    updated.likes = activity.likes + changeVal;
-                })
-            );
+
+        // Acquire the lock
+        await lock.lock();
+
+        try {
+            if (changeVal > 0 || activity.likes > 0) {
+                await DataStore.save(
+                    Activity.copyOf(activity, updated => {
+                        updated.likes = activity.likes + changeVal;
+                    })
+                );
+            }
+        } finally {
+            // Release the lock in a finally block to ensure it's always released
+            lock.unlock();
         }
-    }
+    };
+
+    // const updateLikeCount = async(event, changeVal) => {
+    //     event.preventDefault();
+    //     if (changeVal > 0 || activity.likes > 0) {
+    //         await DataStore.save(
+    //             Activity.copyOf(activity, updated => {
+    //                 updated.likes = activity.likes + changeVal;
+    //             })
+    //         );
+    //     }
+    // }
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "flex-start", alignContent: "center"}
 
