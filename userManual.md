@@ -26,7 +26,7 @@
 ## How to Run Software
 
 - Start up your web-browser and simply visit this website:
-  - https://deployable-page.d3pb2yef2pgy2m.amplifyapp.com/
+  - https://main.d3pb2yef2pgy2m.amplifyapp.com/
 
 - Alternatively, if you wish you can follow the "How to Build/Run System" instructions in the Developer Guidelines to run this app on a localhost port
   - Warning: this option requires extra software and authentication with the team, it is not recommended if you are not a developer
@@ -34,7 +34,7 @@
 ## How to Use the Software
 
 - To use Nicebreakers simply visit this website in your web-browser:
-  - https://deployable-page.d3pb2yef2pgy2m.amplifyapp.com/
+  - https://main.d3pb2yef2pgy2m.amplifyapp.com/
 
 - Currently you can browse, upload, and like on the platform in Guest mode
   - Once login is implemented, uploading and liking will be restricted to account holders
