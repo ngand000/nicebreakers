@@ -167,7 +167,7 @@ export default function QuestionPreview({question, openReport, admin}) {
                             </Authenticator>
                         </Signin>
                         <div style={likeNumStyle}>
-                            {question.likes}
+                            {Math.max(0, question.likes)}
                         </div>
                     </div>
                     {!admin && <button className={"reportStyle"} onClick={() => openReport(question.id)}> Report </button>}

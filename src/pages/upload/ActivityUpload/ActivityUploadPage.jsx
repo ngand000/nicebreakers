@@ -255,7 +255,7 @@ const UploadPage = (props) => {
         if (filterChecks()) {
             const queryStatus = await queryPush();
             if (queryStatus) {
-                window.location.href = "/";
+                navigate("/");
             }
         }
     };
