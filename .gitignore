@@ -7,6 +7,7 @@
 .pnp.js
 /src/aws-exports.js
 /src/amplifyconfiguration.json
+/src/ui-components
 # testing
 /coverage
 

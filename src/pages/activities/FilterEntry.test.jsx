@@ -1,9 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import FilterEntry from "./FilterEntry";
 import {MemoryRouter} from "react-router-dom";
-import * as assert from "assert";
-
-
 
 it('testTitle', () => {
     render(<MemoryRouter>
