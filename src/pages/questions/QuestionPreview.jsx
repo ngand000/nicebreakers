@@ -110,10 +110,10 @@ export default function QuestionPreview({question, openReport, admin}) {
                 }
             }
         } catch (err) {
-            setLikeLock(true);
+            setLikeLock(false);
             setSignedIn(false);
         }
-        setLikeLock(true);
+        setLikeLock(false);
     }
 
     function onClick() {
