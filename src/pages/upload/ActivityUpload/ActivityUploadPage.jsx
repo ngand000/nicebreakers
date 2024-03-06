@@ -9,6 +9,7 @@ import config from '../../../aws-exports.js';
 import '../UploadPages.css';
 import Lock from "../../post/Lock";
 import {withAuthenticator} from "@aws-amplify/ui-react";
+// adding authenticator
 
 Amplify.configure(config);
 
