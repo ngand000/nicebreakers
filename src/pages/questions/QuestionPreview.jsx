@@ -35,8 +35,9 @@ export default function QuestionPreview({question, openReport, admin}) {
                             "Admin": false
                         })
                     );
+                    lock.unlock();
                 }
-                lock.unlock();
+
                 const update = await DataStore.query(Account, (c) => c.userId.eq(userId));
                 if ((changeVal > 0) && update[0].postsLiked.find((element) => element === question.id) === undefined) {
                     await DataStore.save(

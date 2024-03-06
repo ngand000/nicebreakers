@@ -7,6 +7,7 @@ import { uploadData } from 'aws-amplify/storage';
 import { remove } from 'aws-amplify/storage';
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
+import Lock from "../../post/Lock";
 
 Amplify.configure(config);
 
@@ -199,10 +200,12 @@ const UploadPage = (props) => {
     //return, true if pushes new Activity to remote database
     //        populated with user inputs
     //        and false if push failed
+    const lock = new Lock();
     const queryPush = async() => {
         let currActivity = null;
         let i = 0;
         try {
+            lock.lock();
             currActivity = await DataStore.save(
                 new Activity({
                     name: activityName,
@@ -222,11 +225,15 @@ const UploadPage = (props) => {
                     timesReported: 0,
                 })
             );
+            lock.unlock();
+
             for (i = 0; i < userImages.length; i++) {
+                lock.lock();
                 await uploadData({
                     key: currActivity.id + "img" + i + "." + userImageTypes[i],
                     data: userImages[i],
                 }).result;
+                lock.unlock();
             }
             alert("Uploaded Successfully");
             return true;
@@ -252,10 +259,12 @@ const UploadPage = (props) => {
     const checkSubmit = async(event) => {
         event.preventDefault();
         if (filterChecks()) {
+            lock.lock();
             const queryStatus = await queryPush();
             if (queryStatus) {
                 window.location.href = "/";
             }
+            lock.unlock();
         }
     };
 

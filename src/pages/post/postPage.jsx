@@ -37,24 +37,6 @@ const PostPage = ({id}) => {
 
     const lock = new Lock();
 
-    // const updateLikeCount = async (event, changeVal) => {
-    //     event.preventDefault();
-    //
-    //     // Acquire the lock
-    //     await lock.lock();
-    //
-    //     try {
-    //         if (changeVal > 0 || activity.likes > 0) {
-    //             await DataStore.save(
-    //                 Activity.copyOf(activity, updated => {
-    //                     updated.likes = activity.likes + changeVal;
-    //                 })
-    //             );
-    //         }
-    //     } finally {
-    //         // Release the lock in a finally block to ensure it's always released
-    //         lock.unlock();
-
     const updateLikeCount = async(event, changeVal) => {
         /* Models in DataStore are immutable. To update a record you must use the copyOf function
         to apply updates to the item’s fields rather than mutating the instance directly */
@@ -71,8 +53,9 @@ const PostPage = ({id}) => {
                     "Admin": false
                 })
             );
+            lock.unlock();
         }
-        lock.unlock();
+
 
         const update = await DataStore.query(Account, (c) => c.userId.eq(userId));
         if ((changeVal > 0) && update[0].postsLiked.find((element) => element === activity.id) === undefined) {
