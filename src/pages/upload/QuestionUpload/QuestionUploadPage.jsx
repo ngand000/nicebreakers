@@ -20,6 +20,8 @@ const UploadPage = (props) => {
     const [ageMin, ageMinSetter] = useState(0);
     const [ageMax, ageMaxSetter] = useState(1);
 
+    const [isUploadLocked, setUploadLock] = useState(false);
+
     const navigate = useNavigate()
 
     const filterNames = ["questionText", "authorVal", "ageMin", "ageMax"];
@@ -136,12 +138,18 @@ const UploadPage = (props) => {
     //         add redirects to respective viewing page
     const checkSubmit = async(event) => {
         event.preventDefault();
+        if (isUploadLocked) {
+            return;
+        }
+        setUploadLock(true);
         if (filterChecks()) {
             const queryStatus = await queryPush();
             if (queryStatus) {
+                setUploadLock(false);
                 navigate("/questions");
             }
         }
+        setUploadLock(false);
     };
 
     //pre: none
