@@ -21,6 +21,8 @@ const PostPage = ({id}) => {
     const [postID, setPostID] = useState()
     const [liked, setLiked] = useState(0)
 
+    const [isLikeLocked, setLikeLock] = useState(false)
+
     function rangeToString(r) {
         return (r && (r[0] === r[1] ? r[0] : r[0] + "-" + r[1]))
     }
@@ -46,6 +48,10 @@ const PostPage = ({id}) => {
     })
 
     const updateLikeCount = async(event, changeVal) => {
+        if (isLikeLocked) {
+            return;
+        }
+        setLikeLock(true);
         /* Models in DataStore are immutable. To update a record you must use the copyOf function
         to apply updates to the item’s fields rather than mutating the instance directly */
         const { userId } = await getCurrentUser();
@@ -142,6 +148,7 @@ const PostPage = ({id}) => {
                 })
             );
         }
+        setLikeLock(false);
     }
 
     const headerStyle = {height: "16vmin", display: "flex", margin: "auto", width: "90vw", justifyContent: "flex-start", alignContent: "center"}

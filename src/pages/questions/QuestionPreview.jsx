@@ -12,7 +12,12 @@ import { Authenticator } from '@aws-amplify/ui-react';
 // The preview for a single question pulled from the database
 export default function QuestionPreview({question, openReport, admin}) {
     const [isSignedIn, setSignedIn] = useState(true);
+    const [isLikeLocked, setLikeLock] = useState(false);
     const updateLikeCount = async(event, changeVal) => {
+        if (isLikeLocked) {
+            return;
+        }
+        setLikeLock(true);
         try {
             const { userId } = await getCurrentUser();
             setSignedIn(true);
@@ -105,8 +110,10 @@ export default function QuestionPreview({question, openReport, admin}) {
                 }
             }
         } catch (err) {
+            setLikeLock(true);
             setSignedIn(false);
         }
+        setLikeLock(true);
     }
 
     function onClick() {

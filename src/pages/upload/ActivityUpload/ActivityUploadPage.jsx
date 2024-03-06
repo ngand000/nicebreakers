@@ -31,6 +31,8 @@ const UploadPage = (props) => {
     const [userImages, userImageSetter] = useState([]);
     const [userImageTypes, userImageTypesSetter] = useState([]);
 
+    const [isUploadLocked, setUploadLock] = useState(false);
+
     const navigate = useNavigate()
 
 
@@ -252,12 +254,18 @@ const UploadPage = (props) => {
     //         add redirects to respective viewing page
     const checkSubmit = async(event) => {
         event.preventDefault();
+        if (isUploadLocked) {
+            return;
+        }
+        setUploadLock(true);
         if (filterChecks()) {
             const queryStatus = await queryPush();
             if (queryStatus) {
+                setUploadLock(false);
                 navigate("/");
             }
         }
+        setUploadLock(false);
     };
 
     //pre: none
