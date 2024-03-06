@@ -8,6 +8,7 @@ import { remove } from 'aws-amplify/storage';
 import config from '../../../aws-exports.js';
 import '../UploadPages.css';
 import Lock from "../../post/Lock";
+import {withAuthenticator} from "@aws-amplify/ui-react";
 
 Amplify.configure(config);
 
@@ -347,4 +348,4 @@ const UploadPage = (props) => {
     )
 }
 
-export default UploadPage;
+export default withAuthenticator(UploadPage);
