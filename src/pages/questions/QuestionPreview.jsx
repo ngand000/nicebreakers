@@ -13,6 +13,7 @@ import { Authenticator } from '@aws-amplify/ui-react';
 export default function QuestionPreview({question, openReport, admin}) {
     const [isSignedIn, setSignedIn] = useState(true);
     const [isLikeLocked, setLikeLock] = useState(false);
+
     const updateLikeCount = async(event, changeVal) => {
         if (isLikeLocked) {
             return;
