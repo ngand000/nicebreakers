@@ -40,7 +40,7 @@ export default function ActivityPreview({activity, admin}) {
 
     const abstractStyle = {display: "flex", fontSize: "2.5vmin", textAlign: "left", width: "100%", height: "60%", maxHeight: "60%", overflowY: "auto", overflowX: "hidden", marginTop: "0"}
 
-    const bottomBar = {display: "flex", width: "100%", height: "15%", margin: "auto 0 5% 0", overflowX: "hidden"}
+    const bottomBar = {display: "flex", width: "100%", height: "15%", margin: "auto 0 5% 0", overflowX: "hidden", overflowY: "hidden"}
 
     const likeNumStyle = {fontSize: "3.5vmin", flexGrow: 1, textAlign: "left", width: "10%"}
 
