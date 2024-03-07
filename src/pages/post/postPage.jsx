@@ -161,7 +161,7 @@ const PostPage = ({id}) => {
 
     const attributesStyle = {display: "flex"}
 
-    const images = {display: "flex", overflowX: "scroll"}
+    const images = {display: "flex", overflowX: "auto"}
 
     const bottomBar = {display: "flex"}
 

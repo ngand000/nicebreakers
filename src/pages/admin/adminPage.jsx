@@ -123,8 +123,8 @@ const AdminPage = () => {
                 <h1>Reported Questions</h1>
                 <QuestionsList questions={questions.sort(compareReports)} admin={setQuestion}/>
                 {(reports.length > 0 && questionID) && <ReportList reports={reports}/>}
-                {activityID && <button style={{color: "green"}} className={"button"} onClick={resolve}> Resolve </button>}
-                {activityID && <button style={{color: "red"}} className={"button"} onClick={removePost}> Remove </button>}
+                {questionID && <button style={{color: "green"}} className={"button"} onClick={resolve}> Resolve </button>}
+                {questionID && <button style={{color: "red"}} className={"button"} onClick={removePost}> Remove </button>}
             </div>
         )
     } else {
