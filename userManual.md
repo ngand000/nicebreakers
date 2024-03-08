@@ -36,13 +36,6 @@
 - To use Nicebreakers simply visit this website in your web-browser:
   - https://main.d3pb2yef2pgy2m.amplifyapp.com/
 
-- Currently you can browse, upload, and like on the platform in Guest mode
-  - Once login is implemented, uploading and liking will be restricted to account holders
-  - You will still be able to browse and apply filters in Guest mode
-  - You can also visit https://deployable-page.d3pb2yef2pgy2m.amplifyapp.com/#/admin to view the admin page
-    - Once login is implemented this will be restricted to privilaged accounts
-      - While admin is public we ask that you please only remove your own posts, to avoid interfering with data and creating unexpected removals
-
 - Upon visiting the website you will be brought to the Activities Preview Page. The design is fairly intuitive so feel free to play around and explore. Reference this documentation for a more in-depth description of each page.
 
 - Activities Page (landing page)
@@ -70,10 +63,11 @@
     - Some filters have a popup input value(s) in the format "x" or "x-y"
       - Close the popup when finished inputting
   - Click the like button on a question to increment its like count
-    - (Will be limited to one like per post when log in implemented)
+    - If you are not yet logged in, you will need to login/signup first
   - Click the dislike button on a question to decrement its like count
-      - (Will be limited to one dislike per post when log in implemented)
+    - If you are not yet logged in, you will need to login/signup first
   - Click the report button to report this question for a violation
+    - If you are not yet logged in, you will need to login/signup first
     - Enter a reason in the given popup box
     - Click Go Back to cancel your report and exit popup
     - Click Report to file the report and exit popup
@@ -87,7 +81,7 @@
     - Activity Name
     - Abstract (for the Activities Page preview)
     - Description (for the full post page)
-    - Author Name (will be prefilled when log in implemented)
+    - Author Name
     - Player count (from 1 to 99 people)
     - Duration (0 to 60 min)
     - Age range (0 to 99 years)
@@ -95,7 +89,6 @@
   - Outbound Pages:
     - Click the Back button or the Nicebreakers logo to return to the Activities Page without uploading
     - Click the upload button to upload your activity
-      - (Will be limited to accounts only when log in implemented)
       - You should get an alert if you have any malformed inputs, and not be redirected
       - You should get an alert if there is an error in uploading, and not be redirected
       - You should get an alert if the activity uploaded successfully, and you will be redirected to the Activities Page
@@ -104,12 +97,11 @@
   - Scroll up and down to view various fields
   - Input the following fields about your question (please be appropriate and safe):
     - Question content
-    - Author Name (will be prefilled when log in implemented)
+    - Author Name
     - Age range (0 to 99 years)
   - Outbound Pages:
     - Click the Back button or the Nicebreakers logo to return to the Questions Page without uploading
     - Click the upload button to upload your question
-      - (Will be limited to accounts only when log in implemented)
       - You should get an alert if you have any malformed inputs, and not be redirected
       - You should get an alert if there is an error in uploading, and not be redirected
       - You should get an alert if the question uploaded successfully, and you will be redirected to the Questions Page
@@ -123,9 +115,9 @@
     - Like count
     - Images (if applicable)
   - Click the like button to increment the like count of this activity
-    - (Will be limited to one like per post when log in implemented)
+    - If you are not yet logged in, you will need to login/signup first
   - Click the dislike button to decrement the like count of this activity
-    - (Will be limited to one dislike per post when log in implemented)
+    - If you are not yet logged in, you will need to login/signup first
   - Click the report button to report this post for a violation
     - Enter a reason in the given popup box
     - Click Go Back to cancel your report and exit popup
@@ -134,7 +126,8 @@
     - Click the Nicebreakers logo to return to the Activities Page
 
 - Report page
-  - This page is not accessible through the main website
+  - This page is not accessible through the main website, go to https://main.d3pb2yef2pgy2m.amplifyapp.com/#/admin
+  - You will only have acess to this page if your account is a admin-level account
   - Scroll around to view the reported activities/questions
   - Click a post to view its contents, report message(s), and get admin options
     - Click "resolve" to reject the report(s) and keep the post up
